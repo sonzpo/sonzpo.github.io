@@ -21,6 +21,24 @@
     <script>
       new WOW().init();
     </script>
+	<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "assets/audio/312727.mp3"
+     sound[1]= "assets/audio/312767.mp3"
+     sound[2]= "assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>	
   </head>
 
   <body>
@@ -1823,7 +1841,7 @@
                   SZP focuses on crypto-asset exchange and multi-level reward. It is managed by the fair and provable smart contract on Polygon blockchain network. The web interface is published on Github, the world's largest open source repository, and adopts the industry-recognized standard Tailwind. The framework is implemented and the integration of the Metamask software wallet and the Ledger Nano series hardware wallet provides higher convenience and security.
                   <br />
                   <br />
-                  The SZP asset pool provides exchange services with Tether USDT. The platform issues SZP rewards to SZP holders on a regular basis every six months. The smart contract in the agreement will automatically record the time and quantity of the holder (using 1 SZP token as the calculation unit, no rewards will be issued if the holding SZP token is less than one), and perform return calculation by a 3x5 multi-level matrix. SZP holders regularly expect to obtain reward token with an annualized return rate of up to approximately 121% (243x0.5=121, 243=3x3x3x3x3x). However, the actual reward of the operation may still be affected by the actual situation of the backend custodian and the gas consumption of the blockchain network.
+                  The SZP asset pool provides exchange services with Tether USDT. The platform issues SZP rewards to SZP holders on a regular basis every six months. The smart contract in the agreement will automatically record the time and quantity of the holder (using 1 SZP token as the calculation unit, no rewards will be issued if the holding SZP token is less than one), and perform return calculation by a 3x5 multi-level matrix. SZP holders regularly expect to obtain reward token with an annualized return rate of up to approximately 101% (243x0.5-20=101, 243=3x3x3x3x3x). However, the actual reward of the operation may still be affected by the actual situation of the backend custodian and the gas consumption of the blockchain network.
                 </p>
 
                 <a
@@ -2153,10 +2171,10 @@
                     Exchange price is due to market factor.
                   </p>
                   <p class="text-base text-body-color dark:text-dark-6">
-                    Expected annual growth rate of net worth: 6%
+                    Expected annual growth rate of net worth: over 6%
                   </p>
                   <p class="text-base text-body-color dark:text-dark-6">
-                    Expected annual multilevel reward of net worth: up to 121%
+                    Expected annual multilevel reward of net worth: up to 101%
                   </p>
                 </div>
               </div>
@@ -3186,15 +3204,16 @@
             <div class="w-full px-4 md:w-1/3 lg:w-1/2">
               <div class="my-1 flex justify-center md:justify-end">
                 <p class="text-base text-gray-7">
-                  Since 2017 developed and managed by
+                   Developed and managed by
                   <a
                     href=""
                     rel="nofollow noopner"
                     target="_blank"
                     class="text-gray-1 hover:underline"
                   >
-                    Sonzpo Grp.
+                    Sonzpo Grp. 
                   </a>
+				  since 2017
                 </p>
               </div>
             </div>
