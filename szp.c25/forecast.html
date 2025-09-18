@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+	<title> SZP.c25 Tech Forecast</title>
+<!--<script src="https://www.chartjs.org/dist/2.6.0/Chart.bundle.js"></script>
+    <script src="https://www.chartjs.org/samples/2.6.0/utils.js"></script> -->
+    <script src="./assets/js/Chart.bundle_2.6.0.js"></script>
+    <script src="./assets/js/utils_2.6.0.js"></script> 	
+    <style>
+    canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+    </style>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+    <label for="iniBal">Initial Balance : </label><input name="iniBal" id="iniBal" value="100" size="3"> , 
+    <label for="forROI">Forecast ROI(%) : </label><input name="forROI" id="forROI" value="100" size="3"> , 
+    <label for="decRate">Decay(%) without Forecast : </label><input name="decRate" id="decRate" value="50" size="3">
+	<br><br>
+    <button id="randomizeData">Calculation</button>
+    <br>	
+    <div style="width: 85%;">
+        <canvas id="canvas"></canvas>
+        <progress id="animationProgress" max="1" value="0" style="width: 100%"></progress>
+    </div>
+    <br>
+    <br>
+    * real performance of forecast: 2025/08/16~2025/09/15  monthly accuracy rate:30/34~88%, monthly ROI~over 200%	
+    <br><br>
+    ** forecast service: subscription for information services, receiving highly accurate and profitable daily recommendations of market entry by paying SZP.c25 equivalent to 100 USDT per month
+	
+    <script>
+
+        function calBalw(x) {
+         if (x === undefined) {x = 0;}		
+		 var iniBal = document.getElementById('iniBal').value;
+		 var forROI = document.getElementById('forROI').value/100;
+         var decRate = document.getElementById('decRate').value/100;
+		 forROI = forROI + 1;
+		 var retVal = iniBal * Math.pow(forROI, x);
+	     return (retVal);		 
+        }
+
+        function calBalwo(x) {
+         if (x === undefined) {x = 0;}		
+		 var iniBal = document.getElementById('iniBal').value;
+		 var forROI = document.getElementById('forROI').value/100;
+         var decRate = document.getElementById('decRate').value/100;
+		 forROI = forROI * decRate;
+		 forROI = forROI + 1;
+		 var retVal = iniBal * Math.pow(forROI, x);
+	     return (retVal);		 
+        }
+		
+        var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var progress = document.getElementById('animationProgress');
+        var config = {
+            type: 'line',
+            data: {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+				    label: "with forecast service**",
+                    fill: false,
+                    borderColor: window.chartColors.red,
+                    backgroundColor: window.chartColors.red,
+                    data: [
+                        calBalw(0),
+                        calBalw(1),
+                        calBalw(2),
+                        calBalw(3),
+                        calBalw(4),
+                        calBalw(5),
+                        calBalw(6)
+                    ]
+                }, {
+                    label: "without forecast service",
+                    fill: false,
+                    borderColor: window.chartColors.blue,
+                    backgroundColor: window.chartColors.blue,
+                    data: [
+                        calBalwo(0),
+                        calBalwo(1),
+                        calBalwo(2),
+                        calBalwo(3),
+                        calBalwo(4),
+                        calBalwo(5),
+                        calBalwo(6)
+                    ]
+                }]
+            },
+            options: {
+                title:{
+                    display:true,
+                    text: "SZP.c25 tech forecast for 6 months in association with most update real performance*"
+                },
+                animation: {
+                    duration: 2000,
+                    onProgress: function(animation) {
+                        progress.value = animation.currentStep / animation.numSteps;
+                    },
+                    onComplete: function(animation) {
+                        window.setTimeout(function() {
+                            progress.value = 0;
+                        }, 2000);
+                    }
+                }
+            }
+        };
+
+        window.onload = function() {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myLine = new Chart(ctx, config);
+        };
+
+        document.getElementById('randomizeData').addEventListener('click', function() {
+		      location.reload(false);  
+        });	
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"97fd51715dc83313","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.8.0","token":"423c3e9d905f44cc8497f44510725b8d"}' crossorigin="anonymous"></script>
+</body>
+
+</html>
