@@ -21,7 +21,24 @@
     <label for="forROI">預報投報率(%) : </label><input name="forROI" id="forROI" value="100" size="3"> , 
     <label for="decRate">沒有預報下的衰減率(%) : </label><input name="decRate" id="decRate" value="50" size="3">
 	<br><br>
-    <button id="randomizeData">計算</button>
+    選擇您偏好的配置:<br>
+
+    <input type="radio" id="conservative" name="fav_mode" value="conservative" checked>
+    <label for="conservative">保守型</label> ,    
+    <input type="radio" id="moderate" name="fav_mode" value="moderate">
+    <label for="moderate">適中型</label> ,  
+    <input type="radio" id="aggressive" name="fav_mode" value="aggressive">
+    <label for="aggressive">積極型</label> <br>
+	
+    <input type="radio" id="techOnly" name="fav_port" value="techOnly" checked>
+    <label for="techOnly">只採用 SZP.c25 技術</label><br>    
+    <input type="radio" id="addFixed" name="fav_port" value="addFixed">
+    <label for="addFixed">增加搭配 USDT 定存 或 期現套利 : </label>
+    </label><input name="addDepo" id="addDepo" value="900" size="4"> , 
+    <label for="annROI">年化投報率(%) : </label><input name="annROI" id="annROI" value="10" size="3"> 	
+
+	<br><br>	
+    <button id="calculation">計算</button>
     <br>	
     <div style="width: 85%;">
         <canvas id="canvas"></canvas>
@@ -40,7 +57,16 @@
 		 var forROI = document.getElementById('forROI').value/100;
          var decRate = document.getElementById('decRate').value/100;
 		 forROI = forROI + 1;
-		 var retVal = iniBal * Math.pow(forROI, x);
+		 
+		 var addVal = 0.0;
+		 var addDepo = document.getElementById('addDepo').value;
+		 var annROI = document.getElementById('annROI').value/(100*12);
+         annROI = annROI + 1;		 
+		 if (document.getElementById('addFixed').checked){
+		   addVal = addDepo * Math.pow(annROI, x);
+		 }
+		 
+		 var retVal = addVal + iniBal * Math.pow(forROI, x);
 	     return (retVal);		 
         }
 
@@ -51,7 +77,16 @@
          var decRate = document.getElementById('decRate').value/100;
 		 forROI = forROI * decRate;
 		 forROI = forROI + 1;
-		 var retVal = iniBal * Math.pow(forROI, x);
+
+		 var addVal = 0.0;
+		 var addDepo = document.getElementById('addDepo').value;
+		 var annROI = document.getElementById('annROI').value/(100*12);
+         annROI = annROI + 1;		 
+		 if (document.getElementById('addFixed').checked){
+		   addVal = addDepo * Math.pow(annROI, x);
+		 }
+		 
+		 var retVal = addVal + iniBal * Math.pow(forROI, x);
 	     return (retVal);		 
         }
 		
@@ -115,9 +150,25 @@
             window.myLine = new Chart(ctx, config);
         };
 
-        document.getElementById('randomizeData').addEventListener('click', function() {
+        document.getElementById('calculation').addEventListener('click', function() {
 		      location.reload(false);  
-        });	
+        });
+
+        document.getElementById('conservative').addEventListener('click', function() {
+		      document.getElementById("iniBal").value = "100"; 
+		      document.getElementById("addDepo").value = "900";			  
+        });
+		
+        document.getElementById('moderate').addEventListener('click', function() {
+		      document.getElementById("iniBal").value = "200";
+		      document.getElementById("addDepo").value = "800";				  
+        });		
+		
+        document.getElementById('aggressive').addEventListener('click', function() {
+		      document.getElementById("iniBal").value = "300";  
+		      document.getElementById("addDepo").value = "700";	
+        });
+		
     </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"97fd51715dc83313","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.8.0","token":"423c3e9d905f44cc8497f44510725b8d"}' crossorigin="anonymous"></script>
 </body>

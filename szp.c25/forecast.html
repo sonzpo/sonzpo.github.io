@@ -21,7 +21,24 @@
     <label for="forROI">Forecast ROI(%) : </label><input name="forROI" id="forROI" value="100" size="3"> , 
     <label for="decRate">Decay(%) without Forecast : </label><input name="decRate" id="decRate" value="50" size="3">
 	<br><br>
-    <button id="randomizeData">Calculation</button>
+    Choose your favorite portfolio:<br>
+
+    <input type="radio" id="conservative" name="fav_mode" value="conservative" checked>
+    <label for="conservative">Conservative</label> ,    
+    <input type="radio" id="moderate" name="fav_mode" value="moderate">
+    <label for="moderate">Moderate</label> ,  
+    <input type="radio" id="aggressive" name="fav_mode" value="aggressive">
+    <label for="aggressive">Aggressive</label> <br>
+	
+    <input type="radio" id="techOnly" name="fav_port" value="techOnly" checked>
+    <label for="techOnly">SZP.c25 Technology only</label><br>    
+    <input type="radio" id="addFixed" name="fav_port" value="addFixed">
+    <label for="addFixed">In addition, with USDT Fixed Deposit or Spot-Futures Arbitrage : </label>
+    </label><input name="addDepo" id="addDepo" value="900" size="4"> , 
+    <label for="annROI">Annual ROI(%) : </label><input name="annROI" id="annROI" value="10" size="3"> 	
+
+	<br><br>
+    <button id="calculation">Calculation</button>
     <br>	
     <div style="width: 85%;">
         <canvas id="canvas"></canvas>
@@ -34,14 +51,23 @@
     ** forecast service: subscription for information services, receiving highly accurate and profitable daily recommendations of market entry by paying SZP.c25 equivalent to 100 USDT per month
 	
     <script>
-
+			
         function calBalw(x) {
          if (x === undefined) {x = 0;}		
 		 var iniBal = document.getElementById('iniBal').value;
 		 var forROI = document.getElementById('forROI').value/100;
          var decRate = document.getElementById('decRate').value/100;
 		 forROI = forROI + 1;
-		 var retVal = iniBal * Math.pow(forROI, x);
+		 
+		 var addVal = 0.0;
+		 var addDepo = document.getElementById('addDepo').value;
+		 var annROI = document.getElementById('annROI').value/(100*12);
+         annROI = annROI + 1;		 
+		 if (document.getElementById('addFixed').checked){
+		   addVal = addDepo * Math.pow(annROI, x);
+		 }
+		 
+		 var retVal = addVal + iniBal * Math.pow(forROI, x);
 	     return (retVal);		 
         }
 
@@ -52,7 +78,16 @@
          var decRate = document.getElementById('decRate').value/100;
 		 forROI = forROI * decRate;
 		 forROI = forROI + 1;
-		 var retVal = iniBal * Math.pow(forROI, x);
+
+		 var addVal = 0.0;
+		 var addDepo = document.getElementById('addDepo').value;
+		 var annROI = document.getElementById('annROI').value/(100*12);
+         annROI = annROI + 1;		 
+		 if (document.getElementById('addFixed').checked){
+		   addVal = addDepo * Math.pow(annROI, x);
+		 }
+		 
+		 var retVal = addVal + iniBal * Math.pow(forROI, x);
 	     return (retVal);		 
         }
 		
@@ -116,9 +151,25 @@
             window.myLine = new Chart(ctx, config);
         };
 
-        document.getElementById('randomizeData').addEventListener('click', function() {
+        document.getElementById('calculation').addEventListener('click', function() {
 		      location.reload(false);  
         });	
+
+        document.getElementById('conservative').addEventListener('click', function() {
+		      document.getElementById("iniBal").value = "100"; 
+		      document.getElementById("addDepo").value = "900";			  
+        });
+		
+        document.getElementById('moderate').addEventListener('click', function() {
+		      document.getElementById("iniBal").value = "200";
+		      document.getElementById("addDepo").value = "800";				  
+        });		
+		
+        document.getElementById('aggressive').addEventListener('click', function() {
+		      document.getElementById("iniBal").value = "300";  
+		      document.getElementById("addDepo").value = "700";	
+        });		
+
     </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"97fd51715dc83313","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.8.0","token":"423c3e9d905f44cc8497f44510725b8d"}' crossorigin="anonymous"></script>
 </body>
