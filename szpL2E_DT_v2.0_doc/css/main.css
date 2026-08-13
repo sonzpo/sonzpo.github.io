@@ -192,12 +192,6 @@ nav.top-nav a.current { background: var(--pine-900); color: var(--parchment); }
   color: var(--acorn-500);
   flex-shrink: 0;
 }
-.nav-dropdown a .v-tag-new {
-  color: #fff;
-  background: var(--acorn-500);
-  padding: 1px 6px;
-  border-radius: 999px;
-}
 .nav-dropdown .dd-foot {
   border-top: 1px solid var(--line);
   margin-top: 6px;

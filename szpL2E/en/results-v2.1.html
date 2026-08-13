@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Implementation Results Specification &amp; Performance Report v2.1 ｜ szpL2E Sonzpo Learn-to-Earn</title>
+<meta name="description" content="szpL2E v2.1 Implementation Results Specification &amp; Performance Report: the v2.0→v2.1 approaching-production-readiness rewrite across six domains — data persistence, real royalty settlement, structured logging, expanded anti-cheat rules, API versioning, and a chaos-testing framework — with a new Stage 7 demo and 91 automated tests all passing.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="../css/main.css">
+<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../../assets/audio/312727.mp3"
+     sound[1]= "../../assets/audio/312767.mp3"
+     sound[2]= "../../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>Sonzpo Learn-to-Earn<small>SZPL2E　·　松鼠坡學以致富</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html">Overview</a>
+      <a href="technical.html">Architecture</a>
+      <a href="wbs.html">Task Breakdown</a>
+      <a href="roadmap.html">Launch Plan</a>
+      <div class="nav-item-drop">
+        <a href="results.html" class="current">Results</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python stdlib zero-dependency rewrite</a>
+          <a href="results-v2.1.html"><span class="v-tag v-tag-new">v2.1</span> Persistence, royalties, chaos testing</a>
+          <div class="dd-foot">
+            <a href="results.html">→ All versions</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html">Investor Memo</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="../results-v2.1.html">中</a>
+        <a href="results-v2.1.html" class="is-active">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-hero">
+  <div class="wrap">
+    <span class="kicker">Implementation Results Report　·　Implementation Results Specification &amp; Performance Report</span>
+    <h1>szpL2E v2.1: results of the approaching-production-readiness rewrite</h1>
+    <p>This page compiles the contents of the "szpL2E v2.1 Implementation Results Specification &amp; Performance Report." Building on v2.0's full nine-stage rewrite (Stage −1 through Stage 6), v2.1 selectively advances six improvement domains needed to approach real operating conditions: data persistence, real royalty settlement and asset transfer (EIP-2981), structured logging, expanded anti-cheat rules, API versioning, and a chaos-testing framework — plus a new Stage 7 that serves as a combined one-click demo of all six domains. <code>run_all_demos.py</code> now covers nine stages (Stage −1 through Stage 7), taking roughly 34.9 seconds total in a single run; the accompanying test suite grew from v2.0's 47 tests to 91, all passing.</p>
+    <div class="meta-row">
+      <span>Document version　<strong>v2.1</strong></span>
+      <span>Date　<strong>August 12, 2026</strong></span>
+      <span>Project codename　<strong>SONZPO ALPHAINFINI · szpL2E</strong></span>
+      <span>Companion plan　<strong>One-Click Staged Launch Plan v2.0</strong></span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ version tabs ============ -->
+<section class="tight" style="padding-top:26px;padding-bottom:0">
+  <div class="wrap">
+    <div class="version-tabs">
+      <a href="results-v2.0.html">v2.0　2026-08</a>
+      <a href="results-v2.1.html" class="is-active">v2.1　2026-08</a>
+      <a href="results.html">All versions →</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap doc-layout">
+
+    <aside class="doc-sidebar">
+      <div class="sb-group">
+        <div class="sb-h">Contents</div>
+        <a href="#summary">Summary</a>
+        <a href="#context">1　v2.0→v2.1 Rewrite Overview &amp; Decision Context</a>
+        <a href="#domains">2　Six Improvement Domains: Spec &amp; Implementation</a>
+        <a href="#modules">3　New &amp; Extended Module Matrix</a>
+        <a href="#phase7">4　New Stage 7 Walkthrough</a>
+        <a href="#results">5　Quantified Results Summary</a>
+        <a href="#tests">6　Test Coverage &amp; QA</a>
+        <a href="#chaos">7　Chaos Testing Report</a>
+        <a href="#api">8　API Versioning &amp; OpenAPI Spec</a>
+        <a href="#honesty">9　Honesty-Boundary Disclosures</a>
+        <a href="#package">10　Reproducible Package</a>
+        <a href="#future">11　Known Limits &amp; Outlook</a>
+      </div>
+    </aside>
+
+    <div class="doc-main">
+
+      <h2 id="summary">Summary</h2>
+      <p>This report compiles the v2.0→v2.1 approaching-production-readiness improvement work, building on the "szpL2E One-Click Staged Launch Plan v2.0" and the "szpL2E Task Breakdown &amp; Fishbone Plan v2.0." v2.0 already completed a full rewrite across nine stages (Stage −1 through Stage 6), proving the whole architecture could be demoed with one click inside a zero-external-dependency sandbox. v2.1 builds on that foundation to selectively close the gap between "it runs" and "it can withstand real operating pressure" across six domains, rather than staying at the level of a written plan.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Domain</th><th>Improvement area</th><th>One-line outcome</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">A</td><td>Data persistence</td><td>Balances, NFT holdings, and idempotency state now survive a service crash or restart</td></tr>
+            <tr><td class="strong">B/C</td><td>Real royalty settlement &amp; asset transfer</td><td>EIP-2981 royalties move from "field exists" to "actually enforced on the transaction path"</td></tr>
+            <tr><td class="strong">D</td><td>Structured logging</td><td>Every service process emits JSON Lines structured events, queryable programmatically</td></tr>
+            <tr><td class="strong">E</td><td>Expanded anti-cheat rules</td><td>Two new rules added (rate limiting, device-fingerprint clustering) — four rules now work together</td></tr>
+            <tr><td class="strong">F</td><td>API versioning</td><td>Every endpoint serves both a /v1 prefix and the legacy path, with a generated OpenAPI 3.0 spec</td></tr>
+            <tr><td class="strong">G</td><td>Chaos-testing framework</td><td>A real, repeatable fault-injection tool — not just a planning concept</td></tr>
+            <tr><td class="strong">H</td><td>Dashboard v2</td><td>New on-chain asset overview, risk-control events, and chaos-test-report visualization blocks</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>v2.1 adds Stage 7 (<code>launch_phase7.py</code>), which integrates all six domains above into a single repeatable one-click demo: it really terminates and restarts core service processes, walks through the "mint → first sale → resale" royalty lifecycle, really triggers the two new anti-cheat rules, verifies API versioning via the /v1 prefix, and runs three rounds of chaos testing against real subprocesses.</p>
+      <p>The <code>run_all_demos.py</code> master script now covers nine stages (Stage −1 through Stage 7), all succeeding in a single run, taking roughly 34.9 seconds total (up from 17.6 seconds in the v2.0 era — the new Stage 7's real subprocess restarts and chaos-testing sequence account for roughly 17.6 of the added seconds). The accompanying test suite grew from v2.0's 47 tests to 91 (44 new), all passing; the new tests cover persistence-after-restart, royalty-settlement correctness, the new anti-cheat rules, and invariant checks under chaos conditions.</p>
+
+      <h2 id="context">1　v2.0→v2.1 Rewrite Overview &amp; Decision Context</h2>
+      <h3>1.1　Rewrite motivation: from "can demo" to "can take a beating"</h3>
+      <p>§8.1 of the v2.0 report honestly listed four sandbox environment limits (no Tauri client-shell build, no real IPFS/EVM testnet connectivity, no large-scale stress testing). These are environment-level limits, and v2.1 does not attempt to cross them — crossing that line would require real network access and real toolchains. But within the environment's limits, at the rule and logic level, v2.0 still had several clear gaps it could honestly close:</p>
+      <ol>
+        <li><strong>State lived entirely in memory</strong>: any process restart — whether a deliberate maintenance action or an accidental crash — zeroed out every balance, every NFT holding, and every idempotency record.</li>
+        <li><strong>Royalty field existed but was never enforced</strong>: v2.0's <code>royalty_bps</code> was only recorded, never actually deducted or distributed on any transaction path — EIP-2981 semantics stayed at the data-model level.</li>
+        <li><strong>Anti-cheat rules were thin</strong>: v2.0 had only one behavioral rule ("consecutive high-difficulty instant answers"), offering no defense against bot-driven farming or multi-account abuse patterns.</li>
+        <li><strong>Chaos testing existed only as planning-document text</strong>: the plan mentioned a "chaos mode" concept, but no corresponding code existed, so system resilience could not be repeatedly verified.</li>
+        <li><strong>Dashboard lacked information depth</strong>: the v2.0 dashboard only showed process liveness and performance-spec comparisons — no on-chain asset overview, risk-control status, or fault-testing results.</li>
+        <li><strong>No API versioning mechanism</strong>: every endpoint path was fixed, leaving no smooth migration path for a future breaking change.</li>
+      </ol>
+      <p>v2.1 tackles each of these six points directly, rather than staying at the planning level.</p>
+
+      <h3>1.2　Rewrite principles: backward compatibility, repeatable verification, honest disclosure</h3>
+      <p>v2.1 held to three engineering disciplines throughout:</p>
+      <ul>
+        <li><strong>Backward compatibility</strong>: every existing v2.0 test (47 total) and existing call interface (<code>chain_client.py</code>, existing service endpoints) passes with zero modification; persistence is opt-in via the <code>SZP_DB_PATH</code> environment variable, and behavior is identical to v2.0 when it is unset.</li>
+        <li><strong>Repeatable verification</strong>: every new feature ships with a corresponding real-subprocess-level integration test (not just function-level unit tests) — for example, "really launch the chain-sim subprocess → mint → send a real SIGTERM → restart → verify balance."</li>
+        <li><strong>Honest disclosure</strong>: every new module's docstring explicitly records its "v2.0 → v2.1 rewrite motivation" and "honesty boundary," continuing the boundary-honesty principle established in v1.1/v2.0 (plan §8.3).</li>
+      </ul>
+
+      <h2 id="domains">2　Six Improvement Domains: Spec &amp; Implementation</h2>
+
+      <h3>2.1　Domain A: Data Persistence (SQLite, zero external dependencies)</h3>
+      <p><strong>Problem</strong>: every v2.0 service process (<code>chain_sim.py</code>, <code>settlement_service.py</code>, and the risk-control profile built into <code>anticheat.py</code>) kept state in in-memory dicts, sets, and lists — restarting the process reset everything to zero.</p>
+      <p><strong>Solution</strong>: a new <code>src/persistence.py</code> module provides dual-purpose storage — general key-value snapshots plus an event log — using the Python standard-library <code>sqlite3</code> module in WAL mode, opted into via the <code>SZP_DB_PATH</code> environment variable:</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Behavior mode</th><th>Condition</th></tr></thead>
+          <tbody>
+            <tr><td>Pure in-memory (v2.0-compatible)</td><td><code>SZP_DB_PATH</code> unset</td></tr>
+            <tr><td>SQLite persistence</td><td><code>SZP_DB_PATH</code> set</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>API design: <code>store.put(key, value)</code> (write a key-value snapshot), <code>store.get(key, default=None)</code> (read a key), <code>store.append_event(type, payload)</code> (append to the event log, for blockchain-style replay), <code>store.replay_events(type)</code> (replay the event log to restore state on process startup).</p>
+      <p><strong>Verification</strong>: <code>tests/test_v21_resilience.py</code> uses <code>subprocess.Popen</code> to really launch the <code>chain_sim.py</code> subprocess, sends a real HTTP mint request, sends a real SIGTERM via <code>proc.terminate()</code>, confirms the process has actually terminated, then relaunches a new subprocess against the same database file (simulating a post-crash restart) and verifies balances and NFT holdings are correctly restored. A control-group test with <code>SZP_DB_PATH</code> unset confirms v2.0-compatible behavior remains unbroken.</p>
+      <p><strong>Overhead measurement</strong>: local mint-transaction latency was compared between pure-in-memory mode and SQLite-persistence mode (10 samples each, both including the 120ms simulated confirmation delay):</p>
+      <div class="table-wrap">
+        <table class="data evidence-table">
+          <thead><tr><th>Mode</th><th>Mean latency</th><th>P95 latency</th></tr></thead>
+          <tbody>
+            <tr><td>Pure in-memory (v2.0-compatible)</td><td>125.49 ms</td><td>122.48 ms</td></tr>
+            <tr><td>SQLite persistence (v2.1 new)</td><td>123.11 ms</td><td>123.28 ms</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The persistence write overhead falls within measurement noise (difference &lt; 3ms, far below the scale of the 120ms simulated confirmation delay), demonstrating that SQLite's WAL mode adds essentially zero extra latency under this sandbox's write load.</p>
+
+      <h3>2.2　Domain B/C: Real Royalty Settlement (EIP-2981 Enforced) &amp; Asset Transfer</h3>
+      <p><strong>Problem</strong>: v2.0's <code>royalty_bps</code> field existed on mint requests but was never actually deducted or distributed on any transaction path, and NFTs could not change ownership at all.</p>
+      <p><strong>Solution</strong>: <code>chain_sim.py</code> adds a <code>/contract/transfer</code> endpoint implementing the rule <code>royalty_amount = sale_price × royalty_bps / 10000</code>, <code>seller_proceeds = sale_price − royalty_amount</code>. The royalty beneficiary is fixed as that NFT's original minter (via a <code>minter_of</code> mapping), regardless of how many times it changes hands — matching EIP-2981's core semantic that creator royalties follow the asset across every secondary-market transaction. The same endpoint also supports peer-to-peer transfers of the fungible token (<code>token_id=0</code>), which does not trigger royalty logic.</p>
+      <p><strong>Lifecycle verification example</strong> (<code>tests/test_royalty_and_transfer.py::test_resale_pays_royalty_to_original_minter_not_seller</code>):</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Step</th><th>Action</th><th>Alice (creator) balance</th><th>Bob balance</th><th>Royalty flow</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>Alice mints an NFT, royalty_bps=1000 (10%)</td><td>0</td><td>0</td><td>—</td></tr>
+            <tr><td>1</td><td>Bob buys from Alice for 100 SZP</td><td>100.0 (90 net + 10 royalty)</td><td>900.0 (1000 − 100)</td><td>10 SZP → Alice</td></tr>
+            <tr><td>2</td><td>Carol buys from Bob for 200 SZP</td><td>120.0 (+20 royalty)</td><td>1080.0 (900 − 100 + 180)</td><td>20 SZP → Alice (the original creator, not seller Bob)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The second resale verifies that royalties correctly flow to the original creator rather than the current seller — the point where EIP-2981 semantics are most easily implemented incorrectly — and this is now covered by a dedicated test assertion. A settlement-service proxy endpoint, <code>/settle/transfer</code>, was added to <code>settlement_service.py</code> so users can call the on-chain transfer through the settlement service proxy without holding direct chain-connection details.</p>
+
+      <h3>2.3　Domain D: Structured Logging (JSON Lines)</h3>
+      <p><strong>Problem</strong>: v2.0 only emitted human-readable text via <code>print(..., flush=True)</code>, which log-aggregation systems cannot parse and which cannot be filtered or queried programmatically.</p>
+      <p><strong>Solution</strong>: a new <code>src/structured_log.py</code> module gives every service process a named logger; calling <code>log.info(event_name, **fields)</code> simultaneously emits a human-readable summary to stderr (preserving terminal-demo readability) and a structured JSON record to <code>logs/&lt;service&gt;.jsonl</code> (when <code>SZP_LOG_DIR</code> is set). The <code>state_restored</code> event is itself direct evidence that the persistence mechanism is working — the log shows exactly how many blocks were restored from the database at process startup.</p>
+
+      <h3>2.4　Domain E: Expanded Anti-Cheat Rules</h3>
+      <p><strong>Problem</strong>: v2.0's <code>anticheat.py</code> had only one behavioral rule ("consecutive high-difficulty instant answers"), unable to defend against bot-driven farming or multi-account abuse patterns.</p>
+      <p><strong>Solution</strong>: <code>AntiCheatEngine</code> expanded from a single rule to four independent rules working together:</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Rule #</th><th>Rule name</th><th>Trigger condition</th><th>Version</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Signature verification</td><td>HMAC-SHA256 signature mismatch</td><td>v2.0</td></tr>
+            <tr><td>2</td><td>Consecutive high-difficulty instant answers</td><td>3 consecutive questions of difficulty ≥3 answered in &lt;2 seconds</td><td>v2.0</td></tr>
+            <tr><td>3</td><td>Rate limiting</td><td>&gt;20 events in a 10-second sliding window</td><td class="strong">v2.1 new</td></tr>
+            <tr><td>4</td><td>Device-fingerprint clustering</td><td>Same device fingerprint tied to &gt;5 distinct users within 60 seconds</td><td class="strong">v2.1 new</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Triggering any rule moves the account into <code>held_for_review</code> (a temporary hold pending human review, not a permanent ban); the <code>reasons</code> field records which rule(s) fired, for manual-review traceability. The risk-control profile can optionally persist through <code>src.persistence</code>, so risk-control history survives a process restart, closing the loophole of "restart wipes the risk record clean."</p>
+      <p><strong>Rules 3 and 4 trigger-timing measurement</strong> (from the Stage 7 demo): rate limiting fired on the 21st event (threshold 20, so the 21st event triggers <code>rate_limit_exceeded</code>); device-fingerprint clustering fired on the 6th distinct user (threshold 5, so the 6th user sharing that device fingerprint triggers <code>device_fingerprint_cluster</code>). Both trigger points match the design threshold exactly (threshold + 1 triggers), confirming the sliding-window counting logic is correct.</p>
+
+      <h3>2.5　Domain F: API Versioning</h3>
+      <p><strong>Problem</strong>: every v2.0 endpoint path was fixed (e.g. <code>/contract/mint</code>), leaving no smooth migration path for a future breaking change.</p>
+      <p><strong>Solution</strong>: <code>httpkit.py</code>'s <code>JsonHTTPServer.route()</code> / <code>route_prefix()</code> decorators now auto-register both paths: registering <code>/contract/mint</code> automatically also registers a <code>/v1/contract/mint</code> alias, both pointing to the same handler, guaranteeing identical behavior (the same function object, not duplicated logic). The unprefixed path remains available so existing v2.0 callers work unmodified; new callers are encouraged to standardize on the /v1 prefix. This design is a standard API-evolution transition-period convention: if a future v3 needs a breaking change, a /v2 prefix can coexist alongside it, with /v1 and the unprefixed path marked deprecated rather than removed outright.</p>
+      <p>A complete OpenAPI 3.0 spec document (<code>docs/openapi.yaml</code>) was produced alongside this, covering 16 path definitions across all four service processes, including request/response schemas, annotations for v2.1's new endpoints, and a description of the API versioning policy.</p>
+
+      <h3>2.6　Domain G: Chaos-Testing Framework</h3>
+      <p><strong>Problem</strong>: the v2.0 plan mentioned a "chaos mode" concept, but no code implemented it — the disconnection scenario in <code>launch_phase5.py</code> was a one-time, scripted disconnect, not random fault injection.</p>
+      <p><strong>Solution</strong>: a new <code>src/chaos.py</code> module provides three composable fault-injection primitives: <strong>ProcessKiller</strong> (sends a termination signal to a subprocess with a given probability, simulating an accidental crash during real operations), <strong>LatencyInjector</strong> (inserts random delay before a call, verifying whether timeout and retry settings are sufficiently tolerant), and <strong>FaultInjector</strong> (raises an exception on a call with a given probability, simulating packet loss or a dropped connection). A <code>ChaosReport</code> aggregates statistics on injected fault types alongside invariant-check results — e.g. "total minted − total burned = circulating supply" or "the same tx_id was only ever settled once" — giving the question "did the system hold up under chaos?" a structured, visualizable answer.</p>
+      <p><strong>Real-scenario verification</strong> (<code>tests/test_chaos.py::TestChaosRealProcessRestart</code>): a real <code>chain_sim.py</code> subprocess runs through three rounds of "launch → mint → supply-conservation check → SIGTERM terminate," all against the same SQLite database path throughout, verifying that supply is conserved exactly (error &lt; 1e-6) after every single restart.</p>
+
+      <h3>2.7　Domain H: Dashboard v2</h3>
+      <p><strong>Problem</strong>: the v2.0 dashboard only showed process liveness and performance-spec comparisons — no on-chain asset overview, risk-control status, or chaos-test results.</p>
+      <p><strong>Solution</strong>: <code>src/dashboard.py</code> adds five new rendering blocks: auto-refresh polling (an embedded <code>&lt;meta http-equiv="refresh"&gt;</code> that reloads the page periodically); on-chain asset overview (circulating supply, cumulative mints/burns, total NFT count, and cumulative royalties paid, shown as cards); a risk-control events block (listing users currently <code>held_for_review</code> and the rules that triggered it); a chaos-test report block (fault-type statistics paired with pass/fail invariant-check results in a table); and a persistence-status badge (marking each process's health check with either "persistent" or "pure in-memory — lost on restart"). The dashboard generator keeps v2.0's static-HTML-snapshot design philosophy; all new blocks are optional parameters that are automatically omitted when not supplied, keeping full backward compatibility with v2.0 callers.</p>
+
+      <h2 id="modules">3　New &amp; Extended Module Matrix</h2>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Module</th><th>v2.0 status</th><th>v2.1 change type</th><th>Change summary</th></tr></thead>
+          <tbody>
+            <tr><td><code>persistence.py</code></td><td>Did not exist</td><td class="strong">New module (179 lines)</td><td>Zero-dependency SQLite persistence layer</td></tr>
+            <tr><td><code>chaos.py</code></td><td>Did not exist</td><td class="strong">New module (167 lines)</td><td>Chaos-testing fault-injection framework</td></tr>
+            <tr><td><code>structured_log.py</code></td><td>Did not exist</td><td class="strong">New module (77 lines)</td><td>JSON Lines structured logging</td></tr>
+            <tr><td><code>chain_sim.py</code></td><td>Existing (http.server)</td><td>Major extension (358 lines, +~190)</td><td>Royalty settlement, NFT transfer, persistence integration</td></tr>
+            <tr><td><code>settlement_service.py</code></td><td>Existing</td><td>Major extension (219 lines, +~68)</td><td>Persistence, transfer-proxy endpoint, structured logging</td></tr>
+            <tr><td><code>anticheat.py</code></td><td>Existing</td><td>Major extension (222 lines, +~130)</td><td>Rate limiting, device-fingerprint clustering, persistent risk profiles</td></tr>
+            <tr><td><code>learning_service.py</code></td><td>Existing</td><td>Minor extension (129 lines)</td><td>device_fp field pass-through, structured logging</td></tr>
+            <tr><td><code>chain_client.py</code></td><td>Existing</td><td>Minor extension (79 lines)</td><td>New transfer() method</td></tr>
+            <tr><td><code>httpkit.py</code></td><td>Existing</td><td>Minor extension (219 lines)</td><td>route()/route_prefix() auto /v1 alias</td></tr>
+            <tr><td><code>dashboard.py</code></td><td>Existing</td><td>Major extension (227 lines)</td><td>Five new rendering blocks</td></tr>
+            <tr><td><code>launch_phase7.py</code></td><td>Did not exist</td><td class="strong">New launch script</td><td>v2.1's combined six-domain demo</td></tr>
+            <tr><td><code>docs/openapi.yaml</code></td><td>Did not exist</td><td class="strong">New document (16 paths)</td><td>OpenAPI 3.0 spec</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">Modules not listed above (content.py, scheduler.py, reward.py, wallet.py, enterprise.py, ipfs_sim.py, perf_spec.py, client/shell_sim.js, etc.) are carried over unchanged from v2.0.</p>
+
+      <h2 id="phase7">4　Nine Stages → Ten: New Stage 7 Walkthrough</h2>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Stage</th><th>Name</th><th>Domains covered</th><th>Processes</th><th>Evidence tier</th><th>Demo result</th></tr></thead>
+          <tbody>
+            <tr><td>−1 through 6</td><td>(carried over from v2.0, see the v2.0 report)</td><td>—</td><td>—</td><td>—</td><td class="strong">✓ Success</td></tr>
+            <tr><td>7</td><td>v2.1 approaching-production-readiness improvements</td><td>All of A/B/C/D/E/F/G/H</td><td>4 + 3 (chaos rotation)</td><td>Two to three</td><td class="strong">✓ Success</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Stage 7 is internally divided into five demo segments, all of which involve real cross-process / real subprocess operations:</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Demo</th><th>Content</th><th>Key verified result</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>Data persistence: really terminating and restarting chain-sim</td><td>Balance was exactly 500.0 SZP before and after restart; block height restored from 0 to 2</td></tr>
+            <tr><td>B/C</td><td>Royalty settlement lifecycle: mint → first sale → resale</td><td>The 20 SZP resale royalty correctly flowed to original creator Alice (not seller Bob)</td></tr>
+            <tr><td>D/E/F</td><td>Settlement persistence + new anti-cheat rules + API versioning</td><td>Rate limiting fired on event #21; device clustering fired on the 6th user; /v1 alias response byte-for-byte matched the legacy path</td></tr>
+            <tr><td>G</td><td>Chaos testing: 3 rounds of random terminate + restart</td><td>Supply-conservation error &lt; 1e-6 each round; 3/3 rounds passed every invariant</td></tr>
+            <tr><td>H</td><td>Dashboard v2</td><td>Produced an HTML file containing all five new blocks, 8004 bytes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><code>run_all_demos.py</code> now runs all nine stages (−1 through 7) in a single invocation, taking 34.86 seconds total, all succeeding:</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Stage</th><th>Duration (s)</th></tr></thead>
+          <tbody>
+            <tr><td>phase_neg1</td><td>1.17</td></tr>
+            <tr><td>phase0</td><td>0.13</td></tr>
+            <tr><td>phase1</td><td>2.04</td></tr>
+            <tr><td>phase2</td><td>4.97</td></tr>
+            <tr><td>phase3</td><td>2.55</td></tr>
+            <tr><td>phase4</td><td>2.22</td></tr>
+            <tr><td>phase5</td><td>2.10</td></tr>
+            <tr><td>phase6</td><td>2.09</td></tr>
+            <tr><td>phase7 (v2.1 new)</td><td class="strong">17.58</td></tr>
+            <tr><td class="strong">Total</td><td class="strong">34.86</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Stage 7 takes noticeably longer than the other stages, mainly because it runs the complete v2.1 test suite as a self-check precondition before the demo (44 tests, roughly 11.6 seconds), plus the process launch/terminate sequences of three chaos-testing rounds (each including health-check polling waits).</p>
+
+      <h2 id="results">5　Quantified Results Summary</h2>
+      <h3>5.1　Four locally measured metrics carried over from v2.0 (still valid, architecture unchanged)</h3>
+      <div class="table-wrap">
+        <table class="data evidence-table">
+          <thead><tr><th>Metric</th><th>Spec target</th><th>Measured mean</th><th>Measured P95</th><th>Met?</th></tr></thead>
+          <tbody>
+            <tr><td>Local service-process health-check response time</td><td>&lt; 50 ms</td><td>0.71 ms</td><td>1.02 ms</td><td class="ok">✓ Well ahead of target</td></tr>
+            <tr><td>Local test-chain transaction confirmation time</td><td>&lt; 200 ms</td><td>121.89 ms</td><td>122.02 ms</td><td class="ok">✓ Met (includes the 120ms simulated-confirmation design value)</td></tr>
+            <tr><td>Signature-verification latency (HMAC-SHA256)</td><td>&lt; 5 ms</td><td>0.0076 ms</td><td>0.0093 ms</td><td class="ok">✓ Well ahead of target</td></tr>
+            <tr><td>IPFS+Storacha content-write latency (local simulation)</td><td>&lt; 100 ms</td><td>0.86 ms</td><td>0.95 ms</td><td class="ok">✓ Well ahead of target</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>5.2　New quantified metrics in v2.1</h3>
+      <div class="table-wrap">
+        <table class="data evidence-table">
+          <thead><tr><th>Metric</th><th>Measurement method</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>SQLite persistence vs. pure-in-memory mint-latency difference</td><td>10 samples each, compared</td><td>Pure in-memory 125.49ms／SQLite 123.11ms (difference within measurement noise, &lt; 3ms)</td></tr>
+            <tr><td>Combined four-rule anti-cheat engine latency (evaluate())</td><td>1,000 samples</td><td>Mean 0.045 ms, P95 0.086 ms</td></tr>
+            <tr><td>Rate-limiting rule trigger precision</td><td>Actual trigger point vs. design threshold</td><td>Threshold 20 events, actually triggered on event #21 (zero error)</td></tr>
+            <tr><td>Device-fingerprint clustering trigger precision</td><td>Actual trigger point vs. design threshold</td><td>Threshold 5 users, actually triggered on user #6 (zero error)</td></tr>
+            <tr><td>Royalty-calculation precision</td><td>100 SZP × 10% royalty scenario</td><td>Royalty 10.0000 SZP, seller net proceeds 90.0000 SZP (error &lt; 1e-8, guaranteed by round(..., 8))</td></tr>
+            <tr><td>Chaos-testing supply-conservation error</td><td>Supply comparison after 3 rounds of random terminate+restart</td><td>Error &lt; 1e-6 per round (exact match within floating-point precision)</td></tr>
+            <tr><td>Full one-click demo total duration</td><td>run_all_demos.py (9 stages)</td><td>34.86 seconds (vs. 17.6 seconds for 8 stages in the v2.0 era)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">Confidence-interval and statistic definitions follow v2.0 convention: given n measurement samples, mean = (1/n)Σtᵢ, and P95 is the 95th-percentile sample after sorting. The royalty formula is expressed in basis points (bps), where 1bps = 0.01%, matching EIP-2981 convention.</p>
+
+      <h2 id="tests">6　Test Coverage &amp; Quality Assurance</h2>
+      <h3>6.1　Test suite overview (8 files / 47 tests carried over from v2.0 + 5 new files / 44 tests in v2.1)</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Test file</th><th>Count</th><th>Type</th><th>Version</th><th>Coverage</th></tr></thead>
+          <tbody>
+            <tr><td>test_scheduler.py</td><td class="num">4</td><td>Pure logic</td><td>v2.0</td><td>Spaced-repetition scheduling engine</td></tr>
+            <tr><td>test_content_and_reward.py</td><td class="num">4</td><td>Pure logic</td><td>v2.0</td><td>Learning content, reward-weight calculation</td></tr>
+            <tr><td>test_anticheat.py</td><td class="num">6</td><td>Pure logic</td><td>v2.0</td><td>Signature verification, original anti-cheat rules</td></tr>
+            <tr><td>test_wallet_and_enterprise.py</td><td class="num">11</td><td>Pure logic</td><td>v2.0</td><td>Wallet, social recovery, routing decisions, enterprise tasks</td></tr>
+            <tr><td>test_httpkit.py</td><td class="num">5</td><td>Real socket</td><td>v2.0</td><td>Zero-dependency HTTP scaffold self-tests</td></tr>
+            <tr><td>test_chain_sim.py</td><td class="num">7</td><td>Real subprocess</td><td>v2.0</td><td>Local test chain mint/burn/idempotency/NFT</td></tr>
+            <tr><td>test_ipfs_sim.py</td><td class="num">5</td><td>Real subprocess</td><td>v2.0</td><td>IPFS+Storacha attestation read/write, UCAN</td></tr>
+            <tr><td>test_services_integration.py</td><td class="num">5</td><td>Real 3-process cluster</td><td>v2.0</td><td>End-to-end settlement, idempotency, signatures, risk control</td></tr>
+            <tr><td>test_persistence.py</td><td class="num">10</td><td>Pure logic + file I/O</td><td class="strong">v2.1</td><td>SQLite persistence layer: kv/event log/restart simulation</td></tr>
+            <tr><td>test_royalty_and_transfer.py</td><td class="num">9</td><td>Real subprocess</td><td class="strong">v2.1</td><td>Royalty-settlement correctness, NFT transfer, idempotency</td></tr>
+            <tr><td>test_anticheat_v21.py</td><td class="num">11</td><td>Pure logic + persistence</td><td class="strong">v2.1</td><td>Rate limiting, device-fingerprint clustering, risk-profile persistence</td></tr>
+            <tr><td>test_chaos.py</td><td class="num">10</td><td>Framework unit + real subprocess</td><td class="strong">v2.1</td><td>Chaos-injection primitives, invariants under real random faults</td></tr>
+            <tr><td>test_v21_resilience.py</td><td class="num">4</td><td>Real subprocess restart</td><td class="strong">v2.1</td><td>Cross-process resilience of balances/idempotency after restart</td></tr>
+            <tr><td class="strong">Total</td><td class="strong num">91</td><td>—</td><td>—</td><td class="strong">All passing</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.2　Continuation and extension of the test-design principles</h3>
+      <p>v2.1 continues v2.0's "real subprocess + real socket" integration-testing philosophy, and extends that principle further to real process termination and restart: both <code>test_v21_resilience.py</code> and <code>test_chaos.py</code> launch independent Python processes with <code>subprocess.Popen</code>, send a real SIGTERM via <code>proc.terminate()</code>, confirm the process actually terminated, and only then restart and verify — rather than simulating a restart with a mock or monkeypatch.</p>
+
+      <h3>6.3　One-click demo reproducibility verification</h3>
+      <p><code>run_all_demos.py</code> was run 3 times during this rewrite effort (including the test-suite self-check inside Stage 7), with consistent results each time: 9/9 stages succeeded, with total durations landing in the 33–36 second range (the variance comes from normal scheduling jitter plus the random timing of chaos-test terminations).</p>
+
+      <h2 id="chaos">7　Chaos Testing Report</h2>
+      <p>This section compiles the complete invariant-check results recorded by the chaos-testing framework (<code>src/chaos.py</code>) during the Stage 7 demo (raw JSON in <code>logs/demo_run_phase7_*.log</code>):</p>
+      <div class="table-wrap">
+        <table class="data evidence-table">
+          <thead><tr><th>Invariant name</th><th>Result</th><th>Detail</th></tr></thead>
+          <tbody>
+            <tr><td>balance_survives_restart</td><td class="ok">✓ Passed</td><td>before=500.0, after=500.0</td></tr>
+            <tr><td>nft_ownership_survives_restart</td><td class="ok">✓ Passed</td><td>NFT #1's holder was 0xAliceCreator both before and after restart</td></tr>
+            <tr><td>rate_limit_rule_triggers</td><td class="ok">✓ Passed</td><td>Triggered at event index 20 (the 21st event)</td></tr>
+            <tr><td>device_cluster_rule_triggers</td><td class="ok">✓ Passed</td><td>Triggered at user index 5 (the 6th user)</td></tr>
+            <tr><td>api_v1_alias_matches_legacy</td><td class="ok">✓ Passed</td><td>/health and /v1/health responses were identical</td></tr>
+            <tr><td>chaos_round_0_supply_conserved</td><td class="ok">✓ Passed</td><td>expected=25.0, actual=25.0</td></tr>
+            <tr><td>chaos_round_1_supply_conserved</td><td class="ok">✓ Passed</td><td>expected=50.0, actual=50.0</td></tr>
+            <tr><td>chaos_round_2_supply_conserved</td><td class="ok">✓ Passed</td><td>expected=75.0, actual=75.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Fault-injection statistics: this demo run injected a total of 4 <code>process_kill</code> events (1 for the data-persistence demo + 3 for the chaos-testing rotation), with all invariant checks passing 8/8.</p>
+      <p>The engineering significance of this result: even when service processes are really and randomly force-terminated, (a) already-confirmed asset state is not lost, and (b) the supply accounting identity (minted − burned = circulating supply) holds exactly after every single restart, with none of the "double counting" or "phantom minting" symptoms typical of state-management defects.</p>
+
+      <h2 id="api">8　API Versioning &amp; OpenAPI Spec</h2>
+      <p>The complete API spec document is at <code>docs/openapi.yaml</code> (OpenAPI 3.0.3 format), covering 16 path definitions across all four service processes:</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Service process</th><th>Endpoints (excluding /v1 aliases)</th><th>Representative endpoints</th></tr></thead>
+          <tbody>
+            <tr><td>learning-service</td><td class="num">3</td><td><code>/learn/submit</code>, <code>/learn/log</code></td></tr>
+            <tr><td>settlement-service</td><td class="num">5</td><td><code>/settle/submit</code>, <code>/settle/transfer</code> (v2.1 new)</td></tr>
+            <tr><td>chain-sim</td><td class="num">7</td><td><code>/contract/mint</code>, <code>/contract/transfer</code> (v2.1 new)</td></tr>
+            <tr><td>ipfs-storacha-sim</td><td class="num">3</td><td><code>/ipfs/add</code>, <code>/ipfs/cat/{cid}</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Versioning policy summary (full content in the <code>x-api-versioning-policy</code> extension field of <code>openapi.yaml</code>): starting with v2.1, every endpoint serves both an unprefixed path (v2.0-compatible) and a /v1-prefixed path, both handled by the same handler with no semantic divergence. This is a transition-period API-evolution convention, not a formal API-gateway version-routing rule (it does not cover header-level version negotiation); that boundary corresponds to the formal gateway-build scope in Stage 7 (T8-01/T8-02).</p>
+
+      <h2 id="honesty">9　Honesty-Boundary Disclosures (v2.1 Update)</h2>
+      <p>Continuing the honesty-boundary principle from §5 of the v2.0 report, the boundaries for v2.1's new items are compiled below:</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Item</th><th>Simulation tier / what was genuinely achieved</th><th>Not yet achieved (path to realism)</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Data persistence</td><td>Single-file SQLite (WAL mode); a single process surviving a restart without losing state is genuinely achieved</td><td>No multi-node distributed consensus or high-availability replication; production would need a cloud database or distributed storage</td></tr>
+            <tr><td class="strong">Royalty settlement (EIP-2981)</td><td>Genuinely enforced at the rule level on the local test chain (the buyer really is charged, the creator really is paid)</td><td>The underlying chain is still a sha256 hash-chain simulation, not a real EVM bytecode contract, and has not been deployed to a real Layer-2 testnet</td></tr>
+            <tr><td class="strong">Anti-cheat rate limiting / device-fingerprint clustering</td><td>Rule-level judgment with engineering-judgment default thresholds; real counting and triggering logic is verified</td><td>Device-fingerprint values are supplied by the caller, not collected via real device-fingerprinting technology; thresholds have not been calibrated against real traffic load</td></tr>
+            <tr><td class="strong">Structured logging</td><td>JSON Lines format, genuinely written to disk, programmatically parseable</td><td>Not yet connected to a real log-aggregation system (ELK/Loki/CloudWatch, etc.)</td></tr>
+            <tr><td class="strong">Chaos-testing framework</td><td>Genuine random fault injection and invariant verification between local sandbox processes</td><td>Not chaos engineering across real network nodes or real geographic regions</td></tr>
+            <tr><td class="strong">API versioning</td><td>Dual path-prefix routing, genuinely functional and verifiable</td><td>Not a formal API gateway (no TLS, OAuth2/JWT, header-level version negotiation, or rate-limiting middleware)</td></tr>
+            <tr><td class="strong">Dashboard v2</td><td>Static HTML snapshot with five new blocks, backed by real data</td><td>Page-level polling refresh, not real WebSocket/SSE server push</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>v2.0's existing boundary disclosures (Tauri client shell, local test chain, IPFS CID, UCAN authorization credentials, szpEX wallet keys, social recovery, CoW/Wormhole routing, enterprise task review) remain unchanged — see <a href="results-v2.0.html#honesty" style="color:var(--pine-900);text-decoration:underline">§5 of the v2.0 report</a>; they are not repeated here.</p>
+      <div class="callout">
+        <div class="c-title">Reaffirming the core boundary principle</div>
+        <p>Every "genuinely achieved" claim in v2.1 refers to real execution within this sandbox environment, at the rule and program-logic level (for example, a royalty was really deducted; a process was really terminated and restarted). Anything touching the real outside world (a real testnet, the Storacha cloud, a real device build) remains within the outlook scope already disclosed in v2.0, and improvements in v2.1's other domains do not blur that boundary.</p>
+      </div>
+
+      <h2 id="package">10　Reproducible Package</h2>
+      <p>The v2.1 reproducible ZIP package delivered for this rewrite is structured as follows:</p>
+      <div class="table-wrap">
+        <table class="data">
+          <tbody>
+            <tr><td class="strong">src/</td><td>Core modules (19 files: v2.0's 14 + 5 new in v2.1)</td></tr>
+            <tr><td class="strong">launch/</td><td>Per-stage launch scripts (9 files: Stage −1, 0–7), including <code>launch_phase7.py</code> (new in v2.1, the combined six-domain demo)</td></tr>
+            <tr><td class="strong">tests/</td><td>Automated test suite (13 files, 91 tests: v2.0's 47 + 44 new in v2.1)</td></tr>
+            <tr><td class="strong">client/</td><td>Client-shell simulation (shell_sim.js, carried over from v2.0)</td></tr>
+            <tr><td class="strong">config/</td><td>Configuration files (carried over from v2.0)</td></tr>
+            <tr><td class="strong">docs/</td><td>This report (md/tex/pdf), dashboard snapshots, OpenAPI spec (<code>openapi.yaml</code>, new in v2.1, 16 paths)</td></tr>
+            <tr><td class="strong">logs/</td><td>Per-stage demo execution records (including v2.1's structured JSON Lines logs)</td></tr>
+            <tr><td class="strong">run_all_demos.py</td><td>Master script (v2.1 update: now 9 stages)</td></tr>
+            <tr><td class="strong">README.md</td><td>Usage instructions</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Reproducibility guarantee</strong>: continuing v2.0's principle, every module depends only on the Python 3.12 standard library and Node.js 22 built-in modules, with no dependency requiring a network download (<code>persistence.py</code>'s <code>sqlite3</code> and <code>chaos.py</code>'s <code>random</code>/<code>signal</code> are all part of the Python standard library). Any environment with Python 3.10+ and Node.js 18+ can run <code>python3 run_all_demos.py</code> offline to reproduce all nine stages' demo results, and run <code>python3 -m unittest discover -s tests</code> to reproduce all 91 passing tests.</p>
+
+      <h2 id="future">11　Known Limits &amp; Outlook</h2>
+      <h3>11.1　This sandbox's environment limits (carried over from v2.0; unchanged by v2.1)</h3>
+      <ul>
+        <li>Could not build a real Tauri client shell (no Rust/cargo toolchain)</li>
+        <li>Could not connect to a real IPFS node or the Storacha cloud service (no network access)</li>
+        <li>Could not deploy to a real EVM testnet (no network access)</li>
+        <li>Could not run large-scale concurrency/stress testing (single-machine sandbox resource limits)</li>
+        <li>SQLite persistence is a single embedded database file, with no distributed high-availability capability</li>
+      </ul>
+
+      <h3>11.2　Remaining Stage 7 outlook scope (per the plan's T8-01/T8-02) after v2.1</h3>
+      <p>v2.1 has moved the following items from "planning concept" to "genuinely working at the rule level," but full production readiness still awaits:</p>
+      <ul>
+        <li>Real Tauri five-platform (Windows/macOS/Linux/iOS/Android) builds and installer testing</li>
+        <li>Real Storacha cloud-persistence integration testing (v2.1's SQLite persistence solves only single-machine restart survival, not cloud multi-node high availability)</li>
+        <li>Real testnet (e.g. Sepolia) contract deployment and gas-cost measurement (v2.1's royalty-settlement logic can now serve as a reference baseline for the contract logic)</li>
+        <li>Large-scale concurrency stress testing and decentralized-compute-layer (Oracle) integration</li>
+        <li>Real-network CoW Protocol／Wormhole Bridge transaction-timing measurement</li>
+        <li>A formal API gateway (TLS, OAuth2/JWT, header-level version negotiation — v2.1's /v1 path prefix is a transitional mechanism)</li>
+        <li>Integration with a real log-aggregation system (v2.1's JSON Lines files are a transitional format — ELK/Loki/CloudWatch, etc.)</li>
+        <li>Real-traffic calibration of the anti-cheat rule thresholds (v2.1's thresholds are engineering-judgment defaults)</li>
+        <li>Expanding chaos engineering across real network nodes, real geographic regions, and disk/OS-level faults (v2.1 covers only local-process-level faults)</li>
+      </ul>
+
+      <h3>11.3　Recommended priorities for the next round (v2.2 or a formal Stage 7)</h3>
+      <p>Ranked by risk × impact scope, the next round should prioritize:</p>
+      <ol>
+        <li><strong>A formal API gateway and authentication (TLS + OAuth2/JWT)</strong>: the system currently fully trusts caller identity claims — this is the single closest risk standing between the system and "safe to expose publicly."</li>
+        <li><strong>Real-testnet exploratory testing of CoW Protocol／Wormhole Bridge</strong>: the plan already flags this as the highest-risk technical item (Wormhole has had major security incidents in the past), so routing-decision logic should be validated early with small amounts of real testnet funds.</li>
+        <li><strong>Real calibration of anti-cheat thresholds</strong>: v2.1's thresholds are defaults; before a real launch they need recalibration against real user-behavior distributions, to avoid misflagging active users or letting abuse patterns slip through.</li>
+      </ol>
+
+      <p class="small muted">This report was auto-compiled from the szpL2E v2.1 approaching-production-readiness rewrite effort; all figures come from actual execution records, stored under the logs/ directory, with dashboard snapshots stored under docs/. This document is szpL2E v2.1's Implementation Results Specification &amp; Performance Report, following the format and methodology of the v2.0 "szpL2E Implementation Results Specification &amp; Performance Report," the "One-Click Staged Launch Plan v2.0," and the "Task Breakdown &amp; Fishbone Plan v2.0." All source code, tests, and demo execution logs are bundled together in the same reproducible ZIP package.</p>
+
+      <div class="btn-row" style="margin-top:24px">
+        <a href="results-v2.0.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">← Cross-reference the v2.0 results</a>
+        <a href="results.html" class="btn btn-primary">Back to the Results Archive</a>
+        <a href="roadmap.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">Cross-reference the One-Click Staged Launch Plan →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ Sonzpo Learn-to-Earn</div>
+        <p class="f-tag">szpL2E — decentralized, gamified, portable skill-proof learning-economy infrastructure.</p>
+      </div>
+      <div>
+        <h5>Documents</h5>
+        <a href="technical.html">Technical Architecture Plan v1.1</a>
+        <a href="wbs.html">Task Breakdown &amp; Fishbone Plan v2.0</a>
+        <a href="roadmap.html">One-Click Staged Launch Plan v2.0</a>
+        <a href="investor.html">Investor Memorandum v1.0</a>
+      </div>
+      <div>
+        <h5>Results Archive</h5>
+        <a href="results-v2.1.html">v2.1 (August 2026)</a>
+        <a href="results-v2.0.html">v2.0 (August 2026)</a>
+        <a href="results.html">All versions</a>
+      </div>
+      <div>
+        <h5>This Page</h5>
+        <a href="#domains">Six improvement domains</a>
+        <a href="#chaos">Chaos testing report</a>
+        <a href="#honesty">Honesty-boundary disclosures</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>Unit of account: <strong>SZP</strong> (Sonzpo token)　｜　Implementation Results Specification &amp; Performance Report v2.1</span>
+      <span>"On Sonzpo Hill, every rewrite is a process of honestly facing constraints and re-rooting; this time, v2.1 roots a little deeper."</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

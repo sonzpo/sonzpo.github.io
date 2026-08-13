@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>實作成果規格性能說明書 v2.1 ｜ szpL2E 松鼠坡學以致富</title>
+<meta name="description" content="szpL2E v2.1 實作成果規格性能說明書：v2.0→v2.1 逼近上線運營全面改善，六大領域（資料持久化、版稅實際結算、結構化日誌、防作弊規則擴充、API 版本化、混沌測試框架）落地實作，新增階段 7，91 項自動化測試全數通過。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="css/main.css">
+<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../assets/audio/312727.mp3"
+     sound[1]= "../assets/audio/312767.mp3"
+     sound[2]= "../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>松鼠坡學以致富<small>SZPL2E　·　SONZPO LEARN-TO-EARN</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html">總覽</a>
+      <a href="technical.html">技術架構</a>
+      <a href="wbs.html">任務拆解</a>
+      <a href="roadmap.html">一鍵啟動計畫</a>
+      <div class="nav-item-drop">
+        <a href="results.html" class="current">實作成果</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python 標準庫零依賴改版</a>
+          <a href="results-v2.1.html"><span class="v-tag v-tag-new">v2.1</span> 資料持久化・版稅結算・混沌測試</a>
+          <div class="dd-foot">
+            <a href="results.html">→ 全部版本總覽</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html">投資人簡報</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="results-v2.1.html" class="is-active">中</a>
+        <a href="en/results-v2.1.html">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="開啟選單">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-hero">
+  <div class="wrap">
+    <span class="kicker">實作成果規格性能說明書　·　Implementation Results Specification &amp; Performance Report</span>
+    <h1>szpL2E v2.1：逼近上線運營全面改善實作成果</h1>
+    <p>本頁彙整《szpL2E v2.1 實作成果規格性能說明書》內容，在 v2.0 九階段（階段 −1 至階段 6）全面改寫實作的基礎上，選擇性推進「逼近上線運營」所需的六大改善領域：資料持久化、版稅實際結算與資產轉移（EIP-2981）、結構化日誌、防作弊規則擴充、API 版本化、混沌測試框架，並新增階段 7 作為六大領域之綜合一鍵展示。<code>run_all_demos.py</code> 現涵蓋九個階段（階段 −1 至階段 7），單次執行總耗時約 34.9 秒，隨附測試套件由 v2.0 的 47 項擴充至 91 項，全數通過。</p>
+    <div class="meta-row">
+      <span>文件版本　<strong>v2.1</strong></span>
+      <span>日期　<strong>2026 年 8 月 12 日</strong></span>
+      <span>專案代號　<strong>SONZPO ALPHAINFINI · szpL2E</strong></span>
+      <span>對應計畫　<strong>一鍵啟動階段化實踐計畫 v2.0</strong></span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 版本瀏覽列 ============ -->
+<section class="tight" style="padding-top:26px;padding-bottom:0">
+  <div class="wrap">
+    <div class="version-tabs">
+      <a href="results-v2.0.html">v2.0　2026-08</a>
+      <a href="results-v2.1.html" class="is-active">v2.1　2026-08</a>
+      <a href="results.html">全部版本 →</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap doc-layout">
+
+    <aside class="doc-sidebar">
+      <div class="sb-group">
+        <div class="sb-h">目錄</div>
+        <a href="#summary">摘要</a>
+        <a href="#context">1　v2.0→v2.1 改版總覽與決策脈絡</a>
+        <a href="#domains">2　六大改善領域逐項規格與實作</a>
+        <a href="#modules">3　新增與擴充模組對照總表</a>
+        <a href="#phase7">4　新增階段 7 逐項展示成果</a>
+        <a href="#results">5　量化實測結果總表</a>
+        <a href="#tests">6　測試覆蓋率與品質保證</a>
+        <a href="#chaos">7　混沌測試報告</a>
+        <a href="#api">8　API 版本化與 OpenAPI 規格</a>
+        <a href="#honesty">9　誠實邊界聲明彙總</a>
+        <a href="#package">10　Reproducible Package</a>
+        <a href="#future">11　已知限制與後續展望</a>
+      </div>
+    </aside>
+
+    <div class="doc-main">
+
+      <h2 id="summary">摘要</h2>
+      <p>本說明書彙整《szpL2E 一鍵啟動階段化實踐計畫 v2.0》與《szpL2E 專案實踐任務拆解與魚骨圖規劃書 v2.0》基礎之上，針對「逼近上線運營」目標所進行的 v2.0→v2.1 全面改善工程成果。v2.0 已完成九階段（階段 −1 至階段 6）之全面改寫實作，證明整套架構可在零外部依賴的沙箱環境內一鍵展示；v2.1 在此基礎上，選擇性地推進六大類「可運行」與「可承受真實維運壓力」之間落差的改善工程，而非僅止於文件敘述層級的規劃。</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>領域代號</th><th>改善領域</th><th>一句話成果</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">A</td><td>資料持久化</td><td>服務行程崩潰或重啟後，資產餘額、NFT 持有、冪等性狀態不再遺失</td></tr>
+            <tr><td class="strong">B/C</td><td>版稅實際結算與資產轉移</td><td>EIP-2981 版稅從「欄位存在」推進到「交易路徑上真正執行」</td></tr>
+            <tr><td class="strong">D</td><td>結構化日誌</td><td>全部服務行程輸出 JSON Lines 結構化事件，可程式化查詢</td></tr>
+            <tr><td class="strong">E</td><td>防作弊規則擴充</td><td>新增速率限制與裝置指紋群聚兩項規則，共四項規則協同運作</td></tr>
+            <tr><td class="strong">F</td><td>API 版本化</td><td>全部端點同時提供 /v1 前綴與相容舊路徑，並產出 OpenAPI 3.0 文件</td></tr>
+            <tr><td class="strong">G</td><td>混沌測試框架</td><td>真正落地可重複執行的故障注入工具，而非僅規劃構想</td></tr>
+            <tr><td class="strong">H</td><td>監控儀表板 v2</td><td>新增鏈上資產總覽、風控事件、混沌測試報告可視化區塊</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>v2.1 新增階段 7（<code>launch_phase7.py</code>），將上述六大領域整合為單一可重複執行的一鍵展示腳本：真實終止並重啟核心服務行程、驗證「鑄造→首次出售→二次轉售」的版稅生命週期、真實觸發兩項新防作弊規則、以 /v1 前綴驗證 API 版本化、對真實子行程進行三輪混沌測試循環。</p>
+      <p><code>run_all_demos.py</code> 總控腳本現已涵蓋九個階段（階段 −1 至階段 7），單次執行全數成功，總耗時約 34.9 秒（v2.0 時期為 17.6 秒，新增階段 7 之真實子行程重啟與混沌測試序列貢獻約 17.6 秒）。隨附測試套件由 v2.0 的 47 項擴充至 91 項（新增 44 項），全數通過，新增測試涵蓋持久化重啟、版稅結算正確性、防作弊新規則、混沌情境下的不變量驗證。</p>
+
+      <h2 id="context">1　v2.0→v2.1 改版總覽與決策脈絡</h2>
+      <h3>1.1　改版動機：從「能展示」到「扛得住」</h3>
+      <p>v2.0 說明書第 8.1 節誠實列出四項沙箱環境限制（無法建置 Tauri 客戶端殼、無法串接真實 IPFS/EVM 測試網、無法大規模壓測），這些屬於環境層級的限制，v2.1 不試圖跨越它們（跨越這條線需要真實網路連線與真實工具鏈）。但在環境限制之內、規則與邏輯層級可以誠實推進的部分，v2.0 仍存在幾個明顯落差：</p>
+      <ol>
+        <li><strong>狀態全在記憶體</strong>：任何一次行程重啟（無論是刻意維護或意外崩潰），所有餘額、NFT 持有、冪等性紀錄全部歸零。</li>
+        <li><strong>版稅欄位存在但未執行</strong>：v2.0 的 <code>royalty_bps</code> 僅被記錄，從未在任何交易路徑上真正觸發扣款分潤，EIP-2981 語意停留在資料模型層級。</li>
+        <li><strong>防作弊規則單薄</strong>：v2.0 僅有「連續高難度秒答」一項行為規則，對機器人化刷題、多帳號農場等常見濫用模式毫無防禦。</li>
+        <li><strong>混沌測試僅存在於規劃書文字</strong>：規劃書提及「混沌模式」構想，但沒有對應程式碼，無法重複驗證系統韌性。</li>
+        <li><strong>監控儀表板資訊量不足</strong>：v2.0 儀表板僅顯示行程存活狀態與效能規格對照，看不到鏈上資產全貌、風控狀況、故障測試結果。</li>
+        <li><strong>API 沒有版本化機制</strong>：所有端點路徑固定，未來若需要做破壞性變更，沒有平滑過渡路徑。</li>
+      </ol>
+      <p>v2.1 針對以上六點逐一動手，而非停留在規劃層級。</p>
+
+      <h3>1.2　改版原則：向下相容、可重複驗證、誠實標注</h3>
+      <p>v2.1 全程遵守三項工程紀律：</p>
+      <ul>
+        <li><strong>向下相容</strong>：所有 v2.0 既有測試（47 項）與既有呼叫介面（<code>chain_client.py</code>、既有服務端點）維持零修改即可通過；持久化機制透過環境變數 <code>SZP_DB_PATH</code> 選擇性開啟，未設定時行為與 v2.0 完全一致。</li>
+        <li><strong>可重複驗證</strong>：新增功能一律配有對應的真實子行程層級整合測試（而非僅函式層級單元測試），例如「真實啟動 chain-sim 子行程 → mint → SIGTERM 真實終止 → 重新啟動 → 驗證餘額」。</li>
+        <li><strong>誠實標注</strong>：每個新模組的 docstring 明確記載「v2.0 → v2.1 改版動機」與「誠實邊界」，延續 v1.1/v2.0 一貫的邊界誠實原則（規劃書 8.3 節）。</li>
+      </ul>
+
+      <h2 id="domains">2　六大改善領域逐項規格與實作</h2>
+
+      <h3>2.1　領域 A：資料持久化（SQLite，零外部依賴）</h3>
+      <p><strong>問題</strong>：v2.0 全部服務行程（<code>chain_sim.py</code>、<code>settlement_service.py</code>、<code>anticheat.py</code> 內建之風控畫像）狀態皆存於記憶體 dict／set／list，行程重啟即歸零。</p>
+      <p><strong>方案</strong>：新增 <code>src/persistence.py</code>，以 Python 標準庫 <code>sqlite3</code>（WAL 模式）提供通用鍵值快照 + 事件日誌雙用途儲存。透過環境變數 <code>SZP_DB_PATH</code> 選擇性開啟：</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>行為模式</th><th>條件</th></tr></thead>
+          <tbody>
+            <tr><td>純記憶體（v2.0 相容）</td><td><code>SZP_DB_PATH</code> 未設定</td></tr>
+            <tr><td>SQLite 持久化</td><td><code>SZP_DB_PATH</code> 已設定</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>API 設計：<code>store.put(key, value)</code>（鍵值快照寫入）、<code>store.get(key, default=None)</code>（鍵值讀取）、<code>store.append_event(type, payload)</code>（事件日誌追加，用於區塊鏈重放）、<code>store.replay_events(type)</code>（事件日誌重放，行程啟動時還原狀態）。</p>
+      <p><strong>驗證方式</strong>：<code>tests/test_v21_resilience.py</code> 以 <code>subprocess.Popen</code> 真實啟動 <code>chain_sim.py</code> 子行程、送出真實 HTTP mint 請求、以 <code>proc.terminate()</code> 送出真實 SIGTERM、確認行程真正終止後，於同一資料庫檔案重新啟動新的子行程（模擬崩潰後重啟），驗證餘額與 NFT 持有正確還原。另有未設定 <code>SZP_DB_PATH</code> 之對照組測試，確保 v2.0 相容行為未被破壞。</p>
+      <p><strong>效能開銷量測</strong>：本機 mint 交易延遲於純記憶體模式與 SQLite 持久化模式下對照（各 10 次取樣，皆含 120ms 模擬確認延遲）：</p>
+      <div class="table-wrap">
+        <table class="data evidence-table">
+          <thead><tr><th>模式</th><th>平均延遲</th><th>P95 延遲</th></tr></thead>
+          <tbody>
+            <tr><td>純記憶體（v2.0 相容）</td><td>125.49 ms</td><td>122.48 ms</td></tr>
+            <tr><td>SQLite 持久化（v2.1 新增）</td><td>123.11 ms</td><td>123.28 ms</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>持久化寫入開銷落於量測雜訊範圍內（差值 &lt; 3ms，遠低於 120ms 模擬確認延遲之量級），證明 SQLite WAL 模式在本沙箱寫入負載下幾乎零額外延遲成本。</p>
+
+      <h3>2.2　領域 B/C：版稅實際結算（EIP-2981 落地）與資產轉移</h3>
+      <p><strong>問題</strong>：v2.0 <code>royalty_bps</code> 欄位存在於 mint 請求中，但從未在任何交易路徑上真正執行扣款分潤，NFT 也無法轉移所有權。</p>
+      <p><strong>方案</strong>：<code>chain_sim.py</code> 新增 <code>/contract/transfer</code> 端點，實作規則：<code>royalty_amount = sale_price × royalty_bps / 10000</code>，<code>seller_proceeds = sale_price − royalty_amount</code>。版稅受益人固定為該枚 NFT 之首次鑄造者（<code>minter_of</code> 映射），無論轉手幾次皆歸屬同一人，符合 EIP-2981「創作者版稅跨越所有次級市場交易」之核心語意。同一端點亦支援同質化代幣（<code>token_id=0</code>）之點對點轉帳（不觸發版稅邏輯）。</p>
+      <p><strong>生命週期驗證範例</strong>（<code>tests/test_royalty_and_transfer.py::test_resale_pays_royalty_to_original_minter_not_seller</code>）：</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>步驟</th><th>操作</th><th>Alice（創作者）餘額</th><th>Bob 餘額</th><th>版稅流向</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>Alice 鑄造 NFT，royalty_bps=1000（10%）</td><td>0</td><td>0</td><td>—</td></tr>
+            <tr><td>1</td><td>Bob 以 100 SZP 向 Alice 購買</td><td>100.0（90 淨額 + 10 版稅）</td><td>900.0（1000 − 100）</td><td>10 SZP → Alice</td></tr>
+            <tr><td>2</td><td>Carol 以 200 SZP 向 Bob 購買</td><td>120.0（+20 版稅）</td><td>1080.0（900 − 100 + 180）</td><td>20 SZP → Alice（原創作者，非賣家 Bob）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>第二次轉售驗證了版稅正確流向原始創作者而非當次賣家，這是 EIP-2981 語意最容易寫錯之處，已納入獨立測試斷言。結算服務代理端點：<code>settlement_service.py</code> 新增 <code>/settle/transfer</code>，讓使用者透過結算服務代理呼叫鏈端轉移，不需直接持有鏈端連線細節。</p>
+
+      <h3>2.3　領域 D：結構化日誌（JSON Lines）</h3>
+      <p><strong>問題</strong>：v2.0 僅以 <code>print(..., flush=True)</code> 輸出人類可讀文字，無法被日誌聚合系統解析、無法程式化篩選查詢。</p>
+      <p><strong>方案</strong>：新增 <code>src/structured_log.py</code>，每個服務行程取得具名 logger，呼叫 <code>log.info(event_name, **fields)</code> 同時輸出：人類可讀摘要至 stderr（保留終端機 demo 可讀性）；結構化 JSON 記錄至 <code>logs/&lt;service&gt;.jsonl</code>（若設定 <code>SZP_LOG_DIR</code>）。<code>state_restored</code> 事件本身即是持久化機制生效的直接證據——可在日誌中直接看到行程啟動時從資料庫還原了幾個區塊。</p>
+
+      <h3>2.4　領域 E：防作弊規則擴充</h3>
+      <p><strong>問題</strong>：v2.0 <code>anticheat.py</code> 僅有「連續高難度秒答」單一行為規則，無法防禦機器人化刷題或多帳號農場等常見濫用模式。</p>
+      <p><strong>方案</strong>：<code>AntiCheatEngine</code> 由單規則擴充為四項獨立規則協同運作：</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>規則編號</th><th>規則名稱</th><th>觸發條件</th><th>版本</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>簽章驗證</td><td>HMAC-SHA256 簽章不符</td><td>v2.0</td></tr>
+            <tr><td>2</td><td>連續高難度秒答</td><td>連續 3 題難度≥3 且作答 &lt;2 秒</td><td>v2.0</td></tr>
+            <tr><td>3</td><td>速率限制</td><td>滑動視窗 10 秒內超過 20 筆事件</td><td class="strong">v2.1 新增</td></tr>
+            <tr><td>4</td><td>裝置指紋群聚</td><td>同一裝置指紋 60 秒內對應超過 5 個不同使用者</td><td class="strong">v2.1 新增</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>任一規則觸發即進入 <code>held_for_review</code>（暫緩覆核，非永久封鎖），<code>reasons</code> 欄位記錄觸發之規則名稱組合，供人工覆核追溯。風控畫像可選擇性透過 <code>src.persistence</code> 持久化，行程重啟後風控歷史不遺失，避免「重啟洗白風控紀錄」的漏洞。</p>
+      <p><strong>規則 3、4 觸發量測</strong>（階段 7 展示實測）：速率限制於第 21 筆事件（門檻 20，第 21 筆即觸發）觸發 <code>rate_limit_exceeded</code>；裝置指紋群聚於第 6 位不同使用者（門檻 5，第 6 位即觸發）使用同一裝置指紋觸發 <code>device_fingerprint_cluster</code>。兩者觸發時機與設計門檻完全吻合（門檻值 + 1 觸發），證明滑動視窗計數邏輯正確。</p>
+
+      <h3>2.5　領域 F：API 版本化</h3>
+      <p><strong>問題</strong>：v2.0 所有端點路徑固定（如 <code>/contract/mint</code>），未來若需破壞性變更，沒有平滑過渡路徑。</p>
+      <p><strong>方案</strong>：<code>httpkit.py</code> 之 <code>JsonHTTPServer.route()</code> / <code>route_prefix()</code> 裝飾器改為自動雙重註冊：註冊 <code>/contract/mint</code> 時，同時自動註冊 <code>/v1/contract/mint</code> 別名，兩者導向同一 handler，行為保證一致（同一函式物件，非兩份重複邏輯）。未加前綴路徑保留供既有 v2.0 呼叫端不需修改即可運作；新開發呼叫端建議統一使用 /v1 前綴。此設計為 API 演進過渡期慣例：未來若 v3 需要破壞性變更，可新增 /v2 前綴並存，/v1 與未加前綴標示為棄用而非立即移除。</p>
+      <p>配套產出完整 OpenAPI 3.0 規格文件（<code>docs/openapi.yaml</code>），涵蓋全部四個服務行程共 16 個路徑定義，含請求/回應 schema、v2.1 新增端點標註、API 版本化政策說明。</p>
+
+      <h3>2.6　領域 G：混沌測試框架</h3>
+      <p><strong>問題</strong>：v2.0 規劃書提及「混沌模式」構想，但無對應程式碼落地，launch_phase5.py 的斷線情境是劇本固定安排的一次性斷線，非隨機故障注入。</p>
+      <p><strong>方案</strong>：新增 <code>src/chaos.py</code>，提供三類可組合故障注入原語：<strong>ProcessKiller</strong>（依機率對子行程送出終止信號，模擬真實維運中的意外崩潰）、<strong>LatencyInjector</strong>（呼叫前插入隨機延遲，驗證逾時與重試設定是否足夠寬容）、<strong>FaultInjector</strong>（依機率讓呼叫拋出例外，模擬封包遺失／連線中斷）。搭配 <code>ChaosReport</code> 彙整注入的故障類型統計與不變量檢查（invariant check）結果——例如「總鑄造量－總銷毀量＝流通供給」「同一 tx_id 只被結算一次」——使混沌測試的「系統扛住了嗎」有一個結構化、可視化的答案。</p>
+      <p><strong>真實情境驗證</strong>（<code>tests/test_chaos.py::TestChaosRealProcessRestart</code>）：對真實 <code>chain_sim.py</code> 子行程進行 3 輪「啟動 → mint → 供給守恆檢查 → SIGTERM 終止」循環，同一 SQLite 資料庫路徑貫穿全程，驗證每一輪重啟後供給數字精確守恆（誤差 &lt; 1e-6）。</p>
+
+      <h3>2.7　領域 H：監控儀表板 v2</h3>
+      <p><strong>問題</strong>：v2.0 儀表板僅顯示行程存活狀態與效能規格對照，看不到鏈上資產全貌、風控狀況、混沌測試結果。</p>
+      <p><strong>方案</strong>：<code>src/dashboard.py</code> 新增五項渲染區塊：自動輪詢刷新（內嵌 <code>&lt;meta http-equiv="refresh"&gt;</code>，頁面定時重新載入）；鏈上資產總覽（流通供給、累計鑄造/銷毀、NFT 總數、累計版稅支付總額卡片式呈現）；風控事件區塊（列出目前 <code>held_for_review</code> 狀態使用者與觸發原因）；混沌測試報告區塊（故障類型統計 × 不變量檢查結果並列表格）；持久化狀態標示（行程健康檢查旁標示「持久化」或「純記憶體（重啟即遺失）」徽章）。儀表板產生器維持 v2.0 之靜態 HTML 快照設計哲學，新增區塊皆為可選參數，未提供時自動省略，向下相容 v2.0 呼叫端。</p>
+
+      <h2 id="modules">3　新增與擴充模組對照總表</h2>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>模組</th><th>v2.0 狀態</th><th>v2.1 異動類型</th><th>異動摘要</th></tr></thead>
+          <tbody>
+            <tr><td><code>persistence.py</code></td><td>不存在</td><td class="strong">全新模組（179 行）</td><td>SQLite 零依賴持久化層</td></tr>
+            <tr><td><code>chaos.py</code></td><td>不存在</td><td class="strong">全新模組（167 行）</td><td>混沌測試故障注入框架</td></tr>
+            <tr><td><code>structured_log.py</code></td><td>不存在</td><td class="strong">全新模組（77 行）</td><td>JSON Lines 結構化日誌</td></tr>
+            <tr><td><code>chain_sim.py</code></td><td>既有（http.server）</td><td>重大擴充（358 行，+約 190 行）</td><td>版稅結算、NFT 轉移、持久化整合</td></tr>
+            <tr><td><code>settlement_service.py</code></td><td>既有</td><td>重大擴充（219 行，+約 68 行）</td><td>持久化、轉移代理端點、結構化日誌</td></tr>
+            <tr><td><code>anticheat.py</code></td><td>既有</td><td>重大擴充（222 行，+約 130 行）</td><td>速率限制、裝置指紋群聚、持久化風控畫像</td></tr>
+            <tr><td><code>learning_service.py</code></td><td>既有</td><td>小幅擴充（129 行）</td><td>device_fp 欄位透傳、結構化日誌</td></tr>
+            <tr><td><code>chain_client.py</code></td><td>既有</td><td>小幅擴充（79 行）</td><td>新增 transfer() 方法</td></tr>
+            <tr><td><code>httpkit.py</code></td><td>既有</td><td>小幅擴充（219 行）</td><td>route()/route_prefix() 自動 /v1 別名</td></tr>
+            <tr><td><code>dashboard.py</code></td><td>既有</td><td>重大擴充（227 行）</td><td>五項新渲染區塊</td></tr>
+            <tr><td><code>launch_phase7.py</code></td><td>不存在</td><td class="strong">全新啟動腳本</td><td>v2.1 六大領域綜合展示</td></tr>
+            <tr><td><code>docs/openapi.yaml</code></td><td>不存在</td><td class="strong">全新文件（16 個路徑）</td><td>OpenAPI 3.0 規格</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">未列於上表之模組（content.py、scheduler.py、reward.py、wallet.py、enterprise.py、ipfs_sim.py、perf_spec.py、client/shell_sim.js 等）v2.1 沿用 v2.0 版本，未作修改。</p>
+
+      <h2 id="phase7">4　九階段→十階段：新增階段 7 逐項展示成果</h2>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>階段</th><th>名稱</th><th>對應改善領域</th><th>行程數</th><th>證據等級</th><th>展示結果</th></tr></thead>
+          <tbody>
+            <tr><td>−1 至 6</td><td>（沿用 v2.0，見 v2.0 說明書）</td><td>—</td><td>—</td><td>—</td><td class="strong">✓ 成功</td></tr>
+            <tr><td>7</td><td>v2.1 逼近上線運營全面改善</td><td>A/B/C/D/E/F/G/H 全項</td><td>4+3（混沌輪替）</td><td>二至三</td><td class="strong">✓ 成功</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>階段 7 內部細分為五個 Demo 段落，皆為真實跨行程/真實子行程操作：</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Demo</th><th>內容</th><th>關鍵驗證結果</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>資料持久化：真實終止 + 重啟 chain-sim</td><td>重啟前後餘額 500.0 SZP 完全一致；區塊高度由 0 還原至 2</td></tr>
+            <tr><td>B/C</td><td>版稅結算生命週期：鑄造 → 首賣 → 轉售</td><td>二次轉售版稅 20 SZP 正確流向原創作者 Alice（非賣家 Bob）</td></tr>
+            <tr><td>D/E/F</td><td>結算持久化 + 防作弊新規則 + API 版本化</td><td>速率限制於第 21 筆觸發；裝置群聚於第 6 位使用者觸發；/v1 別名回應與舊路徑逐位元組相同</td></tr>
+            <tr><td>G</td><td>混沌測試：3 輪隨機終止 + 重啟</td><td>每輪供給守恆誤差 &lt; 1e-6，3/3 輪不變量全部通過</td></tr>
+            <tr><td>H</td><td>監控儀表板 v2</td><td>產出 HTML 含全部五項新區塊，8004 bytes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><code>run_all_demos.py</code> 現一次執行全部九個階段（−1 至 7），單次執行總耗時 34.86 秒，全數成功：</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>階段</th><th>耗時（秒）</th></tr></thead>
+          <tbody>
+            <tr><td>phase_neg1</td><td>1.17</td></tr>
+            <tr><td>phase0</td><td>0.13</td></tr>
+            <tr><td>phase1</td><td>2.04</td></tr>
+            <tr><td>phase2</td><td>4.97</td></tr>
+            <tr><td>phase3</td><td>2.55</td></tr>
+            <tr><td>phase4</td><td>2.22</td></tr>
+            <tr><td>phase5</td><td>2.10</td></tr>
+            <tr><td>phase6</td><td>2.09</td></tr>
+            <tr><td>phase7（v2.1 新增）</td><td class="strong">17.58</td></tr>
+            <tr><td class="strong">總計</td><td class="strong">34.86</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>階段 7 耗時顯著高於其餘階段，主因為其內部執行了完整的 v2.1 新增測試套件自我檢查（44 項測試，約 11.6 秒）作為展示前置條件，加上三輪混沌測試的行程啟動/終止序列（每輪含健康檢查輪詢等待）。</p>
+
+      <h2 id="results">5　量化實測結果總表</h2>
+      <h3>5.1　v2.0 沿用之四項本機實測指標（延續有效，架構未變動）</h3>
+      <div class="table-wrap">
+        <table class="data evidence-table">
+          <thead><tr><th>指標</th><th>規格目標值</th><th>實測平均值</th><th>實測 P95</th><th>是否達標</th></tr></thead>
+          <tbody>
+            <tr><td>本機服務行程健康檢查回應時間</td><td>&lt; 50 ms</td><td>0.71 ms</td><td>1.02 ms</td><td class="ok">✓ 遠優於目標</td></tr>
+            <tr><td>本地測試鏈交易確認時間</td><td>&lt; 200 ms</td><td>121.89 ms</td><td>122.02 ms</td><td class="ok">✓ 達標（含 120ms 模擬確認延遲設計值）</td></tr>
+            <tr><td>簽章驗證延遲（HMAC-SHA256）</td><td>&lt; 5 ms</td><td>0.0076 ms</td><td>0.0093 ms</td><td class="ok">✓ 遠優於目標</td></tr>
+            <tr><td>IPFS+Storacha 內容寫入延遲（本機模擬）</td><td>&lt; 100 ms</td><td>0.86 ms</td><td>0.95 ms</td><td class="ok">✓ 遠優於目標</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>5.2　v2.1 新增之量化指標</h3>
+      <div class="table-wrap">
+        <table class="data evidence-table">
+          <thead><tr><th>指標</th><th>量測方式</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td>SQLite 持久化 vs 純記憶體 mint 延遲差異</td><td>各 10 次取樣對照</td><td>純記憶體 125.49ms／SQLite 123.11ms（差值於量測雜訊範圍內，&lt; 3ms）</td></tr>
+            <tr><td>防作弊四規則整合引擎延遲（evaluate()）</td><td>1000 次取樣</td><td>平均 0.045 ms，P95 0.086 ms</td></tr>
+            <tr><td>速率限制規則觸發精準度</td><td>實際觸發位置 vs 設計門檻</td><td>門檻 20 筆，實際於第 21 筆觸發（誤差 0）</td></tr>
+            <tr><td>裝置指紋群聚規則觸發精準度</td><td>實際觸發位置 vs 設計門檻</td><td>門檻 5 人，實際於第 6 位使用者觸發（誤差 0）</td></tr>
+            <tr><td>版稅計算精確度</td><td>100 SZP × 10% 版稅場景</td><td>版稅 10.0000 SZP，賣家淨收 90.0000 SZP（誤差 &lt; 1e-8，由 round(..., 8) 保證）</td></tr>
+            <tr><td>混沌測試供給守恆誤差</td><td>3 輪隨機終止+重啟後供給比對</td><td>每輪誤差 &lt; 1e-6（浮點精度範圍內完全吻合）</td></tr>
+            <tr><td>全階段一鍵展示總耗時</td><td>run_all_demos.py（9 階段）</td><td>34.86 秒（v2.0 時期 8 階段為 17.6 秒）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">信賴區間與統計量定義沿用 v2.0 慣例：給定 n 次量測樣本，mean = (1/n)Σtᵢ，P95 = 排序後第 95 百分位樣本。版稅計算公式以基點（basis points, bps）為單位，1bps = 0.01%，符合 EIP-2981 慣例。</p>
+
+      <h2 id="tests">6　測試覆蓋率與品質保證</h2>
+      <h3>6.1　測試套件總覽（v2.0 沿用 8 個檔案 47 項 + v2.1 新增 5 個檔案 44 項）</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>測試檔案</th><th>測試數</th><th>類型</th><th>版本</th><th>涵蓋範圍</th></tr></thead>
+          <tbody>
+            <tr><td>test_scheduler.py</td><td class="num">4</td><td>純邏輯</td><td>v2.0</td><td>間隔重複排程引擎</td></tr>
+            <tr><td>test_content_and_reward.py</td><td class="num">4</td><td>純邏輯</td><td>v2.0</td><td>學習內容、獎勵權重計算</td></tr>
+            <tr><td>test_anticheat.py</td><td class="num">6</td><td>純邏輯</td><td>v2.0</td><td>簽章驗證、原有防作弊規則</td></tr>
+            <tr><td>test_wallet_and_enterprise.py</td><td class="num">11</td><td>純邏輯</td><td>v2.0</td><td>錢包、社交復原、路由決策、企業任務</td></tr>
+            <tr><td>test_httpkit.py</td><td class="num">5</td><td>真實 socket</td><td>v2.0</td><td>零依賴 HTTP 骨架自我測試</td></tr>
+            <tr><td>test_chain_sim.py</td><td class="num">7</td><td>真實子行程</td><td>v2.0</td><td>本地測試鏈 mint/burn/冪等性/NFT</td></tr>
+            <tr><td>test_ipfs_sim.py</td><td class="num">5</td><td>真實子行程</td><td>v2.0</td><td>IPFS+Storacha 存證讀寫、UCAN</td></tr>
+            <tr><td>test_services_integration.py</td><td class="num">5</td><td>真實三行程叢集</td><td>v2.0</td><td>端到端結算、冪等性、簽章、風控</td></tr>
+            <tr><td>test_persistence.py</td><td class="num">10</td><td>純邏輯+檔案 I/O</td><td class="strong">v2.1</td><td>SQLite 持久化層 kv/事件日誌/重啟模擬</td></tr>
+            <tr><td>test_royalty_and_transfer.py</td><td class="num">9</td><td>真實子行程</td><td class="strong">v2.1</td><td>版稅結算正確性、NFT 轉移、冪等性</td></tr>
+            <tr><td>test_anticheat_v21.py</td><td class="num">11</td><td>純邏輯+持久化</td><td class="strong">v2.1</td><td>速率限制、裝置指紋群聚、風控持久化</td></tr>
+            <tr><td>test_chaos.py</td><td class="num">10</td><td>框架單元+真實子行程</td><td class="strong">v2.1</td><td>混沌注入原語、真實隨機故障下的不變量</td></tr>
+            <tr><td>test_v21_resilience.py</td><td class="num">4</td><td>真實子行程重啟</td><td class="strong">v2.1</td><td>跨行程重啟後餘額/冪等性韌性</td></tr>
+            <tr><td class="strong">總計</td><td class="strong num">91</td><td>—</td><td>—</td><td class="strong">全數通過</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.2　測試設計原則延續與擴充</h3>
+      <p>v2.1 延續 v2.0「真實子行程 + 真實 socket」整合測試哲學，並將此原則進一步延伸至真實行程終止與重啟層級：<code>test_v21_resilience.py</code> 與 <code>test_chaos.py</code> 皆以 <code>subprocess.Popen</code> 啟動獨立 Python 行程、以 <code>proc.terminate()</code> 送出真實 SIGTERM、確認行程真正終止後再重啟驗證，而非以 mock 或 monkeypatch 模擬重啟行為。</p>
+
+      <h3>6.3　一鍵展示可重現性驗證</h3>
+      <p><code>run_all_demos.py</code> 於本次改版工程中執行 3 次（含測試套件之階段 7），三次結果一致：9/9 階段全數成功，總耗時落於 33–36 秒區間（差異為系統排程正常波動與混沌測試隨機終止時序差異）。</p>
+
+      <h2 id="chaos">7　混沌測試報告</h2>
+      <p>本節彙整階段 7 展示過程中，混沌測試框架（<code>src/chaos.py</code>）記錄之完整不變量檢查結果（原始 JSON 見 <code>logs/demo_run_phase7_*.log</code>）：</p>
+      <div class="table-wrap">
+        <table class="data evidence-table">
+          <thead><tr><th>不變量名稱</th><th>結果</th><th>細節</th></tr></thead>
+          <tbody>
+            <tr><td>balance_survives_restart</td><td class="ok">✓ 通過</td><td>before=500.0, after=500.0</td></tr>
+            <tr><td>nft_ownership_survives_restart</td><td class="ok">✓ 通過</td><td>NFT #1 持有者重啟前後皆為 0xAliceCreator</td></tr>
+            <tr><td>rate_limit_rule_triggers</td><td class="ok">✓ 通過</td><td>於第 20 個事件索引（第 21 筆）觸發</td></tr>
+            <tr><td>device_cluster_rule_triggers</td><td class="ok">✓ 通過</td><td>於第 5 個使用者索引（第 6 位）觸發</td></tr>
+            <tr><td>api_v1_alias_matches_legacy</td><td class="ok">✓ 通過</td><td>/health 與 /v1/health 回應完全相同</td></tr>
+            <tr><td>chaos_round_0_supply_conserved</td><td class="ok">✓ 通過</td><td>expected=25.0, actual=25.0</td></tr>
+            <tr><td>chaos_round_1_supply_conserved</td><td class="ok">✓ 通過</td><td>expected=50.0, actual=50.0</td></tr>
+            <tr><td>chaos_round_2_supply_conserved</td><td class="ok">✓ 通過</td><td>expected=75.0, actual=75.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>注入故障事件統計：本次展示總計注入 4 次 <code>process_kill</code> 事件（1 次資料持久化展示用 + 3 次混沌測試輪替），全部不變量檢查 8/8 通過。</p>
+      <p>此結果之工程意義：即便在服務行程被真實、隨機地強制終止的情境下，(a) 已確認的資產狀態不會遺失，(b) 供給總量之會計恆等式（鑄造－銷毀＝流通供給）在任何一次重啟後都精確成立，未出現「重複計數」或「幽靈鑄幣」等常見於狀態管理缺陷之現象。</p>
+
+      <h2 id="api">8　API 版本化與 OpenAPI 規格</h2>
+      <p>完整 API 規格文件見 <code>docs/openapi.yaml</code>（OpenAPI 3.0.3 格式），涵蓋 16 個路徑定義，橫跨全部四個服務行程：</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>服務行程</th><th>端點數（不含 /v1 別名）</th><th>代表性端點</th></tr></thead>
+          <tbody>
+            <tr><td>learning-service</td><td class="num">3</td><td><code>/learn/submit</code>、<code>/learn/log</code></td></tr>
+            <tr><td>settlement-service</td><td class="num">5</td><td><code>/settle/submit</code>、<code>/settle/transfer</code>（v2.1 新增）</td></tr>
+            <tr><td>chain-sim</td><td class="num">7</td><td><code>/contract/mint</code>、<code>/contract/transfer</code>（v2.1 新增）</td></tr>
+            <tr><td>ipfs-storacha-sim</td><td class="num">3</td><td><code>/ipfs/add</code>、<code>/ipfs/cat/{cid}</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>版本化政策摘要（完整內容見 <code>openapi.yaml</code> 之 <code>x-api-versioning-policy</code> 擴充欄位）：全部端點自 v2.1 起同時提供未加前綴路徑（v2.0 相容）與 /v1 前綴路徑，兩者由同一 handler 處理，不存在語意分歧；此為 API 演進之過渡期慣例，非正式 API Gateway 版本路由規則（未涵蓋標頭層級版本協商），此邊界對應階段 7（T8-01/T8-02）正式閘道器建置範疇。</p>
+
+      <h2 id="honesty">9　誠實邊界聲明彙總（v2.1 更新版）</h2>
+      <p>延續 v2.0 說明書第 5 節之誠實邊界原則，v2.1 新增項目之邊界彙整如下：</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>項目</th><th>模擬層級 / 已達成程度</th><th>尚未達成之處（真實化路徑）</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">資料持久化</td><td>單檔案 SQLite（WAL 模式），單一行程重啟不遺失狀態為真實達成</td><td>不具備多節點分散式共識或高可用複寫；正式環境需雲端資料庫或分散式儲存</td></tr>
+            <tr><td class="strong">版稅結算（EIP-2981）</td><td>本地測試鏈規則層級真實執行（買方確實被扣款、創作者確實入帳）</td><td>底層仍為 sha256 雜湊鏈模擬，非真實 EVM 位元組碼合約，未部署至真實 Layer 2 測試網</td></tr>
+            <tr><td class="strong">防作弊速率限制/裝置指紋群聚</td><td>規則層級判斷，門檻值為工程經驗預設，真實計數與觸發邏輯已驗證</td><td>裝置指紋值由呼叫端提供，非真實裝置指紋採集技術；門檻值未依真實流量壓測校準</td></tr>
+            <tr><td class="strong">結構化日誌</td><td>JSON Lines 格式輸出，真實落地檔案，可程式化解析</td><td>未串接真實日誌聚合系統（ELK/Loki/CloudWatch 等）</td></tr>
+            <tr><td class="strong">混沌測試框架</td><td>本機沙箱行程間之真實隨機故障注入與不變量驗證</td><td>非跨真實網路節點、跨真實地理區域的混沌工程</td></tr>
+            <tr><td class="strong">API 版本化</td><td>路徑前綴雙重路由，真實運作可驗證</td><td>非正式 API Gateway（未涵蓋 TLS、OAuth2/JWT、標頭版本協商、速率限制中介層）</td></tr>
+            <tr><td class="strong">監控儀表板 v2</td><td>靜態 HTML 快照，含五項新區塊，真實資料來源</td><td>頁面層級輪詢刷新，非 WebSocket/SSE 真正伺服器推播</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>v2.0 既有邊界聲明（Tauri 客戶端殼、本地測試鏈、IPFS CID、UCAN 授權憑證、szpEX 錢包金鑰、社交復原、CoW/Wormhole 路由、企業任務覆核）維持不變，詳見 <a href="results-v2.0.html#honesty" style="color:var(--pine-900);text-decoration:underline">v2.0 說明書第 5 節</a>，此處不重複列出。</p>
+      <div class="callout">
+        <div class="c-title">核心邊界原則重申</div>
+        <p>v2.1 所有「真實達成」之描述，皆指在本沙箱環境內、規則與程式邏輯層級的真實執行（例如版稅確實被扣款、行程確實被真實終止並重啟）。凡涉及真實外部世界（真實測試網、Storacha 雲端、真實裝置編譯）之項目，一律維持 v2.0 已標注之展望範疇，不因 v2.1 之其他領域改善而模糊此邊界。</p>
+      </div>
+
+      <h2 id="package">10　Reproducible Package 說明</h2>
+      <p>本次交付之 v2.1 reproducible ZIP package 結構：</p>
+      <div class="table-wrap">
+        <table class="data">
+          <tbody>
+            <tr><td class="strong">src/</td><td>核心程式模組（19 個檔案，v2.0 的 14 個 + v2.1 新增 5 個）</td></tr>
+            <tr><td class="strong">launch/</td><td>各階段啟動腳本（9 個檔案：階段 −1, 0～7），含 <code>launch_phase7.py</code>（v2.1 新增，六大領域綜合展示）</td></tr>
+            <tr><td class="strong">tests/</td><td>自動化測試套件（13 個檔案，91 項測試，v2.0 的 47 項 + v2.1 新增 44 項）</td></tr>
+            <tr><td class="strong">client/</td><td>客戶端殼模擬（shell_sim.js，沿用 v2.0）</td></tr>
+            <tr><td class="strong">config/</td><td>組態檔（沿用 v2.0）</td></tr>
+            <tr><td class="strong">docs/</td><td>本規格說明書（md/tex/pdf）、監控儀表板快照、OpenAPI 規格（<code>openapi.yaml</code>，v2.1 新增，16 個路徑）</td></tr>
+            <tr><td class="strong">logs/</td><td>各階段展示執行紀錄（含 v2.1 結構化 JSON Lines 日誌）</td></tr>
+            <tr><td class="strong">run_all_demos.py</td><td>總控腳本（v2.1 更新：9 階段）</td></tr>
+            <tr><td class="strong">README.md</td><td>使用說明</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>可重現性保證</strong>：延續 v2.0 原則，全部模組僅依賴 Python 3.12 標準庫與 Node.js 22 內建模組，不含任何需要網路下載的外部套件依賴（<code>persistence.py</code> 之 <code>sqlite3</code>、<code>chaos.py</code> 之 <code>random</code>/<code>signal</code> 皆為 Python 標準庫）。任何具備 Python 3.10+ 與 Node.js 18+ 的環境皆可離線執行 <code>python3 run_all_demos.py</code> 重現全部九階段展示結果，執行 <code>python3 -m unittest discover -s tests</code> 重現全部 91 項測試通過結果。</p>
+
+      <h2 id="future">11　已知限制與後續展望</h2>
+      <h3>11.1　本次沙箱環境限制（延續 v2.0，v2.1 未改變此類限制）</h3>
+      <ul>
+        <li>無法建置真實 Tauri 客戶端殼（無 Rust/cargo 工具鏈）</li>
+        <li>無法串接真實 IPFS 節點或 Storacha 雲端服務（無網路連線）</li>
+        <li>無法部署至真實 EVM 測試網（無網路連線）</li>
+        <li>無法進行大規模併發壓力測試（單機沙箱資源限制）</li>
+        <li>SQLite 持久化為單檔案嵌入式資料庫，不具備分散式高可用能力</li>
+      </ul>
+
+      <h3>11.2　v2.1 完成後，階段 7（依規劃書 T8-01/T8-02）剩餘展望範疇</h3>
+      <p>v2.1 已將以下項目從「規劃構想」推進至「規則層級真實運作」，但完整生產就緒仍待：</p>
+      <ul>
+        <li>真實 Tauri 五端（Windows/macOS/Linux/iOS/Android）編譯與安裝檔實測</li>
+        <li>真實 Storacha 雲端持久化整合測試（v2.1 之 SQLite 持久化僅解決單機重啟問題，非雲端多節點高可用）</li>
+        <li>真實測試網（如 Sepolia）合約部署與 Gas 成本實測（v2.1 版稅結算邏輯已可作為合約邏輯參考基準）</li>
+        <li>大規模併發壓力測試與去中心化計算層（Oracle）整合</li>
+        <li>CoW Protocol／Wormhole Bridge 真實網路交易時序實測</li>
+        <li>正式 API Gateway 建置（TLS、OAuth2/JWT、標頭版本協商，v2.1 之 /v1 路徑前綴為過渡機制）</li>
+        <li>真實日誌聚合系統串接（v2.1 之 JSON Lines 檔案為過渡格式，ELK/Loki/CloudWatch 等）</li>
+        <li>防作弊規則門檻值之真實流量壓測校準（v2.1 門檻為工程經驗預設值）</li>
+        <li>混沌工程擴大至跨真實網路節點、跨地理區域、磁碟/OS 層級故障（v2.1 僅涵蓋本機行程層級）</li>
+      </ul>
+
+      <h3>11.3　建議下一輪（v2.2 或階段 7 正式）優先順序</h3>
+      <p>依「風險 × 影響範圍」排序，建議下一輪優先處理：</p>
+      <ol>
+        <li><strong>正式 API Gateway 與身分驗證（TLS + OAuth2/JWT）</strong>：目前系統完全信任呼叫端身分主張，是距離「可對外開放」最近的一項風險。</li>
+        <li><strong>CoW Protocol／Wormhole Bridge 真實測試網探索性測試</strong>：規劃書已標注此為風險等級最高的技術項目（Wormhole 曾有重大安全事件），應及早以測試網小額資金驗證路由決策邏輯。</li>
+        <li><strong>防作弊門檻值真實校準</strong>：v2.1 門檻為預設值，正式上線前需依真實使用者行為分布重新校準，避免誤判活躍使用者或漏放濫用行為。</li>
+      </ol>
+
+      <p class="small muted">本說明書由 szpL2E v2.1 逼近上線運營改版工程自動彙整產出，所有數據均來自本次實際執行紀錄，紀錄檔案存放於 logs/ 目錄，儀表板快照存放於 docs/ 目錄。本文件為 szpL2E v2.1 松鼠坡學以致富之實作成果規格性能說明書，格式與方法論承接 v2.0 版《szpL2E 實作成果規格性能說明書》與《一鍵啟動階段化實踐計畫 v2.0》、《任務拆解與魚骨圖規劃書 v2.0》。全部原始碼、測試、與展示執行紀錄皆隨附於同一可重現 ZIP 套件中。</p>
+
+      <div class="btn-row" style="margin-top:24px">
+        <a href="results-v2.0.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">← 對照 v2.0 實作成果</a>
+        <a href="results.html" class="btn btn-primary">回到實作成果版本總覽</a>
+        <a href="roadmap.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">對照一鍵啟動階段化實踐計畫 →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ 松鼠坡學以致富</div>
+        <p class="f-tag">Sonzpo Learn-to-Earn（szpL2E）—— 去中心化・遊戲化・可攜式技能證明學習經濟基礎設施。</p>
+      </div>
+      <div>
+        <h5>工程文件</h5>
+        <a href="technical.html">技術架構規劃書 v1.1</a>
+        <a href="wbs.html">任務拆解與魚骨圖規劃書 v2.0</a>
+        <a href="roadmap.html">一鍵啟動階段化實踐計畫 v2.0</a>
+        <a href="investor.html">投資人簡報書 v1.0</a>
+      </div>
+      <div>
+        <h5>實作成果版本</h5>
+        <a href="results-v2.1.html">v2.1（2026 年 8 月）</a>
+        <a href="results-v2.0.html">v2.0（2026 年 8 月）</a>
+        <a href="results.html">全部版本總覽</a>
+      </div>
+      <div>
+        <h5>本頁章節</h5>
+        <a href="#domains">六大改善領域</a>
+        <a href="#chaos">混沌測試報告</a>
+        <a href="#honesty">誠實邊界聲明</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>計價單位：<strong>SZP</strong>（松鼠坡代幣）　｜　實作成果規格性能說明書 v2.1</span>
+      <span>「在松鼠坡上，每一次改版都是誠實面對限制、重新扎根的過程；v2.1 這一次，我們扎得更深一點。」</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
