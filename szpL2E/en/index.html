@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>szpL2E Sonzpo Learn-to-Earn ｜ Decentralized, Gamified, Portable Skill-Proof Learning-Economy Infrastructure</title>
+<meta name="description" content="szpL2E (Sonzpo Learn-to-Earn): a decentralized learning-economy operating system with no trusted central server. Technical architecture, task breakdown, one-click launch plan, and investor memorandum — four engineering documents in one hub.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="../css/main.css">
+	<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../../assets/audio/312727.mp3"
+     sound[1]= "../../assets/audio/312767.mp3"
+     sound[2]= "../../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>Sonzpo Learn-to-Earn<small>SZPL2E　·　松鼠坡學以致富</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html" class="current">Overview</a>
+      <a href="technical.html">Architecture</a>
+      <a href="wbs.html">Task Breakdown</a>
+      <a href="roadmap.html">Launch Plan</a>
+      <div class="nav-item-drop">
+        <a href="results.html">Results</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python stdlib zero-dependency rewrite</a>
+          <div class="dd-foot">
+            <a href="results.html">→ All versions</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html">Investor Memo</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="../index.html">中</a>
+        <a href="index.html" class="is-active">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Engineering Document Hub　·　v2026.08</span>
+    <h1 class="display">Learning is a <em>nut stored</em><br>for winter</h1>
+    <p class="hero-sub">
+      Sonzpo Learn-to-Earn (szpL2E) is a decentralized learning-economy operating system built on "no trusted central server."
+      Users earn tradable tokens, a portable learning résumé, and on-chain verifiable skill credentials through gamified learning and verification —
+      and trade digital IP licenses and digital courses on the same wallet and asset infrastructure.
+    </p>
+    <div class="hero-meta">
+      <span>Unit of account　<strong>SZP</strong></span>
+      <span>Platforms　<strong>iPhone・Android・Windows・macOS・Wasm Web</strong></span>
+      <span>Core stack　<strong>Tauri v2 ＋ IPFS/Storacha ＋ CoW Protocol ＋ Wormhole</strong></span>
+    </div>
+    <div class="btn-row">
+      <a href="investor.html" class="btn btn-primary">Read the Investor Memorandum</a>
+      <a href="roadmap.html" class="btn btn-ghost">See the One-Click Launch Plan</a>
+    </div>
+  </div>
+</section>
+
+<div class="disclaimer-band">
+  <div class="wrap">⚠ This site aggregates four internal engineering planning documents for technical and investment reference. It is not a formal offering prospectus, nor a public or private offering document in any jurisdiction. All forward-looking figures are subject to the disclosures in each source document.</div>
+</div>
+
+<!-- ============ baseline stat strip ============ -->
+<section class="tight">
+  <div class="wrap">
+    <span class="kicker">Baseline as of 2026-08</span>
+    <h2 class="section-title">Four layers of deliverables, all finalized and executable</h2>
+    <p class="section-lede">Technical architecture, quantified specifications, a nine-domain task breakdown, and a complete local one-click digital twin — spanning the client shell through simulated performance-spec comparisons — form the factual basis of the four documents on this site. Production mainnet deployment and real fund integration are the next phase of work.</p>
+
+    <div class="stat-strip">
+      <div class="stat-cell">
+        <div class="v">5<small>platforms</small></div>
+        <div class="l">iPhone / Android / Windows / macOS / Wasm Web, one Rust core deployed to all</div>
+      </div>
+      <div class="stat-cell">
+        <div class="v">9<small>domains</small></div>
+        <div class="l">~30 sub-domains, an 80-task two-tier WBS</div>
+      </div>
+      <div class="stat-cell">
+        <div class="v">8<small>stages</small></div>
+        <div class="l">Stage −1 through Stage 6, a local one-click end-to-end digital twin fully planned and runnable</div>
+      </div>
+      <div class="stat-cell">
+        <div class="v">11<small>tracks</small></div>
+        <div class="l">Language, coding, finance, health, Web3, ERP, IP licensing, prediction markets, gaming, AI co-work, industry skills</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ five features ============ -->
+<section class="section-alt">
+  <div class="wrap">
+    <span class="kicker">Five Product Highlights</span>
+    <h2 class="section-title">The "no trusted central server" architecture thesis</h2>
+    <p class="section-lede">The core claim isn't literally "zero servers anywhere," but "no single trusted server": matching, authentication, custody, and other core business logic never run on a szpL2E-operated, unilaterally controlled server — smart contracts and off-chain protocols replace the traditional backend API.</p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <span class="num">01</span>
+        <h3>Five-platform, single-source client</h3>
+        <p>Runs on iPhone, Android, Windows, macOS, and Wasm Web from one Rust core deployed everywhere, avoiding fragmented security logic.</p>
+      </div>
+      <div class="card">
+        <span class="num">02</span>
+        <h3>Decentralized storage layer</h3>
+        <p>IPFS plus Storacha (Filecoin persistence) as the content layer; content is encrypted and content-addressed on-chain, with conditional decryption after purchase — IP never passes through a szpL2E server gate.</p>
+      </div>
+      <div class="card">
+        <span class="num">03</span>
+        <h3>szpEX Sonzpo trading wallet</h3>
+        <p>Connects to hardware wallets; integrates CoW Protocol (best same-chain pricing and MEV protection) and Wormhole Bridge (cross-chain transfers), with a planned social-recovery mechanism.</p>
+      </div>
+      <div class="card">
+        <span class="num">04</span>
+        <h3>szpDRX digital licensing exchange</h3>
+        <p>Lets users publish digital IP such as e-books; ERC-1155/721 + EIP-2981 royalty standards guarantee automatic creator royalties even on secondary-market resale.</p>
+      </div>
+      <div class="card">
+        <span class="num">05</span>
+        <h3>szpERX digital learning exchange</h3>
+        <p>Course publishing and trading, anti-cheat online exams (behavioral fingerprinting, spaced-repetition testing, optional zk-SNARK privacy proofs), and milestone achievement NFTs.</p>
+      </div>
+      <div class="card">
+        <span class="num">06</span>
+        <h3>Horizontal expansion roadmap</h3>
+        <p>szpDRX and szpERX are two applications of the same asset-tization framework, enabling low-marginal-cost expansion into ERP, prediction markets, and gaming modules.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ four docs ============ -->
+<section id="docs">
+  <div class="wrap">
+    <span class="kicker">Document Library</span>
+    <h2 class="section-title">Four internal engineering documents, one hub</h2>
+    <p class="section-lede">The Investor Memorandum is compiled from the three engineering documents below. Select any document card for a full chapter-by-chapter walkthrough.</p>
+
+    <div class="grid grid-2">
+      <a href="technical.html" class="doc-card">
+        <span class="tag">Technical Architecture Plan　v1.1</span>
+        <h3>Seven system layers, technology choices all finalized</h3>
+        <p>Overall architecture principles, product positioning and gamified economic design, Tauri v2 client architecture, decentralized storage layer, szpEX wallet, szpDRX/szpERX asset modules, mid/long-term roadmap, and risk notes.</p>
+        <span class="go">Read the Technical Architecture Plan</span>
+      </a>
+      <a href="wbs.html" class="doc-card">
+        <span class="tag">Task Breakdown &amp; Fishbone Plan　v2.0</span>
+        <h3>Nine work domains・80 executable tasks</h3>
+        <p>Two-tier verification architecture (Claude AI verification first → engineering implementation); a two-tier WBS across ~30 sub-domains and 80 tasks, with critical path, high-risk nodes, and team-staffing recommendations.</p>
+        <span class="go">Read the Task Breakdown &amp; Fishbone Plan</span>
+      </a>
+      <a href="roadmap.html" class="doc-card">
+        <span class="tag">One-Click Staged Launch Plan　v2.0</span>
+        <h3>Stage −1 through Stage 6・a one-click digital twin</h3>
+        <p>Built on a "process count × feature depth" two-axis grid, moving from simple to complex — every stage launches with one click and runs an automated health check plus end-to-end demo script.</p>
+        <span class="go">Read the One-Click Staged Launch Plan</span>
+      </a>
+      <a href="investor.html" class="doc-card">
+        <span class="tag">Investor Memorandum　v1.0</span>
+        <h3>Market sizing and szpL2E valuation report</h3>
+        <p>Global market quantification, business model and financial projections, a three-method cross-validated valuation, fundraising plan and use of funds, and risk disclosures.</p>
+        <span class="go">Read the Investor Memorandum</span>
+      </a>
+      <a href="results.html" class="doc-card">
+        <span class="tag">Implementation Results Report　v2.0 onward・versioned archive</span>
+        <h3>The measured-results archive for the Launch Plan</h3>
+        <p>Read alongside the One-Click Staged Launch Plan: each rewrite's quantified test results, honesty-boundary disclosures, test coverage, and reproducible package — one page per version, permanently kept side by side, with v2.1, v2.2… to follow.</p>
+        <span class="go">Browse the Results Archive</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ eleven tracks ============ -->
+<section class="section-alt">
+  <div class="wrap">
+    <span class="kicker">Core Positioning</span>
+    <h2 class="section-title">What to learn, what to earn, who pays</h2>
+    <p class="section-lede">The product runs a "multi-track parallel" content strategy across eleven learning tracks, each with its own verification mechanism and token reward curve.</p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <h3>What to learn</h3>
+        <p>Eleven learning tracks — language, programming, finance, health literacy, crypto/Web3, ERP, digital content licensing, prediction markets/gaming, game design, AI co-work, and industry-specific skills — weighted 1x–10x by verification strength to deter grinding-for-tokens abuse.</p>
+      </div>
+      <div class="card">
+        <h3>What to earn</h3>
+        <p>Four asset types: the platform token SZP, lottery entries, a portable learning résumé, and on-chain verifiable credentials (NFT/SBT).</p>
+      </div>
+      <div class="card">
+        <h3>Who pays</h3>
+        <p>Four mutually reinforcing revenue sources: advertisers (precision placement in learning breaks), corporate sponsorship (recruiting and training tasks), school/government grants (education-policy goals), and paid user subscriptions (unlock advanced content).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ market snapshot ============ -->
+<section>
+  <div class="wrap">
+    <div class="section-head-row">
+      <div>
+        <span class="kicker">Market Snapshot</span>
+        <h2 class="section-title">The intersection of four high-growth markets</h2>
+      </div>
+      <a href="investor.html#market" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">See the full market analysis →</a>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data">
+        <thead>
+          <tr><th>Constituent market</th><th>Base-size range</th><th>CAGR range</th><th>szpL2E mapping</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="strong">Global E-Learning</td><td>$300B–$370B</td><td class="num">7.6%–24.2%</td><td>Base demand for the eleven learning tracks</td></tr>
+          <tr><td class="strong">Gamified Learning</td><td>$1.1B–$13.5B</td><td class="num">12%–36%</td><td>Direct match to the core-loop design</td></tr>
+          <tr><td class="strong">Corporate Training &amp; Professional Certification</td><td>$18.4B–$400.9B</td><td class="num">7.3%–11.7%</td><td>Corporate sponsored tasks, monetizable verified credentials</td></tr>
+          <tr><td class="strong">Blockchain Education／Learn-to-Earn</td><td>$0.24B–$3.2B</td><td class="num">15.6%–43.9%</td><td>Where the differentiation lives — highest growth rate</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted" style="margin-top:14px">Sources: Grand View Research, IMARC Group, Zion Market Research, Market.us, SkyQuest, DataIntelo and other third-party market research firms, public reports 2024–2026. Methodologies are not fully consistent across sources; figures indicate scale and growth trend only. See Chapter 4 of the Investor Memorandum for detail.</p>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="section-dark">
+  <div class="wrap center">
+    <span class="kicker">Next Step</span>
+    <h2 class="section-title">Start with the architecture, or jump straight to valuation</h2>
+    <p class="section-lede" style="margin-left:auto;margin-right:auto">The four documents each stand alone, and can also be read in sequence — Architecture → Task Breakdown → Launch Plan → Investor Memorandum — to see the full evidentiary chain from spec freeze to executable demo.</p>
+    <div class="btn-row" style="justify-content:center">
+      <a href="technical.html" class="btn btn-primary">Start with the Technical Architecture Plan</a>
+      <a href="investor.html" class="btn btn-ghost">Jump to the Investor Memorandum</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ Sonzpo Learn-to-Earn</div>
+        <p class="f-tag">szpL2E — decentralized, gamified, portable skill-proof learning-economy infrastructure. This site is an engineering-document hub, not a formal public disclosure.</p>
+      </div>
+      <div>
+        <h5>Documents</h5>
+        <a href="technical.html">Technical Architecture Plan v1.1</a>
+        <a href="wbs.html">Task Breakdown &amp; Fishbone Plan v2.0</a>
+        <a href="roadmap.html">One-Click Staged Launch Plan v2.0</a>
+        <a href="investor.html">Investor Memorandum v1.0</a>
+        <a href="results.html">Implementation Results Archive (v2.0 onward)</a>
+      </div>
+      <div>
+        <h5>Tech Stack</h5>
+        <a href="technical.html#client">Tauri v2 client</a>
+        <a href="technical.html#storage">IPFS ＋ Storacha</a>
+        <a href="technical.html#wallet">szpEX wallet</a>
+        <a href="technical.html#drx-erx">szpDRX ／ szpERX</a>
+      </div>
+      <div>
+        <h5>Investors</h5>
+        <a href="investor.html#market">Market analysis</a>
+        <a href="investor.html#valuation">Valuation</a>
+        <a href="investor.html#funding">Fundraising plan</a>
+        <a href="investor.html#risk">Risk disclosures</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+	  <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>Unit of account: <strong>SZP</strong> (Sonzpo token)　｜　Compiled　August 2026</span>
+      <span>"On Sonzpo Hill, every lesson learned is a nut stored for winter."</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>技術架構規劃書 v1.1 ｜ szpL2E 松鼠坡學以致富</title>
+<meta name="description" content="szpL2E 技術架構規劃書 v1.1：整體架構原則、系統七層分層、Tauri v2 客戶端架構、去中心化儲存層、szpEX 錢包、szpDRX／szpERX 資產化模組、中長期路線圖與風險提醒。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="css/main.css">
+	<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../assets/audio/312727.mp3"
+     sound[1]= "../assets/audio/312767.mp3"
+     sound[2]= "../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>松鼠坡學以致富<small>SZPL2E　·　SONZPO LEARN-TO-EARN</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html">總覽</a>
+      <a href="technical.html" class="current">技術架構</a>
+      <a href="wbs.html">任務拆解</a>
+      <a href="roadmap.html">一鍵啟動計畫</a>
+      <div class="nav-item-drop">
+        <a href="results.html">實作成果</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python 標準庫零依賴改版</a>
+          <div class="dd-foot">
+            <a href="results.html">→ 全部版本總覽</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html">投資人簡報</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="technical.html" class="is-active">中</a>
+        <a href="en/technical.html">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="開啟選單">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-hero">
+  <div class="wrap">
+    <span class="kicker">技術架構規劃書　·　Technical Architecture Plan</span>
+    <h1>「無後台伺服器」如何落地：系統七層分層與技術選型全定案</h1>
+    <p>本規劃書彙整 szpL2E App 的產品需求與技術研究結果，作為系統設計、技術選型與開發排程之依據。文件定位為「技術架構」層級文件，聚焦技術選型理由、系統分層設計與相容之產品／經濟模型設計規格。</p>
+    <div class="meta-row">
+      <span>版本　<strong>v1.1</strong></span>
+      <span>發佈　<strong>2026 年 8 月</strong></span>
+      <span>計價單位　<strong>SZP</strong></span>
+      <span>狀態　<strong>技術選型全數定案</strong></span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap doc-layout">
+
+    <aside class="doc-sidebar">
+      <div class="sb-group">
+        <div class="sb-h">目錄</div>
+        <a href="#principles">1　整體架構原則</a>
+        <a href="#positioning">2　產品定位與經濟設計</a>
+        <a href="#client">3　跨平台客戶端 Tauri v2</a>
+        <a href="#storage">4　去中心化儲存層</a>
+        <a href="#wallet">5　szpEX 交易錢包</a>
+        <a href="#drx-erx">6　szpDRX／szpERX 模組</a>
+        <a href="#longterm">7　中長期模組路線圖</a>
+        <a href="#risk">8　風險與現實提醒</a>
+        <a href="#summary">9　技術選型總表</a>
+      </div>
+    </aside>
+
+    <div class="doc-main">
+
+      <h2 id="principles">1　整體架構原則</h2>
+      <p class="lede-note">「無後台伺服器」的正確定義</p>
+      <p>在正式展開技術選型前，必須先釐清一個關鍵前提：在 szpL2E 目標規模（跨鏈交易、IP 授權市場、課程平台、未來 ERP／預測市場）下，「完全 100% 無任何伺服器」並不現實，也不是業界去中心化應用（dApp）的真實運作方式。合理且可落地的架構目標，是達成「<strong>無單一信任伺服器</strong>（No Trusted Central Server）」，而非字面上的「無任何運算節點」。</p>
+
+      <p>具體而言，szpL2E 應追求以下三項原則：</p>
+      <ol>
+        <li><strong>無中心化業務邏輯伺服器</strong>：撮合、鑑權、資金保管等核心業務邏輯，皆不經由 szpL2E 自營且可單方控制的伺服器處理。</li>
+        <li><strong>保留輕量、無狀態、可被任何人重跑的基礎設施</strong>：例如 RPC 節點、IPFS Gateway、鏈上事件索引器。這些屬於「去信任化」而非「消失」——任何人都可以自行架設對等節點取代 szpL2E 提供的節點。</li>
+        <li><strong>以智能合約與鏈下協定（Intent-Based Protocol）取代傳統後台 API</strong>：交易撮合、資產轉移、內容授權等操作，改由使用者用錢包簽署「意圖」，交由去中心化的求解者／中繼者網路執行，最終在鏈上結算。</li>
+      </ol>
+      <p>這也是 CoW Protocol、Wormhole 等成熟去中心化協定自身採用的模式：鏈上結算、鏈下 Solver/Relayer 網路執行、客戶端直接簽署意圖。szpL2E 的架構設計仿照此一模式作為主軸。</p>
+
+      <h3>1.2　系統分層總覽</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>層級</th><th>說明</th><th>對應技術</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">客戶端層</td><td>跨平台原生／網頁應用，承載 UI、金鑰管理、簽章邏輯</td><td>Tauri v2（Rust 核心）+ Web 前端框架</td></tr>
+            <tr><td class="strong">協定層</td><td>資產交易、跨鏈橋接、意圖撮合</td><td>CoW Protocol SDK、Wormhole TypeScript SDK</td></tr>
+            <tr><td class="strong">內容層</td><td>去中心化檔案儲存與內容定址</td><td>IPFS + Storacha（Filecoin 持久化）</td></tr>
+            <tr><td class="strong">資產層</td><td>智能合約：代幣、NFT、版稅、存取控制</td><td>EVM 相容鏈（ERC-20 / ERC-1155 / ERC-721 / EIP-2981）</td></tr>
+            <tr><td class="strong">索引層</td><td>去中心化查詢與資料索引（取代傳統資料庫 API）</td><td>The Graph Subgraph／自建輕量 Indexer 節點</td></tr>
+            <tr><td class="strong">身份層</td><td>使用者身份與登入</td><td>錢包簽章登入（EIP-4361, Sign-In with Ethereum）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>1.3　傳統後台功能之去中心化替代方案總表</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>傳統做法（有後台）</th><th>szpL2E 去中心化替代方案</th></tr></thead>
+          <tbody>
+            <tr><td>帳號密碼 + Session</td><td>錢包簽章登入（Sign-In with Ethereum, EIP-4361）</td></tr>
+            <tr><td>SQL 資料庫查詢</td><td>The Graph Subgraph（去中心化查詢網路）</td></tr>
+            <tr><td>雲端物件儲存（S3）</td><td>IPFS + Storacha／Filecoin</td></tr>
+            <tr><td>自建 RPC 節點</td><td>公開 RPC 供應商多重備援，使用者亦可自帶 RPC</td></tr>
+            <tr><td>後台 Push 通知伺服器</td><td>客戶端輪詢鏈上事件 + 選配去中心化訊息協定（如 XMTP）</td></tr>
+            <tr><td>雲端 Web Server 託管前端</td><td>前端靜態檔上傳 IPFS，搭配 ENS／去中心化域名解析，或多節點鏡像</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="positioning">2　產品定位與遊戲化經濟設計</h2>
+      <p class="lede-note">學什麼、賺什麼、誰來付錢——三個核心變數構成可持續的學習經濟閉環</p>
+
+      <h3>2.1　十一條學習賽道</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>學習賽道</th><th>內容範例</th><th>主要驗證方式</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">語言學習</td><td>外語聽說讀寫、商用會話</td><td>口說辨識、情境對話實作</td></tr>
+            <tr><td class="strong">程式設計</td><td>程式語言、資料結構、演算法</td><td>實作題、程式碼提交自動評測</td></tr>
+            <tr><td class="strong">金融知識</td><td>個人理財、投資基礎、風險管理</td><td>情境試算、案例分析</td></tr>
+            <tr><td class="strong">健康素養</td><td>營養、運動科學、心理健康常識</td><td>情境判斷題、行為紀錄任務</td></tr>
+            <tr><td class="strong">加密貨幣／Web3</td><td>區塊鏈原理、錢包安全、DeFi 基礎</td><td>鏈上操作模擬、安全情境測驗</td></tr>
+            <tr><td class="strong">ERP 企業系統</td><td>SAP／用友等主流 ERP 模組操作</td><td>系統模擬操作實作</td></tr>
+            <tr><td class="strong">數位內容授權</td><td>著作權、IP 授權、創作者經濟</td><td>案例判讀、合約條款分析</td></tr>
+            <tr><td class="strong">預測市場／博奕</td><td>機率思維、風險管理、市場預測</td><td>模擬下注、結果覆盤分析</td></tr>
+            <tr><td class="strong">遊戲設計</td><td>遊戲機制、關卡設計、平衡性</td><td>小型關卡設計實作</td></tr>
+            <tr><td class="strong">AI 共作</td><td>提示工程、人機協作流程、AI 工具應用</td><td>人機協作任務、產出評分</td></tr>
+            <tr><td class="strong">產業特定技能</td><td>依企業贊助任務客製（資料分析、客服應答等）</td><td>企業命題實作＋企業覆核</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2.2　核心循環（Core Loop）</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>階段</th><th>說明</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">① 學習內容</td><td>使用者依賽道選擇課程單元，內容以短單元（micro-learning）形式呈現</td></tr>
+            <tr><td class="strong">② 測驗／實作驗證</td><td>透過間隔重複測驗與實作題，確認學習成果而非記憶輸出</td></tr>
+            <tr><td class="strong">③ 賺取代幣</td><td>驗證通過後依難度與品質獲得 SZP 代幣，獎勵曲線隨進程遞減</td></tr>
+            <tr><td class="strong">④ 代幣兌換／升級</td><td>代幣可兌換獎品、質押、購買進階內容存取權</td></tr>
+            <tr><td class="strong">⑤ 解鎖更難內容</td><td>達成里程碑後解鎖高階單元，形成技能樹式進程</td></tr>
+            <tr><td class="strong">⑥ 循環回到 ①</td><td>使用者持續進階，同時累積履歷與證書資產</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2.2.1　防作弊驗證機制與題型權重</h3>
+      <p>驗證機制是本產品最關鍵的護城河。若驗證過鬆，代幣獎勵將淪為無意義的刷題行為，破壞經濟模型與教育信譽。核心設計包含間隔重複測驗（同一知識點在 1／3／7／14 天後重複出現，僅多次間隔後仍正確才給予完整獎勵）、打字與操作速度異常偵測、裝置與行為指紋比對。</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>題型</th><th>驗證強度</th><th>代幣權重</th></tr></thead>
+          <tbody>
+            <tr><td>選擇題</td><td>低（易猜測／易作弊）</td><td class="num">基礎權重 1x</td></tr>
+            <tr><td>情境應用題</td><td>中（需理解與推理）</td><td class="num">權重 2–3x</td></tr>
+            <tr><td>實作題／專案提交</td><td>高（需實際操作與產出）</td><td class="num">權重 4–6x</td></tr>
+            <tr><td>企業命題任務</td><td>最高（企業覆核 + 實作）</td><td class="num">權重 6–10x ＋企業贊助獎金</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2.3　代幣經濟的通縮設計</h3>
+      <p>代幣發放遵循<strong>遞減曲線</strong>：初期獎勵倍率最高以驅動早期採用，隨使用者等級與代幣總流通量提升，單題可得代幣逐步下修，並與「當期代幣總流通量」動態掛鉤。搭配進階內容解鎖、證書鑄造、抽獎參與等多個消費情境的固定比例代幣銷毀（Burn）機制，形成自我調節的通縮壓力。</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>指標</th><th>定義</th><th>對獎勵的影響</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">進步係數</td><td>測驗正確率、實作品質分數的時間序列成長幅度</td><td>持續進步者獲得倍率加成；停滯或倒退則倍率下修</td></tr>
+            <tr><td class="strong">留存係數</td><td>跨週期的規律學習頻率（而非單日暴刷）</td><td>規律學習者獲得穩定倍率；短期爆量後消失者無法累積加成</td></tr>
+            <tr><td class="strong">品質係數</td><td>實作題／專案的人工或 AI 覆核評分</td><td>低品質產出無法透過「量」彌補代幣收益</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>企業贊助任務資金由企業預先儲值於智能合約，平台不代墊、不經手資金流轉，全程鏈上化，進一步降低平台自身的資金壓力與監理暴險。</p>
+
+      <h3>2.4　變現與獎勵來源</h3>
+      <div class="grid grid-4">
+        <div class="card"><h3>企業贊助任務</h3><p>企業付費取得履歷與能力數據、實作成果排序、優先媒合權限（需使用者授權同意）。</p></div>
+        <div class="card"><h3>廣告置入</h3><p>學習間隙的非侵入式品牌內容，依內容賽道精準投放，依實際曝光與完課轉換結算。</p></div>
+        <div class="card"><h3>代幣質押</h3><p>質押解鎖進階內容存取權，長期質押者享治理權重，同時作為代幣沉澱池穩定價格。</p></div>
+        <div class="card"><h3>證書變現</h3><p>付費鑄造可驗證證書（NFT／SBT），企業可付費核發「企業認證版」證書。</p></div>
+      </div>
+
+      <h3>2.6–2.7　視覺方向與素材庫策略</h3>
+      <p>主視覺意象以「松鼠坡」為世界觀，松鼠角色隨學習進度成長、換裝、累積堅果（代幣視覺化）；色彩系統為森林綠＋暖木色主色調，搭配高飽和點綴色標示不同學習賽道。美術與音效資產第一層來源採用四大開源／公共領域素材庫：</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>素材庫</th><th>素材類型</th><th>授權條款</th><th>適用場景</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Kenney.nl</td><td>2D／3D 模型、音效、UI 元件（逾 4～6 萬項）</td><td>CC0</td><td>介面元件、成就音效、輕量場景元素</td></tr>
+            <tr><td class="strong">Quaternius</td><td>大量低面數 3D 模型</td><td>CC0</td><td>場景環境物件、道具、簡化角色與載具</td></tr>
+            <tr><td class="strong">Poly Haven／AmbientCG</td><td>高品質 PBR 貼圖與 3D 模型</td><td>CC0</td><td>地形／材質貼圖、環境材質</td></tr>
+            <tr><td class="strong">OpenGameArt.org</td><td>大型社群素材庫（2D／3D／音樂／音效）</td><td>CC0、CC-BY、OGA-BY 等</td><td>特定風格素材，需逐項確認授權</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">松鼠角色成長系統、賽道色彩系統等具高度產品識別度之核心美術資產，維持由去中心化外包社群客製化製作，開源素材庫僅作為風格參考或非核心元素之補充。</p>
+
+      <h2 id="client">3　跨平台客戶端架構：Tauri v2</h2>
+      <p><strong>選型理由：</strong>szpL2E 需要同時支援 iPhone、Android、Windows、macOS 與 Wasm 網頁五種執行環境，且核心邏輯涉及金鑰管理、加密簽章等高敏感度運算，因此客戶端框架選型以「單一核心邏輯、多端部署、原生等級安全性」為最優先考量。Tauri v2（穩定版 v2.10.1，2026 年 3 月發佈）已完整支援 Linux、macOS、Windows、Android 與 iOS 五大平台，核心邏輯以 Rust 撰寫，是目前唯一能以單一 Rust 核心涵蓋桌面與行動裝置的成熟跨平台框架。</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>需求</th><th>Tauri v2 對應能力</th></tr></thead>
+          <tbody>
+            <tr><td>五端統一部署</td><td>iOS 和 Android 目標與桌面共享同一個 Rust 核心業務邏輯，避免邏輯重複開發與分裂維護</td></tr>
+            <tr><td>Wasm 網頁版</td><td>前端本為 Web 技術（React／Svelte／Vue），Rust 核心可額外編譯為純 Wasm＋Web 版本</td></tr>
+            <tr><td>錢包與加密邏輯</td><td>CPU 密集運算（簽名、加密）交由 Rust 處理，效能較 Node.js 快 10～100 倍</td></tr>
+            <tr><td>輕量、快速安裝</td><td>使用系統原生 WebView 而非打包 Chromium，安裝檔可小至數 MB 等級</td></tr>
+            <tr><td>權限治理</td><td>v2 引入基於能力（Capability-Based）的權限模型，取代 v1 的一次性 allowlist</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.2　客戶端四層架構</h3>
+      <ol>
+        <li><strong>前端 UI 層</strong>：React／Svelte + TypeScript，撰寫一次、多端共用。</li>
+        <li><strong>Tauri IPC Bridge</strong>：前端與 Rust 核心之間透過 invoke／emit 進行進程間通訊。</li>
+        <li><strong>Rust 核心</strong>：涵蓋 szpEX 錢包簽章與金鑰管理（含硬體錢包 HID/USB 通訊）、嵌入式 IPFS/libp2p 節點、本地加密資料庫（SQLite + SQLCipher）、CoW SDK／Wormhole SDK 呼叫橋接。</li>
+        <li><strong>編譯輸出</strong>：原生路徑編譯為 iOS／Android／Windows／macOS／Linux 五種原生執行檔；另一條路徑將 Rust 核心以 wasm-pack 編譯為 WebAssembly，搭配 WebCrypto API 保護私鑰，形成 Wasm 網頁版。</li>
+      </ol>
+      <p>此設計確保「Web 版」與「原生版」共用同一套 Rust 安全邏輯，而非另外以 JavaScript 重寫一份，避免安全邏輯分裂、難以稽核的風險。次選方案 React Native 會犧牲 Rust 核心跨端共用優勢，不建議作為主架構。</p>
+
+      <h2 id="storage">4　去中心化儲存層：IPFS 與 Storacha</h2>
+      <p>單純部署 IPFS 節點無法保證資料長期可得性——若無人執行 Pin 操作，內容可能隨時從網路中消失。2026 年業界實務做法是將「IPFS 內容定址」與「底層持久化網路」結合使用。Storacha（前身為 web3.storage）結合 IPFS 內容定址、Filecoin 長期持久化與 UCAN（User Controlled Authorization Networks）式權限控制。</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>層級</th><th>用途</th><th>技術方案</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">熱資料</td><td>電子書封面、課程縮圖、UI 資產</td><td>IPFS + Storacha（UCAN 授權）</td></tr>
+            <tr><td class="strong">冷資料</td><td>已購買的完整電子書、課程影片母帶</td><td>Filecoin 儲存合約（透過 Storacha 或直接 FVM）</td></tr>
+            <tr><td class="strong">個人加密資料</td><td>使用者筆記、學習進度、私鑰加密備份</td><td>IPFS 私有加密內容，開放使用者自選 Pin 服務</td></tr>
+            <tr><td class="strong">App 內嵌 P2P 節點</td><td>點對點直接下載加速、離線優先體驗</td><td>js-libp2p／rust-libp2p（嵌入 Tauri Rust 核心）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4.3　內容 IP 保護的關鍵設計</h3>
+      <p>電子書與課程內容不應以「明文」形式直接放上公開 IPFS 網路。正確流程為：內容於上傳前先行加密並上傳至 IPFS 取得 CID；解密金鑰透過智能合約進行「購買後授權釋放」，可採 Lit Protocol 式的存取控制條件，或自建門檻式金鑰分發服務；CID 僅作為「加密封包」的定址指標，真正的存取控制邏輯完全落在鏈上，而非由 szpL2E 的伺服器把關。建議至少接入兩個獨立的 Pinning／持久化服務，以分散單一服務中斷或政策變動的風險。</p>
+
+      <h2 id="wallet">5　szpEX 松鼠坡交易錢包：跨鏈交易核心</h2>
+
+      <h3>5.1　CoW Protocol：同鏈最優價格撮合與 MEV 保護</h3>
+      <p>CoW Protocol SDK 支援意圖式交易（Intent-Based Trading），涵蓋 Swap、限價單、TWAP 與可程式化訂單，並覆蓋 11 個以上區塊鏈網路。採批次拍賣（Batch Auction）機制執行交易，避免使用者交易被搶跑或三明治攻擊；CowShedSdk 讓一般 EOA 錢包也具備智能合約帳戶能力，可實現「一鍵完成：購買課程 + 換幣」等複合交易流程；本身即提供 BridgingSdk，整合多種橋接供應商。</p>
+
+      <h3>5.2　Wormhole：跨鏈資產橋接</h3>
+      <p>Wormhole TypeScript SDK 支援原生代幣轉移（NTT）、封裝代幣轉移（WTT）、CCTP（USDC 專用）與 Settlement 結算。WTT 協定簡化跨鏈資產轉移流程，適合遊戲資產跨鏈情境；SDK 支援涵蓋 EVM 與非 EVM 鏈（如 Solana、Sui），為未來擴展預留彈性。</p>
+
+      <h3>5.3　szpEX 整合架構</h3>
+      <ol>
+        <li>使用者於 szpEX 錢包（App 內嵌、非托管）中發起操作，支援軟體金鑰（BIP-39/44，Rust 端加密儲存）與硬體錢包連接（Ledger／Trezor）。</li>
+        <li>交易路由決策層依交易類型分流：同鏈換幣走 CoW Protocol SDK；跨鏈資產轉移走 Wormhole SDK；跨鏈＋換幣的複合交易優先走 CoW 的 BridgingSdk，Wormhole 作為底層橋接的備援路由，兩者並存增加路由多樣性與容錯能力。</li>
+        <li>最終於鏈上完成結算，szpL2E 全程無需以自營伺服器介入資金流轉。</li>
+      </ol>
+
+      <h3>5.5　社交復原機制（Social Recovery）</h3>
+      <p>私鑰完全由使用者裝置本地加密保管，szpL2E 平台不託管私鑰。為降低助記詞遺失風險，szpEX 建議整合社交復原機制，讓使用者可指定多位信任聯絡人，於私鑰遺失時透過門檻簽章（如 3 取 2）共同批准帳戶復原，不需任何一方單獨掌握完整私鑰。此機制以智能合約帳戶（Account Abstraction）實作，復原流程全程鏈上執行。</p>
+
+      <h2 id="drx-erx">6　szpDRX 數位授權交易模組 與 szpERX 數位學習交易模組</h2>
+      <p>szpDRX（數位智慧財產 IP 授權交易）與 szpERX（數位學習課程交易）在技術本質上是「同一套資產化框架」的兩種應用場景，核心設計原則為：<strong>內容加密 + 鏈上所有權證明 + 條件式解密 + 版稅自動分潤</strong>。</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>功能</th><th>技術方案</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">IP／課程資產鑄造</td><td>ERC-1155（可複製銷售商品）或 ERC-721（限量版／創作者原版）</td></tr>
+            <tr><td class="strong">版稅自動分潤</td><td>EIP-2981 搭配智能合約強制執行，二級市場轉售亦可自動分潤原創作者</td></tr>
+            <tr><td class="strong">內容存取控制</td><td>加密內容存放 IPFS／Storacha，購買後由智能合約觸發金鑰釋放</td></tr>
+            <tr><td class="strong">線上考試防作弊</td><td>題庫加密，作答結果雜湊記錄於鏈上時間戳；可選用 zk-SNARK 隱私證明</td></tr>
+            <tr><td class="strong">課程遊戲化</td><td>學習進度以鏈上事件／積分記錄，完課里程碑鑄造成就 NFT</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.3　szpDRX 與 szpERX 差異化重點</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>面向</th><th>szpDRX（數位授權交易）</th><th>szpERX（數位學習交易）</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">初期內容類型</td><td>電子書</td><td>數位學習課程</td></tr>
+            <tr><td class="strong">核心保護標的</td><td>IP 著作權與轉售分潤</td><td>課程內容 IP 與學習成果證明</td></tr>
+            <tr><td class="strong">特有配套機制</td><td>無（聚焦內容授權與交易）</td><td>線上考試防作弊、課程遊戲化、學習成就 NFT</td></tr>
+            <tr><td class="strong">未來擴充方向</td><td>音樂、圖像、影音等其他數位智財類型</td><td>更多課程形式（直播課、認證課程、企業內訓）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="longterm">7　中長期模組技術路線圖：ERP、預測市場與遊戲</h2>
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="num">ERP 模組</span>
+          <h3>智能合約記帳＋zk-Rollup</h3>
+          <p>延續「智能合約記帳 + 前端 UI」的一致架構路線，採零知識證明技術強化隱私保護，使企業帳務明細不必公開於鏈上仍保有可驗證性。</p>
+        </div>
+        <div class="card">
+          <span class="num">預測市場模組</span>
+          <h3>條件代幣框架</h3>
+          <p>參考 Polymarket／Gnosis 的條件代幣框架（Conditional Tokens Framework），天然適合與 CoW Protocol 批次拍賣機制結合結算，直接沿用 szpEX 既有交易路由基礎設施。</p>
+        </div>
+        <div class="card">
+          <span class="num">遊戲模組</span>
+          <h3>跨鏈友善代幣標準</h3>
+          <p>遊戲內資產自設計初期即採用跨鏈友善代幣標準，直接對接 szpEX 已整合的 Wormhole NTT 協定，避免日後資產難以跨鏈流通。</p>
+        </div>
+      </div>
+
+      <h2 id="risk">8　風險與現實提醒</h2>
+      <div class="callout">
+        <div class="c-title">⚠ 監管風險</div>
+        <p>跨鏈橋接、IP 版權交易、教育服務，加上未來規劃的 ERP 與預測市場模組，橫跨證券法、著作權法與金融監理等多重法律領域，建議及早諮詢熟悉加密貨幣與證券法規的專業律師進行合規性審視。本規劃書僅為技術架構研究，不構成法律意見。</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ 跨鏈橋接安全風險</div>
+        <p>跨鏈橋歷史上是駭客攻擊的重災區，Wormhole 本身也曾於 2022 年發生約 3.2 億美元的重大安全事件。szpL2E 於整合跨鏈橋接功能時，務必落實多重簽章機制、第三方安全審計，並評估導入保險機制以降低使用者資產風險。</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠「完全無伺服器」的體驗代價</div>
+        <p>採用無後台架構意味著沒有傳統客服系統，也沒有集中式的異常監控機制。szpL2E 需要在 App 內建更完善的鏈上交易狀態追蹤與錯誤恢復流程，來彌補去中心化架構下使用者支援體驗的落差；此部分的 UX 設計難度將顯著高於一般中心化 App。</p>
+      </div>
+
+      <h2 id="summary">9　總結：技術選型總表</h2>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>模組／功能</th><th>採用技術</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">跨平台客戶端</td><td>Tauri v2（Rust 核心）+ React/Svelte 前端，另編譯 Wasm 網頁版</td></tr>
+            <tr><td class="strong">去中心化儲存</td><td>IPFS + Storacha（Filecoin 持久化）+ 嵌入式 libp2p 節點</td></tr>
+            <tr><td class="strong">同鏈交易撮合</td><td>CoW Protocol SDK（TradingSdk / BridgingSdk / CowShedSdk）</td></tr>
+            <tr><td class="strong">跨鏈資產橋接</td><td>Wormhole TypeScript SDK（NTT / WTT / CCTP）</td></tr>
+            <tr><td class="strong">硬體錢包</td><td>WebHID/WebUSB（網頁版）+ Tauri USB Plugin（原生版），統一走 eth_signTypedData_v4</td></tr>
+            <tr><td class="strong">IP／課程資產鑄造</td><td>ERC-1155 / ERC-721 + EIP-2981 版稅標準</td></tr>
+            <tr><td class="strong">內容存取控制</td><td>加密內容 + 智能合約條件式金鑰釋放</td></tr>
+            <tr><td class="strong">鏈上資料索引</td><td>The Graph Subgraph / 自建輕量 Indexer</td></tr>
+            <tr><td class="strong">使用者身份</td><td>錢包簽章登入（EIP-4361, Sign-In with Ethereum）</td></tr>
+            <tr><td class="strong">ERP（中長期）</td><td>智能合約記帳 + zk-Rollup 隱私保護</td></tr>
+            <tr><td class="strong">預測市場（中長期）</td><td>條件代幣框架（Conditional Tokens Framework）+ CoW Protocol 結算</td></tr>
+            <tr><td class="strong">遊戲模組（中長期）</td><td>跨鏈友善代幣標準 + Wormhole NTT</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">本規劃書所列技術選型皆基於 2026 年 8 月當前之公開技術文件與產業實務研究，實際導入時仍須依團隊工程量能、目標上線時程與監管環境變化，進行進一步的技術驗證（PoC）與微調。</p>
+
+      <div class="btn-row" style="margin-top:40px">
+        <a href="wbs.html" class="btn btn-primary">下一份文件：任務拆解與魚骨圖規劃書 →</a>
+        <a href="index.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">回總覽</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ 松鼠坡學以致富</div>
+        <p class="f-tag">Sonzpo Learn-to-Earn（szpL2E）—— 去中心化・遊戲化・可攜式技能證明學習經濟基礎設施。</p>
+      </div>
+      <div>
+        <h5>工程文件</h5>
+        <a href="technical.html">技術架構規劃書 v1.1</a>
+        <a href="wbs.html">任務拆解與魚骨圖規劃書 v2.0</a>
+        <a href="roadmap.html">一鍵啟動階段化實踐計畫 v2.0</a>
+        <a href="investor.html">投資人簡報書 v1.0</a>
+        <a href="results.html">實作成果版本總覽（v2.0 起）</a>
+      </div>
+      <div>
+        <h5>本頁章節</h5>
+        <a href="#principles">整體架構原則</a>
+        <a href="#client">Tauri v2 客戶端</a>
+        <a href="#wallet">szpEX 錢包</a>
+        <a href="#summary">技術選型總表</a>
+      </div>
+      <div>
+        <h5>投資人</h5>
+        <a href="investor.html#market">市場量化分析</a>
+        <a href="investor.html#valuation">估值分析</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+	  <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>計價單位：<strong>SZP</strong>（松鼠坡代幣）　｜　技術架構規劃書 v1.1</span>
+      <span>「在松鼠坡上，每一次學習都是儲備過冬的堅果。」</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

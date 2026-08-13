@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technical Architecture Plan v1.1 ｜ szpL2E Sonzpo Learn-to-Earn</title>
+<meta name="description" content="szpL2E Technical Architecture Plan v1.1: overall architecture principles, seven system layers, Tauri v2 client architecture, decentralized storage layer, szpEX wallet, szpDRX/szpERX asset modules, mid/long-term roadmap, and risk notes.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="../css/main.css">
+	<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../../assets/audio/312727.mp3"
+     sound[1]= "../../assets/audio/312767.mp3"
+     sound[2]= "../../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>Sonzpo Learn-to-Earn<small>SZPL2E　·　松鼠坡學以致富</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html">Overview</a>
+      <a href="technical.html" class="current">Architecture</a>
+      <a href="wbs.html">Task Breakdown</a>
+      <a href="roadmap.html">Launch Plan</a>
+      <div class="nav-item-drop">
+        <a href="results.html">Results</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python stdlib zero-dependency rewrite</a>
+          <div class="dd-foot">
+            <a href="results.html">→ All versions</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html">Investor Memo</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="../technical.html">中</a>
+        <a href="technical.html" class="is-active">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-hero">
+  <div class="wrap">
+    <span class="kicker">Technical Architecture Plan　·　技術架構規劃書</span>
+    <h1>Making "no backend server" real: seven system layers, all technology choices finalized</h1>
+    <p>This plan compiles szpL2E's product requirements and technical research as the basis for system design, technology selection, and the development schedule. It sits at the "technical architecture" level, focused on the reasoning behind each technology choice, the system's layered design, and the compatible product/economic-model specification.</p>
+    <div class="meta-row">
+      <span>Version　<strong>v1.1</strong></span>
+      <span>Published　<strong>August 2026</strong></span>
+      <span>Unit of account　<strong>SZP</strong></span>
+      <span>Status　<strong>All technology choices finalized</strong></span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap doc-layout">
+
+    <aside class="doc-sidebar">
+      <div class="sb-group">
+        <div class="sb-h">Contents</div>
+        <a href="#principles">1　Overall Architecture Principles</a>
+        <a href="#positioning">2　Product Positioning &amp; Economic Design</a>
+        <a href="#client">3　Cross-Platform Client: Tauri v2</a>
+        <a href="#storage">4　Decentralized Storage Layer</a>
+        <a href="#wallet">5　szpEX Trading Wallet</a>
+        <a href="#drx-erx">6　szpDRX／szpERX Modules</a>
+        <a href="#longterm">7　Mid/Long-Term Module Roadmap</a>
+        <a href="#risk">8　Risks &amp; Reality Checks</a>
+        <a href="#summary">9　Technology Selection Summary</a>
+      </div>
+    </aside>
+
+    <div class="doc-main">
+
+      <h2 id="principles">1　Overall Architecture Principles</h2>
+      <p class="lede-note">Defining "no backend server" correctly</p>
+      <p>Before diving into technology choices, one premise needs to be settled: at szpL2E's target scale (cross-chain trading, an IP licensing market, a course platform, and future ERP/prediction markets), "literally zero servers anywhere" is not realistic, nor is it how decentralized applications (dApps) actually operate in the industry. The reasonable, achievable architectural goal is <strong>no single trusted server</strong> (No Trusted Central Server) — not literally "no compute nodes at all."</p>
+
+      <p>Concretely, szpL2E pursues three principles:</p>
+      <ol>
+        <li><strong>No centralized business-logic server:</strong> matching, authentication, fund custody, and other core business logic never run on a server that szpL2E operates and can unilaterally control.</li>
+        <li><strong>Keep lightweight, stateless infrastructure anyone can re-run:</strong> RPC nodes, IPFS gateways, on-chain event indexers, for example. These are "trust-minimized," not "absent" — anyone can stand up a peer node to replace the one szpL2E provides.</li>
+        <li><strong>Replace the traditional backend API with smart contracts and off-chain protocols (Intent-Based Protocol):</strong> trade matching, asset transfer, and content licensing are instead handled by the user signing an "intent" with their wallet, executed by a decentralized solver/relayer network, and finally settled on-chain.</li>
+      </ol>
+      <p>This mirrors how mature decentralized protocols such as CoW Protocol and Wormhole already operate: on-chain settlement, off-chain solver/relayer execution, and clients signing intents directly. szpL2E's architecture follows this same pattern as its main axis.</p>
+
+      <h3>1.2　System Layer Overview</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Layer</th><th>Description</th><th>Corresponding technology</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Client layer</td><td>Cross-platform native/web app carrying the UI, key management, and signing logic</td><td>Tauri v2 (Rust core) + web frontend framework</td></tr>
+            <tr><td class="strong">Protocol layer</td><td>Asset trading, cross-chain bridging, intent matching</td><td>CoW Protocol SDK, Wormhole TypeScript SDK</td></tr>
+            <tr><td class="strong">Content layer</td><td>Decentralized file storage and content addressing</td><td>IPFS + Storacha (Filecoin persistence)</td></tr>
+            <tr><td class="strong">Asset layer</td><td>Smart contracts: tokens, NFTs, royalties, access control</td><td>EVM-compatible chain (ERC-20 / ERC-1155 / ERC-721 / EIP-2981)</td></tr>
+            <tr><td class="strong">Index layer</td><td>Decentralized query and data indexing (replacing a traditional database API)</td><td>The Graph Subgraph／self-hosted lightweight indexer</td></tr>
+            <tr><td class="strong">Identity layer</td><td>User identity and login</td><td>Wallet-signature login (EIP-4361, Sign-In with Ethereum)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>1.3　Decentralized Substitutes for Traditional Backend Functions</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Traditional approach (with a backend)</th><th>szpL2E's decentralized substitute</th></tr></thead>
+          <tbody>
+            <tr><td>Username/password + session</td><td>Wallet-signature login (Sign-In with Ethereum, EIP-4361)</td></tr>
+            <tr><td>SQL database queries</td><td>The Graph Subgraph (decentralized query network)</td></tr>
+            <tr><td>Cloud object storage (S3)</td><td>IPFS + Storacha／Filecoin</td></tr>
+            <tr><td>Self-hosted RPC node</td><td>Redundant public RPC providers; users may also bring their own RPC</td></tr>
+            <tr><td>Backend push-notification server</td><td>Client polls on-chain events + optional decentralized messaging protocol (e.g. XMTP)</td></tr>
+            <tr><td>Cloud web server hosting the frontend</td><td>Static frontend files on IPFS, with ENS/decentralized name resolution or multi-node mirroring</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="positioning">2　Product Positioning &amp; Gamified Economic Design</h2>
+      <p class="lede-note">What to learn, what to earn, who pays — three core variables forming a sustainable learning-economy loop</p>
+
+      <h3>2.1　Eleven Learning Tracks</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Learning track</th><th>Example content</th><th>Primary verification method</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Language learning</td><td>Foreign-language listening/speaking/reading/writing, business conversation</td><td>Speech recognition, scenario-based dialogue exercises</td></tr>
+            <tr><td class="strong">Programming</td><td>Programming languages, data structures, algorithms</td><td>Hands-on exercises, automated code-submission grading</td></tr>
+            <tr><td class="strong">Financial literacy</td><td>Personal finance, investing basics, risk management</td><td>Scenario calculations, case analysis</td></tr>
+            <tr><td class="strong">Health literacy</td><td>Nutrition, exercise science, mental-health basics</td><td>Scenario judgment questions, behavior-logging tasks</td></tr>
+            <tr><td class="strong">Crypto／Web3</td><td>Blockchain fundamentals, wallet security, DeFi basics</td><td>Simulated on-chain operations, security scenario tests</td></tr>
+            <tr><td class="strong">ERP enterprise systems</td><td>Operating mainstream ERP modules (SAP, Yonyou, etc.)</td><td>Simulated system operation exercises</td></tr>
+            <tr><td class="strong">Digital content licensing</td><td>Copyright, IP licensing, the creator economy</td><td>Case interpretation, contract-clause analysis</td></tr>
+            <tr><td class="strong">Prediction markets／gaming</td><td>Probabilistic thinking, risk management, market forecasting</td><td>Simulated wagers, outcome post-mortems</td></tr>
+            <tr><td class="strong">Game design</td><td>Game mechanics, level design, balance</td><td>Small-scale level-design exercises</td></tr>
+            <tr><td class="strong">AI co-work</td><td>Prompt engineering, human-AI collaboration workflows, AI tool use</td><td>Human-AI collaboration tasks, output scoring</td></tr>
+            <tr><td class="strong">Industry-specific skills</td><td>Custom to corporate-sponsored tasks (data analysis, customer service, etc.)</td><td>Corporate-set exercises + corporate review</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2.2　Core Loop</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Stage</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">① Learning content</td><td>Users pick course units by track; content is delivered as micro-learning units</td></tr>
+            <tr><td class="strong">② Test／hands-on verification</td><td>Spaced-repetition tests and practical exercises confirm real learning outcomes, not rote recall</td></tr>
+            <tr><td class="strong">③ Earn tokens</td><td>Passing verification earns SZP tokens scaled by difficulty and quality, on a decaying reward curve</td></tr>
+            <tr><td class="strong">④ Redeem／level up</td><td>Tokens can be redeemed for rewards, staked, or used to unlock advanced content</td></tr>
+            <tr><td class="strong">⑤ Unlock harder content</td><td>Reaching milestones unlocks advanced units, forming a skill-tree-like progression</td></tr>
+            <tr><td class="strong">⑥ Loop back to ①</td><td>Users keep advancing while accumulating résumé and credential assets</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2.2.1　Anti-Cheat Verification &amp; Question-Type Weighting</h3>
+      <p>The verification mechanism is the product's most critical moat. If verification is too loose, token rewards collapse into meaningless grinding, wrecking both the economic model and educational credibility. The core design includes spaced-repetition testing (the same knowledge point resurfaces at 1/3/7/14-day intervals, with full reward only after repeated correct answers across intervals), typing/action-speed anomaly detection, and device/behavioral fingerprint matching.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Question type</th><th>Verification strength</th><th>Token weight</th></tr></thead>
+          <tbody>
+            <tr><td>Multiple choice</td><td>Low (easy to guess／cheat)</td><td class="num">Base weight 1x</td></tr>
+            <tr><td>Scenario-based application</td><td>Medium (requires understanding and reasoning)</td><td class="num">Weight 2–3x</td></tr>
+            <tr><td>Hands-on／project submission</td><td>High (requires real work and output)</td><td class="num">Weight 4–6x</td></tr>
+            <tr><td>Corporate-set task</td><td>Highest (corporate review + hands-on)</td><td class="num">Weight 6–10x ＋ corporate sponsorship bonus</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2.3　The Token Economy's Deflationary Design</h3>
+      <p>Token issuance follows a <strong>decaying curve</strong>: reward multipliers are highest early on to drive adoption, then step down per question as a user's level and the token's total circulating supply rise, dynamically pegged to "current circulating supply." Combined with fixed-ratio token burns across multiple spending scenarios — unlocking advanced content, minting credentials, entering lotteries — this creates self-adjusting deflationary pressure.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Metric</th><th>Definition</th><th>Effect on rewards</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Progress coefficient</td><td>Time-series growth in test accuracy and hands-on quality scores</td><td>Consistent improvement earns a multiplier bonus; stagnation or regression lowers it</td></tr>
+            <tr><td class="strong">Retention coefficient</td><td>Regular learning cadence across cycles (not single-day binges)</td><td>Regular learners get a stable multiplier; short bursts followed by disappearance earn no compounding bonus</td></tr>
+            <tr><td class="strong">Quality coefficient</td><td>Human or AI review score on hands-on work／projects</td><td>Low-quality output cannot be offset by volume</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Funds for corporate-sponsored tasks are pre-funded by the sponsoring company into a smart contract; the platform never advances or handles the flow of funds, all on-chain, further reducing the platform's own capital exposure and regulatory risk.</p>
+
+      <h3>2.4　Monetization &amp; Reward Sources</h3>
+      <div class="grid grid-4">
+        <div class="card"><h3>Corporate-sponsored tasks</h3><p>Companies pay for résumé and ability data, ranked hands-on results, and priority-matching access (subject to user consent).</p></div>
+        <div class="card"><h3>Ad placement</h3><p>Non-intrusive brand content shown in learning breaks, targeted by content track, settled on actual impressions and completion-conversion.</p></div>
+        <div class="card"><h3>Token staking</h3><p>Staking unlocks advanced-content access; long-term stakers gain governance weight, while staking also acts as a token sink stabilizing price.</p></div>
+        <div class="card"><h3>Credential monetization</h3><p>Paid minting of verifiable credentials (NFT／SBT); companies can pay to issue an "enterprise-certified" version of a credential.</p></div>
+      </div>
+
+      <h3>2.6–2.7　Visual Direction &amp; Asset-Library Strategy</h3>
+      <p>The core visual identity is the "Sonzpo Hill" world — a squirrel character that grows, changes outfits, and stockpiles nuts (the token, visualized) as the user progresses. The color system centers on forest green plus warm wood tones, accented with high-saturation colors marking each learning track. First-layer art and audio assets are drawn from four open/public-domain libraries:</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Library</th><th>Asset types</th><th>License</th><th>Use case</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Kenney.nl</td><td>2D／3D models, sound effects, UI components (40,000–60,000+ items)</td><td>CC0</td><td>UI components, achievement sounds, lightweight scene elements</td></tr>
+            <tr><td class="strong">Quaternius</td><td>A large library of low-poly 3D models</td><td>CC0</td><td>Scene/environment objects, props, simplified characters and vehicles</td></tr>
+            <tr><td class="strong">Poly Haven／AmbientCG</td><td>High-quality PBR textures and 3D models</td><td>CC0</td><td>Terrain／material textures, environment materials</td></tr>
+            <tr><td class="strong">OpenGameArt.org</td><td>A large community asset library (2D／3D／music／SFX)</td><td>CC0, CC-BY, OGA-BY, etc.</td><td>Style-specific assets; license must be checked item by item</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">Core, high-identity art assets — the squirrel character's growth system, the track color system — remain custom-produced by the decentralized outsourcing community; open asset libraries only supply style references or non-core filler.</p>
+
+      <h2 id="client">3　Cross-Platform Client Architecture: Tauri v2</h2>
+      <p><strong>Why this choice:</strong> szpL2E must support five runtime environments simultaneously — iPhone, Android, Windows, macOS, and Wasm Web — and its core logic touches highly sensitive operations such as key management and cryptographic signing, so the client framework was chosen to prioritize "one core logic, deployed everywhere, native-grade security." Tauri v2 (stable v2.10.1, released March 2026) fully supports Linux, macOS, Windows, Android, and iOS, with core logic written in Rust — currently the only mature cross-platform framework that covers both desktop and mobile from a single Rust core.</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Requirement</th><th>How Tauri v2 addresses it</th></tr></thead>
+          <tbody>
+            <tr><td>Unified five-platform deployment</td><td>iOS and Android targets share the same Rust core business logic as desktop, avoiding duplicated, fragmented development</td></tr>
+            <tr><td>Wasm web version</td><td>The frontend is already web technology (React／Svelte／Vue); the Rust core can additionally compile to pure Wasm+Web</td></tr>
+            <tr><td>Wallet &amp; crypto logic</td><td>CPU-intensive work (signing, encryption) runs in Rust, 10–100× faster than Node.js</td></tr>
+            <tr><td>Lightweight, fast install</td><td>Uses the system's native WebView instead of bundling Chromium; install size can be as small as a few MB</td></tr>
+            <tr><td>Permission governance</td><td>v2 introduces a capability-based permission model, replacing v1's one-time allowlist</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.2　Four-Layer Client Architecture</h3>
+      <ol>
+        <li><strong>Frontend UI layer:</strong> React／Svelte + TypeScript, written once and shared across platforms.</li>
+        <li><strong>Tauri IPC Bridge:</strong> inter-process communication between the frontend and the Rust core via invoke／emit.</li>
+        <li><strong>Rust core:</strong> covers szpEX wallet signing and key management (including hardware-wallet HID/USB communication), an embedded IPFS/libp2p node, a local encrypted database (SQLite + SQLCipher), and CoW SDK／Wormhole SDK call bridging.</li>
+        <li><strong>Compiled output:</strong> the native path compiles to iOS／Android／Windows／macOS／Linux executables; a second path compiles the Rust core to WebAssembly via wasm-pack, paired with the WebCrypto API to protect private keys, producing the Wasm web version.</li>
+      </ol>
+      <p>This design ensures the "web version" and the "native version" share the exact same Rust security logic, rather than a second implementation rewritten in JavaScript — avoiding the risk of fragmented, hard-to-audit security logic. The runner-up option, React Native, would sacrifice the benefit of a shared Rust core across platforms and is not recommended as the primary architecture.</p>
+
+      <h2 id="storage">4　Decentralized Storage Layer: IPFS and Storacha</h2>
+      <p>A plain IPFS node alone cannot guarantee long-term data availability — without anyone pinning it, content can vanish from the network at any time. Standard 2026 industry practice combines "IPFS content addressing" with an underlying persistence network. Storacha (formerly web3.storage) combines IPFS content addressing, Filecoin long-term persistence, and UCAN (User Controlled Authorization Networks)-style permissioning.</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Tier</th><th>Purpose</th><th>Technical approach</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Hot data</td><td>E-book covers, course thumbnails, UI assets</td><td>IPFS + Storacha (UCAN authorization)</td></tr>
+            <tr><td class="strong">Cold data</td><td>Purchased complete e-books, course video masters</td><td>Filecoin storage deals (via Storacha or directly via FVM)</td></tr>
+            <tr><td class="strong">Personal encrypted data</td><td>User notes, learning progress, encrypted key backups</td><td>Private encrypted IPFS content, with user-chosen pinning service</td></tr>
+            <tr><td class="strong">App-embedded P2P node</td><td>Peer-to-peer download acceleration, offline-first experience</td><td>js-libp2p／rust-libp2p (embedded in the Tauri Rust core)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4.3　Key Design for Content IP Protection</h3>
+      <p>E-books and course content must never sit on the public IPFS network in plaintext. The correct flow: content is encrypted before upload and pushed to IPFS to obtain a CID; the decryption key is released via a smart contract upon purchase, using either Lit Protocol-style access-control conditions or a self-built threshold key-distribution service; the CID is only an address pointer to the encrypted package — the real access-control logic lives entirely on-chain, not behind a szpL2E server gate. At least two independent pinning／persistence services are recommended, to spread the risk of a single service's outage or policy change.</p>
+
+      <h2 id="wallet">5　szpEX Sonzpo Trading Wallet: the Cross-Chain Trading Core</h2>
+
+      <h3>5.1　CoW Protocol: Best Same-Chain Pricing and MEV Protection</h3>
+      <p>The CoW Protocol SDK supports intent-based trading, covering swaps, limit orders, TWAP, and programmable orders, across 11+ blockchain networks. It executes trades via batch auction, protecting users from front-running and sandwich attacks; CowShedSdk gives a plain EOA wallet smart-contract-account capabilities, enabling one-click composite flows such as "buy a course + swap tokens" in a single action; it also ships its own BridgingSdk, integrating multiple bridge providers.</p>
+
+      <h3>5.2　Wormhole: Cross-Chain Asset Bridging</h3>
+      <p>The Wormhole TypeScript SDK supports Native Token Transfers (NTT), Wrapped Token Transfers (WTT), CCTP (USDC-specific), and Settlement. WTT simplifies cross-chain asset transfer, suited to cross-chain game-asset scenarios; the SDK spans both EVM and non-EVM chains (e.g. Solana, Sui), leaving room for future expansion.</p>
+
+      <h3>5.3　szpEX Integration Architecture</h3>
+      <ol>
+        <li>Users initiate operations from the szpEX wallet (built into the app, non-custodial), which supports software keys (BIP-39/44, encrypted on the Rust side) and hardware-wallet connections (Ledger／Trezor).</li>
+        <li>The routing decision layer branches by transaction type: same-chain swaps go through the CoW Protocol SDK; cross-chain transfers go through the Wormhole SDK; composite cross-chain-plus-swap transactions default to CoW's BridgingSdk, with Wormhole as the fallback bridging route — the two coexist to increase routing diversity and fault tolerance.</li>
+        <li>Settlement finalizes on-chain, with szpL2E never needing a self-operated server in the flow of funds.</li>
+      </ol>
+
+      <h3>5.5　Social Recovery</h3>
+      <p>Private keys are held entirely on the user's own device, encrypted locally — the szpL2E platform never custodies keys. To reduce the risk of a lost seed phrase, szpEX plans to integrate social recovery, letting a user designate several trusted contacts who can jointly approve account recovery via threshold signature (e.g. 2-of-3) if the key is lost, with no single party ever holding the complete private key. This is implemented via a smart-contract account (Account Abstraction), with the entire recovery flow executed on-chain.</p>
+
+      <h2 id="drx-erx">6　szpDRX Digital Licensing Exchange and szpERX Digital Learning Exchange</h2>
+      <p>szpDRX (digital IP licensing) and szpERX (digital course trading) are, technically, two applications of the same "asset-tization framework," built on one core design principle: <strong>encrypted content + on-chain proof of ownership + conditional decryption + automatic royalty split</strong>.</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Function</th><th>Technical approach</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">IP／course asset minting</td><td>ERC-1155 (for reproducible items sold multiple times) or ERC-721 (limited editions／creator originals)</td></tr>
+            <tr><td class="strong">Automatic royalty split</td><td>EIP-2981 enforced by smart contract; secondary-market resales also auto-pay the original creator</td></tr>
+            <tr><td class="strong">Content access control</td><td>Encrypted content on IPFS／Storacha; a smart contract triggers key release upon purchase</td></tr>
+            <tr><td class="strong">Anti-cheat online exams</td><td>Encrypted question banks; answer-result hashes timestamped on-chain; optional zk-SNARK privacy proofs</td></tr>
+            <tr><td class="strong">Course gamification</td><td>Learning progress logged as on-chain events／points; completion milestones mint achievement NFTs</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.3　szpDRX vs. szpERX: Key Differences</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Dimension</th><th>szpDRX (digital licensing)</th><th>szpERX (digital learning)</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Initial content type</td><td>E-books</td><td>Digital courses</td></tr>
+            <tr><td class="strong">Core protection target</td><td>IP copyright and resale royalties</td><td>Course-content IP and proof of learning outcomes</td></tr>
+            <tr><td class="strong">Unique supporting mechanisms</td><td>None (focused on licensing and trading)</td><td>Anti-cheat online exams, course gamification, learning-achievement NFTs</td></tr>
+            <tr><td class="strong">Future expansion direction</td><td>Music, images, video, and other digital-IP types</td><td>More course formats (live classes, certification courses, corporate training)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="longterm">7　Mid/Long-Term Module Roadmap: ERP, Prediction Markets, and Gaming</h2>
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="num">ERP module</span>
+          <h3>Smart-contract bookkeeping + zk-Rollup</h3>
+          <p>Continues the "smart-contract bookkeeping + frontend UI" architectural line, using zero-knowledge proofs to strengthen privacy so enterprise financial detail need not be public on-chain while remaining verifiable.</p>
+        </div>
+        <div class="card">
+          <span class="num">Prediction-market module</span>
+          <h3>Conditional Tokens Framework</h3>
+          <p>Modeled on the Polymarket／Gnosis Conditional Tokens Framework, which naturally pairs with CoW Protocol's batch-auction settlement and can directly reuse szpEX's existing trade-routing infrastructure.</p>
+        </div>
+        <div class="card">
+          <span class="num">Gaming module</span>
+          <h3>Cross-chain-friendly token standard</h3>
+          <p>In-game assets adopt a cross-chain-friendly token standard from the design stage, connecting directly to the Wormhole NTT protocol szpEX already integrates, avoiding a future rearchitecture to make assets portable across chains.</p>
+        </div>
+      </div>
+
+      <h2 id="risk">8　Risks and Reality Checks</h2>
+      <div class="callout">
+        <div class="c-title">⚠ Regulatory risk</div>
+        <p>Cross-chain bridging, IP/copyright trading, education services, plus the future ERP and prediction-market modules, span securities law, copyright law, and financial regulation across multiple legal domains. We recommend consulting a lawyer experienced in crypto and securities regulation early for a compliance review. This plan is a technical-architecture study only and does not constitute legal advice.</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ Cross-chain bridge security risk</div>
+        <p>Cross-chain bridges have historically been a favorite hacker target; Wormhole itself suffered a roughly $320M security incident in 2022. When integrating cross-chain bridging, szpL2E must implement multi-signature controls, third-party security audits, and evaluate insurance mechanisms to reduce user-asset risk.</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ The UX cost of "truly no server"</div>
+        <p>A no-backend architecture means no traditional customer-support system and no centralized anomaly-monitoring facility. szpL2E needs a much more complete in-app on-chain transaction tracking and error-recovery flow to make up for the gap in user support under a decentralized architecture; the UX design difficulty here will be significantly higher than in a typical centralized app.</p>
+      </div>
+
+      <h2 id="summary">9　Summary: Technology Selection Table</h2>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Module／function</th><th>Technology adopted</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Cross-platform client</td><td>Tauri v2 (Rust core) + React/Svelte frontend, plus a compiled Wasm web build</td></tr>
+            <tr><td class="strong">Decentralized storage</td><td>IPFS + Storacha (Filecoin persistence) + an embedded libp2p node</td></tr>
+            <tr><td class="strong">Same-chain trade matching</td><td>CoW Protocol SDK (TradingSdk / BridgingSdk / CowShedSdk)</td></tr>
+            <tr><td class="strong">Cross-chain asset bridging</td><td>Wormhole TypeScript SDK (NTT / WTT / CCTP)</td></tr>
+            <tr><td class="strong">Hardware wallets</td><td>WebHID/WebUSB (web) + Tauri USB Plugin (native), unified on eth_signTypedData_v4</td></tr>
+            <tr><td class="strong">IP／course asset minting</td><td>ERC-1155 / ERC-721 + EIP-2981 royalty standard</td></tr>
+            <tr><td class="strong">Content access control</td><td>Encrypted content + smart-contract-conditioned key release</td></tr>
+            <tr><td class="strong">On-chain data indexing</td><td>The Graph Subgraph / self-hosted lightweight indexer</td></tr>
+            <tr><td class="strong">User identity</td><td>Wallet-signature login (EIP-4361, Sign-In with Ethereum)</td></tr>
+            <tr><td class="strong">ERP (mid/long-term)</td><td>Smart-contract bookkeeping + zk-Rollup privacy</td></tr>
+            <tr><td class="strong">Prediction markets (mid/long-term)</td><td>Conditional Tokens Framework + CoW Protocol settlement</td></tr>
+            <tr><td class="strong">Gaming module (mid/long-term)</td><td>Cross-chain-friendly token standard + Wormhole NTT</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">The technology choices in this plan are based on publicly available technical documentation and industry practice as of August 2026. Actual adoption still requires further proof-of-concept validation and tuning, depending on team engineering capacity, target launch timeline, and the evolving regulatory environment.</p>
+
+      <div class="btn-row" style="margin-top:40px">
+        <a href="wbs.html" class="btn btn-primary">Next document: Task Breakdown &amp; Fishbone Plan →</a>
+        <a href="index.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">Back to overview</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ Sonzpo Learn-to-Earn</div>
+        <p class="f-tag">szpL2E — decentralized, gamified, portable skill-proof learning-economy infrastructure.</p>
+      </div>
+      <div>
+        <h5>Documents</h5>
+        <a href="technical.html">Technical Architecture Plan v1.1</a>
+        <a href="wbs.html">Task Breakdown &amp; Fishbone Plan v2.0</a>
+        <a href="roadmap.html">One-Click Staged Launch Plan v2.0</a>
+        <a href="investor.html">Investor Memorandum v1.0</a>
+        <a href="results.html">Implementation Results Archive (v2.0 onward)</a>
+      </div>
+      <div>
+        <h5>On This Page</h5>
+        <a href="#principles">Overall architecture principles</a>
+        <a href="#client">Tauri v2 client</a>
+        <a href="#wallet">szpEX wallet</a>
+        <a href="#summary">Technology selection table</a>
+      </div>
+      <div>
+        <h5>Investors</h5>
+        <a href="investor.html#market">Market analysis</a>
+        <a href="investor.html#valuation">Valuation</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+	  <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>Unit of account: <strong>SZP</strong> (Sonzpo token)　｜　Technical Architecture Plan v1.1</span>
+      <span>"On Sonzpo Hill, every lesson learned is a nut stored for winter."</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

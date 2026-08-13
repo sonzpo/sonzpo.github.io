@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>實作成果規格性能說明書 v2.0 ｜ szpL2E 松鼠坡學以致富</title>
+<meta name="description" content="szpL2E v2.0 實作成果規格性能說明書：v1.1→v2.0 全面改版為 Python 3.12 標準庫零外部依賴架構，九階段一鍵展示成功，47 項自動化測試全數通過，含本機真實量測與模擬推演效能指標之誠實區分。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="css/main.css">
+	<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../assets/audio/312727.mp3"
+     sound[1]= "../assets/audio/312767.mp3"
+     sound[2]= "../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>松鼠坡學以致富<small>SZPL2E　·　SONZPO LEARN-TO-EARN</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html">總覽</a>
+      <a href="technical.html">技術架構</a>
+      <a href="wbs.html">任務拆解</a>
+      <a href="roadmap.html">一鍵啟動計畫</a>
+      <div class="nav-item-drop">
+        <a href="results.html" class="current">實作成果</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python 標準庫零依賴改版</a>
+          <div class="dd-foot">
+            <a href="results.html">→ 全部版本總覽</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html">投資人簡報</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="results-v2.0.html" class="is-active">中</a>
+        <a href="en/results-v2.0.html">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="開啟選單">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-hero">
+  <div class="wrap">
+    <span class="kicker">實作成果規格性能說明書　·　Implementation Results Specification &amp; Performance Report</span>
+    <h1>szpL2E v2.0：v1.1→v2.0 全面改版實作成果</h1>
+    <p>本頁彙整《szpL2E 一鍵啟動階段化實踐計畫 v2.0》九個階段（階段 −1 至階段 6）之全面改寫實作成果。因沙箱環境實測無網路連線、無法安裝 FastAPI＋uvicorn＋httpx＋pydantic 等套件，全面改寫為 Python 3.12 標準庫零外部依賴架構，同時更貼合專案一貫要求之「僅用語言內建、零外部依賴」工程風格。九個階段已全數一鍵展示成功，47 項自動化測試全數通過。</p>
+    <div class="meta-row">
+      <span>文件版本　<strong>v2.0</strong></span>
+      <span>日期　<strong>2026 年 8 月 12 日</strong></span>
+      <span>專案代號　<strong>SONZPO ALPHAINFINI · szpL2E</strong></span>
+      <span>對應計畫　<strong>一鍵啟動階段化實踐計畫 v2.0</strong></span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 版本瀏覽列 ============ -->
+<section class="tight" style="padding-top:26px;padding-bottom:0">
+  <div class="wrap">
+    <div class="version-tabs">
+      <a href="results-v2.0.html" class="is-active">v2.0　2026-08</a>
+      <a href="#" class="is-planned" aria-disabled="true" title="尚未發布">v2.1　籌備中</a>
+      <a href="results.html">全部版本 →</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap doc-layout">
+
+    <aside class="doc-sidebar">
+      <div class="sb-group">
+        <div class="sb-h">目錄</div>
+        <a href="#summary">摘要</a>
+        <a href="#arch">1　架構總覽與改版決策</a>
+        <a href="#stages">2　九階段實作對照表</a>
+        <a href="#results">3　各階段量化實測結果</a>
+        <a href="#perf">4　效能規格對照</a>
+        <a href="#honesty">5　誠實邊界聲明彙總</a>
+        <a href="#tests">6　測試覆蓋率與品質保證</a>
+        <a href="#package">7　Reproducible Package</a>
+        <a href="#future">8　已知限制與後續展望</a>
+      </div>
+    </aside>
+
+    <div class="doc-main">
+
+      <h2 id="summary">摘要</h2>
+      <p>本說明書彙整《szpL2E 一鍵啟動階段化實踐計畫 v2.0》九個階段（階段 −1 至階段 6）之全面改寫實作成果。相較於 v1.1 舊版（依賴 FastAPI＋uvicorn＋httpx＋pydantic），v2.0 因沙箱環境實測無網路連線、無法安裝上述套件，全面改寫為 Python 3.12 標準庫零外部依賴架構（http.server 取代 FastAPI/uvicorn，urllib.request 取代 httpx），此決定同時更貼合專案一貫要求之「僅用語言內建、零外部依賴」工程風格。</p>
+      <p>九個階段已全數一鍵展示成功，<code>run_all_demos.py</code> 總控腳本單次執行即可依序跑完全部階段，總耗時約 17.6 秒；隨附 47 項自動化測試（unittest 標準庫）全數通過，涵蓋純邏輯單元測試與跨行程真實 socket 整合測試兩類。</p>
+
+      <h2 id="arch">1　架構總覽與 v1.1→v2.0 改版決策</h2>
+      <h3>1.1　環境前置檢查發現</h3>
+      <p>本次改版工作開始前，依規範進行環境前置檢查，實測發現如下：</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>檢查項目</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td>網路連線（pip install）</td><td>無法連線，<code>ERROR: No matching distribution found</code></td></tr>
+            <tr><td>cargo / rustc（Tauri 建置必要）</td><td>未安裝</td></tr>
+            <tr><td>npm registry 存取</td><td>403 Forbidden</td></tr>
+            <tr><td>Python 3.12 標準庫</td><td class="strong">齊備（http.server, sqlite3, hashlib, secrets 等）</td></tr>
+            <tr><td>Node.js 22</td><td class="strong">齊備</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>此發現直接觸發了兩項關鍵架構決策：</p>
+      <ol>
+        <li><strong>服務行程傳輸層</strong>：由 FastAPI＋uvicorn＋httpx＋pydantic 全面改寫為 Python 標準庫 <code>http.server</code>（伺服端）與 <code>urllib.request</code>（客戶端），對外行為介面（JSON 請求/回應、<code>/health</code> 端點、逾時重試）完全對齊，僅底層傳輸實作不同。</li>
+        <li><strong>Tauri 客戶端殼</strong>：因無 Rust/Tauri 工具鏈亦無法透過 npm 安裝，階段 −1 客戶端殼改以 Node.js 內建 <code>http</code> 模組實作功能等價之降級模擬版本，並於程式碼與本說明書中明確標注證據等級（詳見第 5 節）。</li>
+      </ol>
+
+      <h3>1.2　零依賴 HTTP 骨架（src/httpkit.py）</h3>
+      <p>新建 <code>httpkit.py</code> 作為全部服務行程共用基礎設施，提供：</p>
+      <ul>
+        <li><strong>JsonHTTPServer</strong>：以 <code>http.server.ThreadingHTTPServer</code> 為底的最小 JSON API 伺服器，支援固定路徑路由與前綴路徑路由（用於 <code>/contract/balance/{address}</code> 一類端點）。</li>
+        <li><strong>http_get_json / http_post_json</strong>：以 <code>urllib.request</code> 為底的 JSON 客戶端函式，內建逾時與有界重試（預設重試 2 次、退避 150ms）。</li>
+        <li><strong>wait_health</strong>：健康檢查輪詢工具，供各啟動腳本等待子行程就緒。</li>
+      </ul>
+      <p>此骨架本身以 5 項獨立單元測試驗證（<code>tests/test_httpkit.py</code>），涵蓋健康檢查、POST 回顯、錯誤碼傳遞、前綴路由參數解析、404 例外處理。</p>
+
+      <h3>1.3　模組對照總表</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>模組</th><th>v1.1 依賴</th><th>v2.0 依賴</th><th>異動類型</th></tr></thead>
+          <tbody>
+            <tr><td>content.py</td><td>無</td><td>無</td><td>沿用（僅更新規格節點註解）</td></tr>
+            <tr><td>scheduler.py</td><td>無</td><td>無</td><td>沿用</td></tr>
+            <tr><td>reward.py</td><td>無</td><td>無</td><td>沿用</td></tr>
+            <tr><td>anticheat.py</td><td>無（hmac/hashlib）</td><td>無</td><td>沿用，新增 F6 對齊介面說明</td></tr>
+            <tr><td>chain_sim.py</td><td>FastAPI+uvicorn</td><td>http.server</td><td>全面改寫，新增 token_id/royalty_bps 欄位對齊 F4 規格</td></tr>
+            <tr><td>chain_client.py</td><td>httpx</td><td>urllib.request</td><td>全面改寫</td></tr>
+            <tr><td>ipfs_sim.py</td><td>FastAPI+uvicorn</td><td>http.server</td><td>全面改寫，新增 UCAN 模擬授權層</td></tr>
+            <tr><td>learning_service.py</td><td>FastAPI+uvicorn</td><td>http.server</td><td>全面改寫</td></tr>
+            <tr><td>settlement_service.py</td><td>FastAPI+uvicorn</td><td>http.server</td><td>全面改寫</td></tr>
+            <tr><td>wallet.py</td><td>無</td><td>無</td><td>升級為 szpEX 錢包，新增社交復原與跨鏈路由雛形</td></tr>
+            <tr><td>enterprise.py</td><td>無</td><td>無</td><td>沿用</td></tr>
+            <tr><td>dashboard.py</td><td>httpx</td><td>httpkit</td><td>全面改寫，新增效能規格對照渲染區塊</td></tr>
+            <tr><td>perf_spec.py</td><td>—</td><td>無</td><td>全新模組（階段 6 效能規格資料化）</td></tr>
+            <tr><td>client/shell_sim.js</td><td>—</td><td>Node.js 內建</td><td>全新模組（Tauri 殼降級模擬）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="stages">2　九階段實作對照表</h2>
+      <p>證據等級定義（沿用規劃書 8.3 節誠實邊界原則）：<strong>等級零</strong>規格定案／骨架示意；<strong>等級一</strong>規則／數值推演驗證（純記憶體邏輯正確性）；<strong>等級二</strong>真實獨立行程＋真實 socket RPC（跨行程通訊確實發生）；<strong>等級三</strong>含真實外部服務整合（部分子項為本機模擬，已標注）。</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>階段</th><th>名稱</th><th>對應規格節點</th><th>行程數</th><th>證據等級</th><th>展示結果</th></tr></thead>
+          <tbody>
+            <tr><td>−1</td><td>Tauri 客戶端骨架</td><td class="num">3.4 節</td><td>零至一</td><td>二</td><td class="strong">✓ 成功</td></tr>
+            <tr><td>0</td><td>單行程學習驗證核心</td><td class="num">F1</td><td>一（純記憶體）</td><td>一</td><td class="strong">✓ 成功</td></tr>
+            <tr><td>1</td><td>本地測試鏈行程</td><td class="num">F4</td><td>一</td><td>二</td><td class="strong">✓ 成功</td></tr>
+            <tr><td>2</td><td>學習+結算+鏈三行程</td><td class="num">F1+F3+F4</td><td>三</td><td>二</td><td class="strong">✓ 成功</td></tr>
+            <tr><td>3</td><td>簽章防偽+防作弊風控</td><td class="num">F2+F6</td><td>三</td><td>二</td><td class="strong">✓ 成功</td></tr>
+            <tr><td>4</td><td>IPFS+Storacha 存證+客戶端殼+監控</td><td class="num">F4+F7</td><td>4+1殼</td><td>二至三</td><td class="strong">✓ 成功</td></tr>
+            <tr><td>5</td><td>szpEX 錢包+企業任務+斷線補送</td><td class="num">F5+F6</td><td>三</td><td>二至三</td><td class="strong">✓ 成功</td></tr>
+            <tr><td>6</td><td>效能規格對照+全鏈路量測</td><td class="num">F9</td><td>四</td><td>二至三</td><td class="strong">✓ 成功</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="results">3　各階段量化實測結果</h2>
+
+      <h3>3.1　階段 0：單行程學習驗證核心</h3>
+      <ul>
+        <li>9 道題目（3 單元 × 3 題型：選擇/應用/實作，另含 1 道企業級）全數作答評測正確</li>
+        <li>總計發放代幣點數：155.00 SZP（記憶體模擬，非鏈上）</li>
+        <li>執行耗時：0.06～0.15 秒（純記憶體運算）</li>
+      </ul>
+
+      <h3>3.2　階段 1：本地測試鏈行程（F4 規格）</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>驗證項目</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td>mint 增加餘額與總供給</td><td>通過（Alice: 100→70 SZP after burn）</td></tr>
+            <tr><td>burn 減少餘額與流通供給</td><td>通過</td></tr>
+            <tr><td>相同 tx_id 冪等性（防重複發放）</td><td>通過（第二次回傳 duplicate_ignored）</td></tr>
+            <tr><td>NFT 證書鑄造（token_id≥1）</td><td>通過（配發遞增 token_id）</td></tr>
+            <tr><td>區塊高度隨交易遞增</td><td>通過</td></tr>
+            <tr><td class="strong">本段跨行程呼叫總耗時</td><td class="strong">0.489 秒（5 次呼叫）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.3　階段 2：學習+結算+鏈三行程</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>情境</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td>端到端作答→結算→鏈上鑄幣</td><td>3 題全數 settled，Alice 鏈上餘額 42.5 SZP</td></tr>
+            <tr><td>結算服務離線時學習服務容錯</td><td>結算欄位標示 unreachable，學習服務本身不崩潰</td></tr>
+            <tr><td class="strong">三行程全鏈路耗時</td><td class="strong">0.426 秒（3 次端到端請求）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.4　階段 3：簽章防偽 + 防作弊風控</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>情境</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td>合法簽章信封</td><td>settled</td></tr>
+            <tr><td>偽造簽章信封（直接攻擊結算服務）</td><td><code>rejected_signature_invalid</code>，未鑄幣</td></tr>
+            <tr><td>連續 3 題高難度異常秒答（0.4秒/題）</td><td>前 2 題 settled，第 3 題 <code>held_for_review</code></td></tr>
+            <tr><td class="strong">鏈上最終總供給</td><td>85.0 SZP（驗證偽造與風控攔截項目皆未反映在總供給中）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.5　階段 4：IPFS+Storacha 存證 + 客戶端殼 + 監控</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>項目</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td>作答→結算→IPFS 存證→鏈上鑄幣</td><td>全鏈路成功，reward=40.00 SZP</td></tr>
+            <tr><td>CID 內容定址存證</td><td><code>bafy-sim-caa9bdae...</code>，可正確讀回</td></tr>
+            <tr><td>UCAN 模擬授權憑證核發</td><td>每筆存證皆附帶 <code>ucan_sim: true</code> 憑證</td></tr>
+            <tr><td class="strong">全鏈路（含存證）耗時</td><td class="strong">0.194 秒</td></tr>
+            <tr><td>監控儀表板產出</td><td>HTML 檔案成功產出，含全部行程健康狀態</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.6　階段 5：szpEX 錢包 + 企業任務 + 斷線補送</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>項目</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td>本地金鑰產生（位址唯一性）</td><td>通過</td></tr>
+            <tr><td>私鑰遮罩顯示</td><td><code>33f445...da1f</code>（不外洩完整私鑰）</td></tr>
+            <tr><td>社交復原（3取2門檻）</td><td>1位核准→False；2位核准→True</td></tr>
+            <tr><td>跨鏈路由決策（同鏈/跨鏈）</td><td>同鏈→CoW Protocol；跨鏈→Wormhole Bridge</td></tr>
+            <tr><td>企業任務發布權重範圍檢查</td><td>8x 通過；3x（低於6x～10x範圍）正確拒絕</td></tr>
+            <tr><td>斷線補送機制</td><td>3 筆離線期間累積提交，結算服務恢復後一次補送 3 筆，delayed-user 鏈上餘額正確反映 15.0 SZP</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.7　階段 6：效能規格對照 + 全鏈路量測</h3>
+      <p>詳見第 4 節。</p>
+
+      <h2 id="perf">4　效能規格對照（階段 6）</h2>
+      <h3>4.1　本機實測指標（4 項，真實量測，n=1000/20/10/10 次取樣）</h3>
+      <div class="table-wrap">
+        <table class="data evidence-table">
+          <thead><tr><th>指標</th><th>規格目標值</th><th>實測平均值</th><th>實測 P95</th><th>是否達標</th></tr></thead>
+          <tbody>
+            <tr><td>本機服務行程健康檢查回應時間</td><td>&lt; 50 ms</td><td>0.71 ms</td><td>1.02 ms</td><td class="ok">✓ 遠優於目標</td></tr>
+            <tr><td>本地測試鏈交易確認時間</td><td>&lt; 200 ms</td><td>121.89 ms</td><td>122.02 ms</td><td class="ok">✓ 達標（含 120ms 模擬確認延遲設計值）</td></tr>
+            <tr><td>簽章驗證延遲（HMAC-SHA256）</td><td>&lt; 5 ms</td><td>0.0076 ms</td><td>0.0093 ms</td><td class="ok">✓ 遠優於目標</td></tr>
+            <tr><td>IPFS+Storacha 內容寫入延遲（本機模擬）</td><td>&lt; 100 ms</td><td>0.86 ms</td><td>0.95 ms</td><td class="ok">✓ 遠優於目標</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4.2　模擬推演指標（3 項，⚠ 非本機實測，依公開技術文件試算）</h3>
+      <div class="table-wrap">
+        <table class="data evidence-table">
+          <thead><tr><th>指標</th><th>規格目標值</th><th>推演值</th><th>推演依據</th></tr></thead>
+          <tbody>
+            <tr><td>Tauri 客戶端殼冷啟動時間</td><td>&lt; 800 ms</td><td class="warn">未量測</td><td>本沙箱缺 Rust/Tauri 工具鏈，無法建置真實殼</td></tr>
+            <tr><td>CoW Protocol 同鏈交易時序</td><td>&lt; 3 s</td><td class="warn">≈ 1.5–3 s</td><td>依 CoW Protocol 公開文件試算</td></tr>
+            <tr><td>Wormhole Bridge 跨鏈交易時序</td><td>&lt; 60 s</td><td class="warn">≈ 15–45 s</td><td>依 Wormhole 公開文件試算，依鏈對而異</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <div class="c-title">⚠ 重要提醒</div>
+        <p>以上模擬推演值不能取代真實裝置與真實測試網環境的正式驗收；正式驗收依據為《szpL2E 專案實踐任務拆解與魚骨圖規劃書》v2.0 T8-01／T8-02（階段 7 展望範疇）。</p>
+      </div>
+
+      <h2 id="honesty">5　誠實邊界聲明彙總</h2>
+      <p>依規劃書 8.3 節誠實邊界原則，本次改版工程中所有模擬／簡化之處彙整如下：</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>項目</th><th>模擬層級</th><th>真實化路徑</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Tauri 客戶端殼</td><td>Node.js 內建 http 模組模擬，非真實 Tauri 編譯產物</td><td>需在具備 cargo/Rust 工具鏈之機器執行 <code>cargo tauri build</code>，介面語意（invoke→服務行程健康檢查）已預先對齊</td></tr>
+            <tr><td class="strong">本地測試鏈</td><td>自製區塊鏈式雜湊鏈（sha256 串接），非真實 EVM 節點</td><td>合約語意已對齊 ERC-1155/721+EIP-2981 標準子集，可作為未來部署至真實測試網（如 Sepolia）合約邏輯的參考基準</td></tr>
+            <tr><td class="strong">IPFS CID</td><td>sha256(canonical JSON) 附加前綴，非真實 multihash/CIDv1</td><td>內容定址邏輯（相同內容→相同識別碼）語意一致，可作為串接真實 IPFS 節點的過渡層</td></tr>
+            <tr><td class="strong">UCAN 授權憑證</td><td>本機產生之模擬物件，非真實 UCAN 規範簽發</td><td>授權委任語意（capability/aud/nonce）已預先示意，供未來串接真實 Storacha 服務參考</td></tr>
+            <tr><td class="strong">szpEX 錢包金鑰</td><td>sha256 位址推導，非真實 ECDSA/secp256k1 金鑰對</td><td>私鑰不落地、僅存本機記憶體之安全邊界精神已落實；簽章介面已與 anticheat.py 對齊</td></tr>
+            <tr><td class="strong">社交復原</td><td>規則層級門檻判斷，不涉及真實智能合約帳戶</td><td>3取2門檻邏輯已驗證，可作為未來 Account Abstraction 合約設計依據</td></tr>
+            <tr><td class="strong">CoW/Wormhole 路由</td><td>規則層級判斷（同鏈/跨鏈二分），未發送真實交易</td><td>路由決策邏輯已示意，未呼叫任何真實 SDK 或鏈上合約</td></tr>
+            <tr><td class="strong">企業任務覆核</td><td>三角色簡化為單一記憶體模組</td><td>業務流程（發布→投遞→覆核→觸發結算）語意完整，正式環境需拆分為獨立服務並加上身分驗證</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="tests">6　測試覆蓋率與品質保證</h2>
+      <h3>6.1　測試套件總覽</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>測試檔案</th><th>測試數</th><th>類型</th><th>涵蓋範圍</th></tr></thead>
+          <tbody>
+            <tr><td>test_scheduler.py</td><td class="num">4</td><td>純邏輯</td><td>間隔重複排程引擎</td></tr>
+            <tr><td>test_content_and_reward.py</td><td class="num">4</td><td>純邏輯</td><td>學習內容、獎勵權重計算</td></tr>
+            <tr><td>test_anticheat.py</td><td class="num">6</td><td>純邏輯</td><td>簽章驗證、防作弊風控規則</td></tr>
+            <tr><td>test_wallet_and_enterprise.py</td><td class="num">11</td><td>純邏輯</td><td>錢包、社交復原、路由決策、企業任務</td></tr>
+            <tr><td>test_httpkit.py</td><td class="num">5</td><td>真實 socket</td><td>零依賴 HTTP 骨架自我測試</td></tr>
+            <tr><td>test_chain_sim.py</td><td class="num">7</td><td>真實子行程</td><td>本地測試鏈 mint/burn/冪等性/NFT</td></tr>
+            <tr><td>test_ipfs_sim.py</td><td class="num">5</td><td>真實子行程</td><td>IPFS+Storacha 存證讀寫、UCAN</td></tr>
+            <tr><td>test_services_integration.py</td><td class="num">5</td><td>真實三行程叢集</td><td>端到端結算、冪等性、簽章、風控</td></tr>
+            <tr><td class="strong">總計</td><td class="strong num">47</td><td>—</td><td class="strong">全數通過</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.2　測試設計原則異動說明</h3>
+      <p>v1.1 舊版採 FastAPI TestClient 做 in-process 測試（無真實 socket）。v2.0 因改用 http.server 標準庫實作，TestClient 機制不再適用，因此全面改為啟動真實子行程＋真實 socket 呼叫的整合測試方式。此改動雖然使測試執行時間略微增加（純邏輯測試仍為毫秒級，跨行程測試約 1～6 秒），但更貼近規劃書「真實跨行程 HTTP」之驗收精神，測試本身即是對系統可部署性的驗證。</p>
+
+      <h3>6.3　一鍵展示可重現性驗證</h3>
+      <p><code>run_all_demos.py</code> 總控腳本已於本次改版工程中連續執行 2 次，兩次結果一致：8/8 階段全數成功，總耗時均在 16.5～17.7 秒區間（差異為系統排程正常波動）。</p>
+
+      <h2 id="package">7　Reproducible Package 說明</h2>
+      <p>本次交付之 reproducible ZIP package 包含：</p>
+      <div class="table-wrap">
+        <table class="data">
+          <tbody>
+            <tr><td class="strong">src/</td><td>核心程式模組（14 個檔案）</td></tr>
+            <tr><td class="strong">launch/</td><td>各階段啟動腳本（8 個檔案：階段 −1, 0～6）</td></tr>
+            <tr><td class="strong">tests/</td><td>自動化測試套件（8 個檔案，47 項測試）</td></tr>
+            <tr><td class="strong">client/</td><td>客戶端殼模擬（shell_sim.js）</td></tr>
+            <tr><td class="strong">config/</td><td>組態檔</td></tr>
+            <tr><td class="strong">docs/</td><td>本規格說明書（md/tex/pdf）與監控儀表板快照</td></tr>
+            <tr><td class="strong">logs/</td><td>各階段展示執行紀錄</td></tr>
+            <tr><td class="strong">run_all_demos.py</td><td>總控腳本</td></tr>
+            <tr><td class="strong">README.md</td><td>使用說明</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>可重現性保證</strong>：全部模組僅依賴 Python 3.12 標準庫與 Node.js 22 內建模組，不含任何需要網路下載的外部套件依賴，任何具備 Python 3.10+ 與 Node.js 18+ 的環境皆可離線執行 <code>python3 run_all_demos.py</code> 重現全部展示結果。</p>
+
+      <h2 id="future">8　已知限制與後續展望</h2>
+      <h3>8.1　本次沙箱環境限制（已誠實標注，非規格缺陷）</h3>
+      <ul>
+        <li>無法建置真實 Tauri 客戶端殼（無 Rust/cargo 工具鏈）</li>
+        <li>無法串接真實 IPFS 節點或 Storacha 雲端服務（無網路連線）</li>
+        <li>無法部署至真實 EVM 測試網（無網路連線）</li>
+        <li>無法進行大規模併發壓力測試（單機沙箱資源限制）</li>
+      </ul>
+
+      <h3>8.2　階段 7 展望範疇（依規劃書 T8-01/T8-02）</h3>
+      <ul>
+        <li>真實 Tauri 五端（Windows/macOS/Linux/iOS/Android）編譯與安裝檔實測</li>
+        <li>真實 Storacha 雲端持久化整合測試</li>
+        <li>真實測試網（如 Sepolia）合約部署與 Gas 成本實測</li>
+        <li>大規模併發壓力測試與去中心化計算層（Oracle）整合</li>
+        <li>CoW Protocol／Wormhole Bridge 真實網路交易時序實測</li>
+      </ul>
+
+      <p class="small muted">本說明書由 szpL2E v2.0 一鍵啟動階段化實踐計畫改版工程自動彙整產出，所有數據均來自本次實際執行紀錄，紀錄檔案存放於 logs/ 目錄。本文件為 szpL2E v2.0 松鼠坡學以致富之實作成果規格性能說明書，格式與方法論承接 v1.1 版《szpL2E 實作成果規格性能說明書》與《一鍵啟動階段化實踐計畫 v2.0》。全部原始碼、測試、與展示執行紀錄皆隨附於同一可重現 ZIP 套件中。</p>
+
+      <div class="btn-row" style="margin-top:40px">
+        <a href="results.html" class="btn btn-primary">← 回到實作成果版本總覽</a>
+        <a href="roadmap.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">對照一鍵啟動階段化實踐計畫 →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ 松鼠坡學以致富</div>
+        <p class="f-tag">Sonzpo Learn-to-Earn（szpL2E）—— 去中心化・遊戲化・可攜式技能證明學習經濟基礎設施。</p>
+      </div>
+      <div>
+        <h5>工程文件</h5>
+        <a href="technical.html">技術架構規劃書 v1.1</a>
+        <a href="wbs.html">任務拆解與魚骨圖規劃書 v2.0</a>
+        <a href="roadmap.html">一鍵啟動階段化實踐計畫 v2.0</a>
+        <a href="investor.html">投資人簡報書 v1.0</a>
+      </div>
+      <div>
+        <h5>實作成果版本</h5>
+        <a href="results-v2.0.html">v2.0（2026 年 8 月）</a>
+        <a href="results.html">全部版本總覽</a>
+      </div>
+      <div>
+        <h5>本頁章節</h5>
+        <a href="#stages">九階段實作對照表</a>
+        <a href="#perf">效能規格對照</a>
+        <a href="#honesty">誠實邊界聲明</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+	  <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>計價單位：<strong>SZP</strong>（松鼠坡代幣）　｜　實作成果規格性能說明書 v2.0</span>
+      <span>「在松鼠坡上，每一次改版都是誠實面對限制、重新扎根的過程。」</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

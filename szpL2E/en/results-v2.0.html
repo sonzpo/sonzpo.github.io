@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Implementation Results Specification &amp; Performance Report v2.0 ｜ szpL2E Sonzpo Learn-to-Earn</title>
+<meta name="description" content="szpL2E v2.0 Implementation Results Specification &amp; Performance Report: a full v1.1→v2.0 rewrite onto Python 3.12 stdlib with zero external dependencies. All nine stages demoed successfully with one click; all 47 automated tests passed, with locally measured performance metrics honestly distinguished from simulated/projected ones.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="../css/main.css">
+	<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../../assets/audio/312727.mp3"
+     sound[1]= "../../assets/audio/312767.mp3"
+     sound[2]= "../../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>Sonzpo Learn-to-Earn<small>SZPL2E　·　松鼠坡學以致富</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html">Overview</a>
+      <a href="technical.html">Architecture</a>
+      <a href="wbs.html">Task Breakdown</a>
+      <a href="roadmap.html">Launch Plan</a>
+      <div class="nav-item-drop">
+        <a href="results.html" class="current">Results</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python stdlib zero-dependency rewrite</a>
+          <div class="dd-foot">
+            <a href="results.html">→ All versions</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html">Investor Memo</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="../results-v2.0.html">中</a>
+        <a href="results-v2.0.html" class="is-active">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-hero">
+  <div class="wrap">
+    <span class="kicker">Implementation Results Report　·　Implementation Results Specification &amp; Performance Report</span>
+    <h1>szpL2E v2.0: results of the full v1.1→v2.0 rewrite</h1>
+    <p>This page compiles the full-rewrite implementation results for all nine stages (Stage −1 through Stage 6) of the "szpL2E One-Click Staged Launch Plan v2.0." Because the sandbox environment turned out to have no network access and could not install FastAPI, uvicorn, httpx, or pydantic, the stack was fully rewritten onto Python 3.12 standard-library, zero-external-dependency architecture — which also better matches the project's consistent engineering preference for "language built-ins only, zero external dependencies." All nine stages demoed successfully with one click; all 47 automated tests passed.</p>
+    <div class="meta-row">
+      <span>Document version　<strong>v2.0</strong></span>
+      <span>Date　<strong>August 12, 2026</strong></span>
+      <span>Project codename　<strong>SONZPO ALPHAINFINI · szpL2E</strong></span>
+      <span>Companion plan　<strong>One-Click Staged Launch Plan v2.0</strong></span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ version tabs ============ -->
+<section class="tight" style="padding-top:26px;padding-bottom:0">
+  <div class="wrap">
+    <div class="version-tabs">
+      <a href="results-v2.0.html" class="is-active">v2.0　2026-08</a>
+      <a href="#" class="is-planned" aria-disabled="true" title="Not yet published">v2.1　In preparation</a>
+      <a href="results.html">All versions →</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap doc-layout">
+
+    <aside class="doc-sidebar">
+      <div class="sb-group">
+        <div class="sb-h">Contents</div>
+        <a href="#summary">Summary</a>
+        <a href="#arch">1　Architecture Overview &amp; Rewrite Decisions</a>
+        <a href="#stages">2　Nine-Stage Implementation Matrix</a>
+        <a href="#results">3　Per-Stage Quantified Results</a>
+        <a href="#perf">4　Performance Spec Comparison</a>
+        <a href="#honesty">5　Honesty-Boundary Disclosures</a>
+        <a href="#tests">6　Test Coverage &amp; QA</a>
+        <a href="#package">7　Reproducible Package</a>
+        <a href="#future">8　Known Limits &amp; Outlook</a>
+      </div>
+    </aside>
+
+    <div class="doc-main">
+
+      <h2 id="summary">Summary</h2>
+      <p>This report compiles the full rewrite implementation results for all nine stages (Stage −1 through Stage 6) of the "szpL2E One-Click Staged Launch Plan v2.0." Compared with the older v1.1 (which depended on FastAPI, uvicorn, httpx, and pydantic), v2.0 — after the sandbox environment tested out to have no network access and could not install those packages — was fully rewritten onto Python 3.12 standard-library, zero-external-dependency architecture (http.server replacing FastAPI/uvicorn, urllib.request replacing httpx). This decision also better matches the project's consistent engineering preference for "language built-ins only, zero external dependencies."</p>
+      <p>All nine stages demoed successfully with one click; the <code>run_all_demos.py</code> master script runs every stage in sequence in a single invocation, taking roughly 17.6 seconds total. The accompanying 47 automated tests (stdlib unittest) all passed, spanning both pure-logic unit tests and cross-process real-socket integration tests.</p>
+
+      <h2 id="arch">1　Architecture Overview &amp; v1.1→v2.0 Rewrite Decisions</h2>
+      <h3>1.1　Pre-flight environment check findings</h3>
+      <p>Before the rewrite began, a pre-flight environment check was run per protocol, with these findings:</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Check item</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Network access (pip install)</td><td>No connection, <code>ERROR: No matching distribution found</code></td></tr>
+            <tr><td>cargo / rustc (required for Tauri build)</td><td>Not installed</td></tr>
+            <tr><td>npm registry access</td><td>403 Forbidden</td></tr>
+            <tr><td>Python 3.12 standard library</td><td class="strong">Complete (http.server, sqlite3, hashlib, secrets, etc.)</td></tr>
+            <tr><td>Node.js 22</td><td class="strong">Complete</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>This finding directly triggered two key architecture decisions:</p>
+      <ol>
+        <li><strong>Service-process transport layer</strong>: fully rewritten from FastAPI+uvicorn+httpx+pydantic onto Python standard-library <code>http.server</code> (server side) and <code>urllib.request</code> (client side); the external behavioral interface (JSON request/response, the <code>/health</code> endpoint, timeout-and-retry) is fully preserved — only the underlying transport implementation changed.</li>
+        <li><strong>Tauri client shell</strong>: with no Rust/Tauri toolchain and no way to install it via npm, the Stage −1 client shell was implemented as a functionally-equivalent degraded simulation using Node.js's built-in <code>http</code> module, with its evidence tier explicitly labeled in both the code and this report (see Section 5).</li>
+      </ol>
+
+      <h3>1.2　Zero-dependency HTTP scaffold (src/httpkit.py)</h3>
+      <p>A new <code>httpkit.py</code> was built as shared infrastructure for every service process, providing:</p>
+      <ul>
+        <li><strong>JsonHTTPServer</strong>: a minimal JSON API server on top of <code>http.server.ThreadingHTTPServer</code>, supporting both fixed-path and prefix-path routing (used for endpoints like <code>/contract/balance/{address}</code>).</li>
+        <li><strong>http_get_json / http_post_json</strong>: JSON client functions on top of <code>urllib.request</code>, with built-in timeout and bounded retry (2 retries by default, 150ms backoff).</li>
+        <li><strong>wait_health</strong>: a health-check polling utility used by launch scripts to wait for child processes to become ready.</li>
+      </ul>
+      <p>The scaffold itself is verified by 5 independent unit tests (<code>tests/test_httpkit.py</code>), covering health checks, POST echo, error-code propagation, prefix-route parameter parsing, and 404 handling.</p>
+
+      <h3>1.3　Module comparison table</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Module</th><th>v1.1 dependency</th><th>v2.0 dependency</th><th>Change type</th></tr></thead>
+          <tbody>
+            <tr><td>content.py</td><td>None</td><td>None</td><td>Carried over (spec-node comments updated only)</td></tr>
+            <tr><td>scheduler.py</td><td>None</td><td>None</td><td>Carried over</td></tr>
+            <tr><td>reward.py</td><td>None</td><td>None</td><td>Carried over</td></tr>
+            <tr><td>anticheat.py</td><td>None (hmac/hashlib)</td><td>None</td><td>Carried over, added F6-alignment interface notes</td></tr>
+            <tr><td>chain_sim.py</td><td>FastAPI+uvicorn</td><td>http.server</td><td>Fully rewritten; added token_id/royalty_bps fields aligned to F4 spec</td></tr>
+            <tr><td>chain_client.py</td><td>httpx</td><td>urllib.request</td><td>Fully rewritten</td></tr>
+            <tr><td>ipfs_sim.py</td><td>FastAPI+uvicorn</td><td>http.server</td><td>Fully rewritten; added a simulated UCAN authorization layer</td></tr>
+            <tr><td>learning_service.py</td><td>FastAPI+uvicorn</td><td>http.server</td><td>Fully rewritten</td></tr>
+            <tr><td>settlement_service.py</td><td>FastAPI+uvicorn</td><td>http.server</td><td>Fully rewritten</td></tr>
+            <tr><td>wallet.py</td><td>None</td><td>None</td><td>Upgraded to the szpEX wallet, added social recovery and a cross-chain routing scaffold</td></tr>
+            <tr><td>enterprise.py</td><td>None</td><td>None</td><td>Carried over</td></tr>
+            <tr><td>dashboard.py</td><td>httpx</td><td>httpkit</td><td>Fully rewritten; added a performance-spec comparison rendering block</td></tr>
+            <tr><td>perf_spec.py</td><td>—</td><td>None</td><td>Brand-new module (Stage 6 performance-spec data)</td></tr>
+            <tr><td>client/shell_sim.js</td><td>—</td><td>Node.js built-in</td><td>Brand-new module (degraded Tauri-shell simulation)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="stages">2　Nine-Stage Implementation Matrix</h2>
+      <p>Evidence-tier definitions (carried over from Section 8.3 of the planning document's honesty-boundary principle): <strong>Tier 0</strong> spec frozen / scaffold only; <strong>Tier 1</strong> rule/numeric-simulation-verified (in-memory logical correctness); <strong>Tier 2</strong> real independent processes + real socket RPC (cross-process communication actually occurs); <strong>Tier 3</strong> includes real external-service integration (some sub-items are local simulations, explicitly labeled).</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Stage</th><th>Name</th><th>Spec node</th><th>Processes</th><th>Evidence tier</th><th>Demo result</th></tr></thead>
+          <tbody>
+            <tr><td>−1</td><td>Tauri client scaffold</td><td class="num">Section 3.4</td><td>0–1</td><td>2</td><td class="strong">✓ Success</td></tr>
+            <tr><td>0</td><td>Single-process learning-verification core</td><td class="num">F1</td><td>1 (in-memory)</td><td>1</td><td class="strong">✓ Success</td></tr>
+            <tr><td>1</td><td>Local test-chain process</td><td class="num">F4</td><td>1</td><td>2</td><td class="strong">✓ Success</td></tr>
+            <tr><td>2</td><td>Learning + settlement + chain, 3 processes</td><td class="num">F1+F3+F4</td><td>3</td><td>2</td><td class="strong">✓ Success</td></tr>
+            <tr><td>3</td><td>Signature anti-forgery + anti-cheat</td><td class="num">F2+F6</td><td>3</td><td>2</td><td class="strong">✓ Success</td></tr>
+            <tr><td>4</td><td>IPFS+Storacha notarization + client shell + monitoring</td><td class="num">F4+F7</td><td>4+1 shell</td><td>2–3</td><td class="strong">✓ Success</td></tr>
+            <tr><td>5</td><td>szpEX wallet + enterprise tasks + offline resend</td><td class="num">F5+F6</td><td>3</td><td>2–3</td><td class="strong">✓ Success</td></tr>
+            <tr><td>6</td><td>Performance-spec comparison + full-path measurement</td><td class="num">F9</td><td>4</td><td>2–3</td><td class="strong">✓ Success</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="results">3　Per-Stage Quantified Results</h2>
+
+      <h3>3.1　Stage 0: single-process learning-verification core</h3>
+      <ul>
+        <li>9 questions (3 units × 3 question types — multiple choice / applied / hands-on — plus 1 enterprise-tier item), all answered and graded correctly</li>
+        <li>Total token points issued: 155.00 SZP (in-memory simulation, not on-chain)</li>
+        <li>Execution time: 0.06–0.15 s (pure in-memory computation)</li>
+      </ul>
+
+      <h3>3.2　Stage 1: local test-chain process (F4 spec)</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Verification item</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>mint increases balance and total supply</td><td>Passed (Alice: 100→70 SZP after burn)</td></tr>
+            <tr><td>burn decreases balance and circulating supply</td><td>Passed</td></tr>
+            <tr><td>Same tx_id idempotency (double-issue prevention)</td><td>Passed (second call returns duplicate_ignored)</td></tr>
+            <tr><td>NFT credential minting (token_id≥1)</td><td>Passed (incrementing token_id assigned)</td></tr>
+            <tr><td>Block height increments with transactions</td><td>Passed</td></tr>
+            <tr><td class="strong">Total cross-process call time, this section</td><td class="strong">0.489 s (5 calls)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.3　Stage 2: learning + settlement + chain, 3 processes</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Scenario</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>End-to-end answer → settlement → on-chain mint</td><td>All 3 questions settled; Alice's on-chain balance is 42.5 SZP</td></tr>
+            <tr><td>Learning-service fault tolerance when settlement is offline</td><td>Settlement field flagged unreachable; learning service itself does not crash</td></tr>
+            <tr><td class="strong">Full 3-process end-to-end time</td><td class="strong">0.426 s (3 end-to-end requests)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.4　Stage 3: signature anti-forgery + anti-cheat</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Scenario</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Legitimate signed envelope</td><td>settled</td></tr>
+            <tr><td>Forged signed envelope (direct attack on settlement service)</td><td><code>rejected_signature_invalid</code>, no mint occurred</td></tr>
+            <tr><td>3 consecutive hard questions answered abnormally fast (0.4 s each)</td><td>First 2 settled; 3rd flagged <code>held_for_review</code></td></tr>
+            <tr><td class="strong">Final on-chain total supply</td><td>85.0 SZP (confirms forged/flagged items were not reflected in total supply)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.5　Stage 4: IPFS+Storacha notarization + client shell + monitoring</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Item</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Answer → settlement → IPFS notarization → on-chain mint</td><td>Full path succeeded, reward = 40.00 SZP</td></tr>
+            <tr><td>CID content-addressed notarization</td><td><code>bafy-sim-caa9bdae...</code>, correctly read back</td></tr>
+            <tr><td>Simulated UCAN authorization credential issuance</td><td>Every notarization record carries a <code>ucan_sim: true</code> credential</td></tr>
+            <tr><td class="strong">Full path time (including notarization)</td><td class="strong">0.194 s</td></tr>
+            <tr><td>Monitoring-dashboard output</td><td>HTML file produced successfully, including all process health statuses</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.6　Stage 5: szpEX wallet + enterprise tasks + offline resend</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Item</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Local key generation (address uniqueness)</td><td>Passed</td></tr>
+            <tr><td>Masked private-key display</td><td><code>33f445...da1f</code> (full private key never exposed)</td></tr>
+            <tr><td>Social recovery (2-of-3 threshold)</td><td>1 approval → False; 2 approvals → True</td></tr>
+            <tr><td>Cross-chain routing decision (same-chain / cross-chain)</td><td>Same-chain → CoW Protocol; cross-chain → Wormhole Bridge</td></tr>
+            <tr><td>Enterprise-task publishing weight-range check</td><td>8x passes; 3x (below the 6x–10x range) correctly rejected</td></tr>
+            <tr><td>Offline resend mechanism</td><td>3 submissions accumulated while offline; once settlement service recovered, all 3 resent in one batch; delayed-user's on-chain balance correctly reflects 15.0 SZP</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.7　Stage 6: performance-spec comparison + full-path measurement</h3>
+      <p>See Section 4.</p>
+
+      <h2 id="perf">4　Performance Spec Comparison (Stage 6)</h2>
+      <h3>4.1　Locally measured metrics (4 items, real measurements, n = 1000/20/10/10 samples)</h3>
+      <div class="table-wrap">
+        <table class="data evidence-table">
+          <thead><tr><th>Metric</th><th>Spec target</th><th>Measured mean</th><th>Measured P95</th><th>Met target?</th></tr></thead>
+          <tbody>
+            <tr><td>Local service-process health-check response time</td><td>&lt; 50 ms</td><td>0.71 ms</td><td>1.02 ms</td><td class="ok">✓ Far exceeds target</td></tr>
+            <tr><td>Local test-chain transaction confirmation time</td><td>&lt; 200 ms</td><td>121.89 ms</td><td>122.02 ms</td><td class="ok">✓ Met (includes a 120ms simulated-confirmation design delay)</td></tr>
+            <tr><td>Signature verification latency (HMAC-SHA256)</td><td>&lt; 5 ms</td><td>0.0076 ms</td><td>0.0093 ms</td><td class="ok">✓ Far exceeds target</td></tr>
+            <tr><td>IPFS+Storacha content write latency (local simulation)</td><td>&lt; 100 ms</td><td>0.86 ms</td><td>0.95 ms</td><td class="ok">✓ Far exceeds target</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4.2　Simulated/projected metrics (3 items, ⚠ not locally measured, projected from public technical documentation)</h3>
+      <div class="table-wrap">
+        <table class="data evidence-table">
+          <thead><tr><th>Metric</th><th>Spec target</th><th>Projected value</th><th>Basis for projection</th></tr></thead>
+          <tbody>
+            <tr><td>Tauri client-shell cold-start time</td><td>&lt; 800 ms</td><td class="warn">Not measured</td><td>This sandbox lacks a Rust/Tauri toolchain, so a real shell could not be built</td></tr>
+            <tr><td>CoW Protocol same-chain transaction timing</td><td>&lt; 3 s</td><td class="warn">≈ 1.5–3 s</td><td>Projected from CoW Protocol's public documentation</td></tr>
+            <tr><td>Wormhole Bridge cross-chain transaction timing</td><td>&lt; 60 s</td><td class="warn">≈ 15–45 s</td><td>Projected from Wormhole's public documentation; varies by chain pair</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <div class="c-title">⚠ Important note</div>
+        <p>The simulated/projected values above cannot substitute for formal sign-off on real devices and real testnets; formal sign-off is governed by T8-01/T8-02 in the "szpL2E Task Breakdown &amp; Fishbone Plan" v2.0 (the Stage 7 outlook).</p>
+      </div>
+
+      <h2 id="honesty">5　Honesty-Boundary Disclosures</h2>
+      <p>Per the honesty-boundary principle in Section 8.3 of the planning document, every simulation or simplification made during this rewrite is compiled below:</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Item</th><th>Simulation tier</th><th>Path to the real implementation</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Tauri client shell</td><td>Simulated with Node.js's built-in http module, not a real Tauri build artifact</td><td>Needs to run <code>cargo tauri build</code> on a machine with a cargo/Rust toolchain; the interface semantics (invoke → service-process health check) are already aligned</td></tr>
+            <tr><td class="strong">Local test chain</td><td>A custom blockchain-style hash chain (sha256-linked), not a real EVM node</td><td>Contract semantics already align with the ERC-1155/721+EIP-2981 standard subset, usable as a reference baseline for future deployment to a real testnet (e.g. Sepolia)</td></tr>
+            <tr><td class="strong">IPFS CID</td><td>sha256(canonical JSON) with an added prefix, not a real multihash/CIDv1</td><td>Content-addressing semantics (same content → same identifier) are consistent, usable as a transition layer to a real IPFS node</td></tr>
+            <tr><td class="strong">UCAN authorization credential</td><td>A locally generated simulated object, not a real UCAN-spec-issued credential</td><td>Authorization-delegation semantics (capability/aud/nonce) are already sketched out for future integration with a real Storacha service</td></tr>
+            <tr><td class="strong">szpEX wallet keys</td><td>sha256-derived addresses, not a real ECDSA/secp256k1 keypair</td><td>The security-boundary principle of "private keys never leave local memory" is already implemented; the signing interface already aligns with anticheat.py</td></tr>
+            <tr><td class="strong">Social recovery</td><td>Rule-level threshold checking, no real smart-contract account involved</td><td>The 2-of-3 threshold logic is verified and can serve as a basis for future Account Abstraction contract design</td></tr>
+            <tr><td class="strong">CoW/Wormhole routing</td><td>Rule-level decision (same-chain vs. cross-chain binary), no real transaction sent</td><td>The routing decision logic is sketched out; no real SDK or on-chain contract is called</td></tr>
+            <tr><td class="strong">Enterprise task review</td><td>Three roles simplified into a single in-memory module</td><td>The business flow (publish → deliver → review → trigger settlement) is semantically complete; production requires splitting into independent services with added identity verification</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="tests">6　Test Coverage &amp; Quality Assurance</h2>
+      <h3>6.1　Test suite overview</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Test file</th><th>Tests</th><th>Type</th><th>Coverage</th></tr></thead>
+          <tbody>
+            <tr><td>test_scheduler.py</td><td class="num">4</td><td>Pure logic</td><td>Spaced-repetition scheduling engine</td></tr>
+            <tr><td>test_content_and_reward.py</td><td class="num">4</td><td>Pure logic</td><td>Learning content, reward-weight computation</td></tr>
+            <tr><td>test_anticheat.py</td><td class="num">6</td><td>Pure logic</td><td>Signature verification, anti-cheat risk rules</td></tr>
+            <tr><td>test_wallet_and_enterprise.py</td><td class="num">11</td><td>Pure logic</td><td>Wallet, social recovery, routing decisions, enterprise tasks</td></tr>
+            <tr><td>test_httpkit.py</td><td class="num">5</td><td>Real socket</td><td>Zero-dependency HTTP scaffold self-tests</td></tr>
+            <tr><td>test_chain_sim.py</td><td class="num">7</td><td>Real subprocess</td><td>Local test-chain mint/burn/idempotency/NFT</td></tr>
+            <tr><td>test_ipfs_sim.py</td><td class="num">5</td><td>Real subprocess</td><td>IPFS+Storacha notarization read/write, UCAN</td></tr>
+            <tr><td>test_services_integration.py</td><td class="num">5</td><td>Real 3-process cluster</td><td>End-to-end settlement, idempotency, signatures, risk controls</td></tr>
+            <tr><td class="strong">Total</td><td class="strong num">47</td><td>—</td><td class="strong">All passed</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.2　Change in test-design principle</h3>
+      <p>The older v1.1 used FastAPI's TestClient for in-process testing (no real socket involved). Because v2.0 switched to a standard-library http.server implementation, the TestClient mechanism no longer applies, so testing was fully switched to spinning up real child processes and making real socket calls for integration tests. This change did modestly increase test run time (pure-logic tests remain millisecond-scale; cross-process tests take roughly 1–6 seconds), but it hews more closely to the planning document's "real cross-process HTTP" acceptance spirit — the tests themselves become a verification of the system's deployability.</p>
+
+      <h3>6.3　One-click demo reproducibility verification</h3>
+      <p>The <code>run_all_demos.py</code> master script was run twice in succession during this rewrite, with consistent results both times: 8/8 stages succeeded, with total run time in the 16.5–17.7 second range both times (the difference being normal OS-scheduling variance).</p>
+
+      <h2 id="package">7　Reproducible Package</h2>
+      <p>The reproducible ZIP package delivered for this work contains:</p>
+      <div class="table-wrap">
+        <table class="data">
+          <tbody>
+            <tr><td class="strong">src/</td><td>Core program modules (14 files)</td></tr>
+            <tr><td class="strong">launch/</td><td>Per-stage launch scripts (8 files: Stage −1, 0–6)</td></tr>
+            <tr><td class="strong">tests/</td><td>Automated test suite (8 files, 47 tests)</td></tr>
+            <tr><td class="strong">client/</td><td>Client-shell simulation (shell_sim.js)</td></tr>
+            <tr><td class="strong">config/</td><td>Configuration files</td></tr>
+            <tr><td class="strong">docs/</td><td>This spec report (md/tex/pdf) and monitoring-dashboard snapshots</td></tr>
+            <tr><td class="strong">logs/</td><td>Per-stage demo execution logs</td></tr>
+            <tr><td class="strong">run_all_demos.py</td><td>Master control script</td></tr>
+            <tr><td class="strong">README.md</td><td>Usage instructions</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Reproducibility guarantee</strong>: every module depends only on the Python 3.12 standard library and Node.js 22 built-in modules, with no dependency requiring a network download; any environment with Python 3.10+ and Node.js 18+ can run <code>python3 run_all_demos.py</code> offline to reproduce every demo result.</p>
+
+      <h2 id="future">8　Known Limits &amp; Outlook</h2>
+      <h3>8.1　This sandbox's environment limits (honestly disclosed, not a spec defect)</h3>
+      <ul>
+        <li>Could not build a real Tauri client shell (no Rust/cargo toolchain)</li>
+        <li>Could not connect to a real IPFS node or the Storacha cloud service (no network access)</li>
+        <li>Could not deploy to a real EVM testnet (no network access)</li>
+        <li>Could not run large-scale concurrency/stress testing (single-machine sandbox resource limits)</li>
+      </ul>
+
+      <h3>8.2　Stage 7 outlook scope (per the plan's T8-01/T8-02)</h3>
+      <ul>
+        <li>Real Tauri five-platform (Windows/macOS/Linux/iOS/Android) builds and installer testing</li>
+        <li>Real Storacha cloud-persistence integration testing</li>
+        <li>Real testnet (e.g. Sepolia) contract deployment and gas-cost measurement</li>
+        <li>Large-scale concurrency stress testing and decentralized-compute-layer (Oracle) integration</li>
+        <li>Real-network CoW Protocol／Wormhole Bridge transaction-timing measurement</li>
+      </ul>
+
+      <p class="small muted">This report was auto-compiled from the szpL2E v2.0 One-Click Staged Launch Plan rewrite effort; all figures come from actual execution records, stored under the logs/ directory. This document is szpL2E v2.0's Implementation Results Specification &amp; Performance Report, following the format and methodology of the v1.1 "szpL2E Implementation Results Specification &amp; Performance Report" and the "One-Click Staged Launch Plan v2.0." All source code, tests, and demo execution logs are bundled together in the same reproducible ZIP package.</p>
+
+      <div class="btn-row" style="margin-top:40px">
+        <a href="results.html" class="btn btn-primary">← Back to the Results Archive</a>
+        <a href="roadmap.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">Cross-reference the One-Click Staged Launch Plan →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ Sonzpo Learn-to-Earn</div>
+        <p class="f-tag">szpL2E — decentralized, gamified, portable skill-proof learning-economy infrastructure.</p>
+      </div>
+      <div>
+        <h5>Documents</h5>
+        <a href="technical.html">Technical Architecture Plan v1.1</a>
+        <a href="wbs.html">Task Breakdown &amp; Fishbone Plan v2.0</a>
+        <a href="roadmap.html">One-Click Staged Launch Plan v2.0</a>
+        <a href="investor.html">Investor Memorandum v1.0</a>
+      </div>
+      <div>
+        <h5>Results Archive</h5>
+        <a href="results-v2.0.html">v2.0 (August 2026)</a>
+        <a href="results.html">All versions</a>
+      </div>
+      <div>
+        <h5>This Page</h5>
+        <a href="#stages">Nine-stage implementation matrix</a>
+        <a href="#perf">Performance-spec comparison</a>
+        <a href="#honesty">Honesty-boundary disclosures</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+	  <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>Unit of account: <strong>SZP</strong> (Sonzpo token)　｜　Implementation Results Specification &amp; Performance Report v2.0</span>
+      <span>"On Sonzpo Hill, every rewrite is a process of honestly facing constraints and re-rooting."</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

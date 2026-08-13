@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>投資人簡報書 v1.0 ｜ szpL2E 松鼠坡學以致富</title>
+<meta name="description" content="szpL2E 投資人簡報書：量化市場潛力分析與公司估值報告。全球市場量化分析、商業模式與財務推估、三方法交叉驗證估值分析、募資規劃與資金運用、風險因素揭露。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="css/main.css">
+	<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../assets/audio/312727.mp3"
+     sound[1]= "../assets/audio/312767.mp3"
+     sound[2]= "../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>松鼠坡學以致富<small>SZPL2E　·　SONZPO LEARN-TO-EARN</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html">總覽</a>
+      <a href="technical.html">技術架構</a>
+      <a href="wbs.html">任務拆解</a>
+      <a href="roadmap.html">一鍵啟動計畫</a>
+      <div class="nav-item-drop">
+        <a href="results.html">實作成果</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python 標準庫零依賴改版</a>
+          <div class="dd-foot">
+            <a href="results.html">→ 全部版本總覽</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html" class="current">投資人簡報</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="investor.html" class="is-active">中</a>
+        <a href="en/investor.html">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="開啟選單">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-hero">
+  <div class="wrap">
+    <span class="kicker">投資人簡報書　·　Investor Memorandum</span>
+    <h1>量化市場潛力分析與 szpL2E 估值報告</h1>
+    <p>依據《技術架構規劃書》v1.1、《性能規格與操作說明書》v1.0、《任務拆解與魚骨圖規劃書》v2.0、《一鍵啟動階段化實踐計畫》v2.0 四份內部工程文件彙整撰寫。本文件為投資人參考資料，非正式招股說明書、亦非任何法域下之公開發行或私募要約文件。</p>
+    <div class="meta-row">
+      <span>版本　<strong>v1.0</strong></span>
+      <span>發佈　<strong>2026 年 8 月</strong></span>
+      <span>計價單位　<strong>SZP</strong></span>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer-band">
+  <div class="wrap">⚠ 前瞻性聲明：文件所載市場規模、成長率、財務推估、估值區間均屬前瞻性陳述，涉及重大不確定性。本文件不構成投資建議、法律意見或財務建議，潛在投資人應諮詢獨立顧問並自行進行盡職調查。</div>
+</div>
+
+<section>
+  <div class="wrap doc-layout">
+
+    <aside class="doc-sidebar">
+      <div class="sb-group">
+        <div class="sb-h">目錄</div>
+        <a href="#overview">1　公司與產品概述</a>
+        <a href="#moat">2　產品特色與技術護城河</a>
+        <a href="#milestones">3　開發進度與里程碑實證</a>
+        <a href="#market">4　全球市場量化分析</a>
+        <a href="#strategy">5　目標市場切入策略</a>
+        <a href="#business">6　商業模式與財務推估</a>
+        <a href="#valuation">7　szpL2E 量化估值分析</a>
+        <a href="#funding">8　募資規劃與資金運用</a>
+        <a href="#risk">9　風險因素揭露</a>
+        <a href="#closing">10　結語與聯繫資訊</a>
+      </div>
+    </aside>
+
+    <div class="doc-main">
+
+      <h2 id="overview">1　公司與產品概述</h2>
+      <p><strong>一句話定位：</strong>松鼠坡學以致富（Sonzpo Learn-to-Earn，代號 szpL2E）是一套「無中心化業務伺服器」的去中心化學習經濟作業系統：使用者透過遊戲化的學習與驗證流程賺取可流通代幣（SZP）、可攜式學習履歷與鏈上可驗證技能證書，並可在同一套錢包與資產基礎設施上，進行數位智慧財產授權交易與數位學習課程交易，長期並將橫向擴充至企業 ERP、預測市場與遊戲等模組。</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>項目</th><th>內容</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">App 代號</td><td>szpL2E</td></tr>
+            <tr><td class="strong">中文全名</td><td>松鼠坡學以致富</td></tr>
+            <tr><td class="strong">計價單位</td><td>SZP（松鼠坡代幣，App 內所有服務之計價與結算單位）</td></tr>
+            <tr><td class="strong">核心定位</td><td>無後台伺服器・去中心化跨平台學習與資產交易應用</td></tr>
+            <tr><td class="strong">支援平台</td><td>iPhone、Android、Windows、macOS、Wasm 網頁五端同源</td></tr>
+            <tr><td class="strong">核心技術棧</td><td>Tauri v2（Rust 核心）＋ IPFS/Storacha ＋ CoW Protocol ＋ Wormhole Bridge ＋ ERC-1155/721 + EIP-2981</td></tr>
+            <tr><td class="strong">目前階段</td><td>架構與規格定案、九大工作領域任務拆解完成、本機一鍵啟動數位分身（階段 −1 至階段 6）規劃完成並可執行；生產環境主網部署與真實資金串接為下一階段工作</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>1.4　核心定位：學什麼、賺什麼、誰付錢</h3>
+      <div class="grid grid-3">
+        <div class="card"><h3>學什麼</h3><p>十一條學習賽道，依驗證強度（選擇題／情境應用題／實作題／企業命題）分級給予 1x～10x 代幣權重，防止刷題套利。</p></div>
+        <div class="card"><h3>賺什麼</h3><p>平台代幣 SZP、抽獎機會、可攜式學習履歷、鏈上可驗證證書（NFT／SBT）四類資產。</p></div>
+        <div class="card"><h3>誰付錢</h3><p>廣告商、企業贊助、學校／政府補助、用戶付費訂閱四方收入來源互相支撐。</p></div>
+      </div>
+
+      <h2 id="moat">2　產品特色與技術護城河</h2>
+
+      <h3>2.1　「無中心化業務伺服器」的架構護城河</h3>
+      <p>szpL2E 的核心架構主張是「無單一信任伺服器」：撮合、鑑權、資金保管等核心業務邏輯全數不經由 szpL2E 自營且可單方控制的伺服器處理，改以智能合約與鏈下協定取代傳統後台 API。相較傳統中心化 EdTech 平台，具有三項難以短期複製的結構性優勢：</p>
+      <ul>
+        <li><strong>監理與信任成本外部化：</strong>資產保管與交易撮合責任分散至 CoW Protocol、Wormhole 等成熟去中心化協定，降低單一平台遭受集中式資料外洩或監管勒令關停的尾端風險。</li>
+        <li><strong>多端同源降低維運複雜度：</strong>Tauri v2 單一 Rust 核心同時編譯出 iOS、Android、Windows、macOS 與 Wasm 網頁版，是目前少數能以單一核心涵蓋桌面與行動裝置的成熟跨平台框架選型。</li>
+        <li><strong>學習成果與資產可攜性：</strong>可驗證證書（NFT／SBT）與履歷資產直接沿用 ERC-1155／ERC-721＋EIP-2981 版稅標準，使用者的學習成果不被鎖定於單一平台。</li>
+      </ul>
+
+      <h3>2.2　防作弊與驗證機制：教育信譽的護城河</h3>
+      <p>Learn-to-Earn 賽道最大的信譽風險是「刷題套利、非真學習」。szpL2E 的驗證機制設計包含間隔重複測驗、打字與操作速度異常偵測、裝置與行為指紋比對，並以進步係數、留存係數、品質係數三軸取代單純出席計數，將防作弊判定結果以雜湊時間戳寫入鏈上存證，形成可稽核、不可竄改的信譽記錄。</p>
+
+      <h3>2.3　代幣經濟的通縮設計</h3>
+      <p>為避免「代幣通膨、發太多沒人要學」的典型失敗模式，szpL2E 採動態遞減獎勵曲線並與當期代幣總流通量掛鉤，搭配進階內容解鎖、證書鑄造、抽獎參與等多個消費情境的固定比例代幣銷毀機制，形成自我調節的通縮壓力。企業贊助任務資金由企業預先儲值於智能合約，平台不代墊、不經手資金流轉。</p>
+
+      <h3>2.4　橫向擴張的模組化設計</h3>
+      <p>szpDRX 與 szpERX 在技術本質上是同一套「內容加密＋鏈上所有權證明＋條件式解密＋版稅自動分潤」資產化框架的兩種應用場景，向其他數位內容類型與其他學習型態橫向擴張時，毋須重建底層資產化基礎設施，大幅降低邊際擴張成本。</p>
+
+      <h2 id="milestones">3　開發進度與里程碑實證</h2>
+      <p>截至本文件撰寫之時，szpL2E 已完成以下四個層級的交付物，構成本輪投資人評估之事實基礎：</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>交付層級</th><th>完成內容</th><th>對應文件</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">技術架構定案</td><td>整體架構原則、系統七層分層、產品定位與遊戲化經濟設計、Tauri v2 客戶端架構、去中心化儲存層、szpEX 錢包、szpDRX／szpERX 資產化模組、中長期路線圖，技術選型全數定案</td><td>技術架構規劃書 v1.1</td></tr>
+            <tr><td class="strong">量化規格定案</td><td>客戶端、去中心化儲存、szpEX 交易、szpDRX／szpERX 四大範疇之量化 SLA 目標值，操作說明書草稿、監控指標與故障排除總表</td><td>性能規格與操作說明書 v1.0</td></tr>
+            <tr><td class="strong">工作拆解定案</td><td>九大工作領域、約 30 個次領域、80 項可執行任務之雙層 WBS，含關鍵路徑、高風險節點與團隊編組建議</td><td>任務拆解與魚骨圖規劃書 v2.0</td></tr>
+            <tr><td class="strong">一鍵啟動數位分身</td><td>階段 −1（Tauri 客戶端骨架）至階段 6（效能規格與監控儀表板）共 8 個可一鍵啟動的本機端到端展示階段已規劃完成並可執行</td><td>一鍵啟動階段化實踐計畫 v2.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.2　一鍵啟動數位分身：已可執行的端到端展示範疇</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>階段</th><th>已完成之展示範疇</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">階段 −1</td><td>Tauri v2 客戶端殼與最小本機服務行程握手，驗證前端 UI → IPC Bridge → Rust 核心 → 服務行程之完整鏈路</td></tr>
+            <tr><td class="strong">階段 0</td><td>多賽道課程單元、間隔重複測驗排程、題型權重與評分系統之單行程端到端 demo，含自動化測試</td></tr>
+            <tr><td class="strong">階段 1</td><td>呼叫本地內嵌測試鏈完成 ERC-1155／ERC-721＋EIP-2981 核心合約子集（發放、銷毀）之真實合約交易</td></tr>
+            <tr><td class="strong">階段 2</td><td>學習驗證服務與鏈上結算服務雙行程真實 HTTP／RPC 通訊；學習內容改採 IPFS＋Storacha 混合持久化雛形</td></tr>
+            <tr><td class="strong">階段 3</td><td>防作弊行為分析最小版與簽章式身分防偽，成績送往結算端全程可驗證簽章</td></tr>
+            <tr><td class="strong">階段 4</td><td>行程數擴大至 3～6 個，新增儲存代理行程與客戶端殼並列上線，並具備簡易監控儀表板</td></tr>
+            <tr><td class="strong">階段 5</td><td>szpEX 自託管錢包最小版、企業任務發布介面雛形、結算行程斷線自動重連韌性機制</td></tr>
+            <tr><td class="strong">階段 6</td><td>性能規格量化 SLA 目標值與本機模擬量測值並列對照的監控儀表板，明確標注模擬推演性質</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ 誠實邊界：本輪尚未涵蓋之範疇（階段 7・生產環境驗證）</div>
+        <p>真實主網部署、CoW Protocol／Wormhole Bridge 真實資金串接、第三方安全審計、教育誠信外部評估、真實裝置五端效能實測，性質上無法壓縮進「本機一鍵啟動」的定義範疇，屬於階段 7（生產環境驗收）展望工作，尚未展開詳細 WBS。第六章財務推估與第七章估值分析，均以「架構、規格、任務拆解與可執行本機數位分身已完成，生產環境驗證與正式上線尚待完成」為前提假設。</p>
+      </div>
+
+      <h3>3.3　關鍵路徑與生產化時程</h3>
+      <p>全專案自 Sprint −1（規格凍結）至 Sprint 5（最終驗收）約 <strong>8 個 Sprint</strong>（以 2 週為一週期，約 16 週／4 個月），即可完成自規格到生產部署與效能驗收之全部工作。關鍵路徑為：客戶端四層架構規格 → Tauri 骨架建置 → 私鑰不落地安全邊界 → 自託管錢包 → 社交復原智能合約 → CoW／Wormhole 雙路由 → 資產變現流程串接 → 版稅自動分潤 → 儲存與交易效能規格驗收 → 生產就緒檢核清單最終驗收。</p>
+
+      <h2 id="market">4　全球市場量化分析（過去 5 年與未來 5 年）</h2>
+      <p>szpL2E 橫跨教育科技、遊戲化學習、去中心化金融基礎設施與數位智慧財產交易四個高成長市場的交集。本章彙整截至 2026 年 8 月可得之第三方市場研究機構公開數據。</p>
+
+      <h3>4.1　核心市場一：全球數位學習（E-Learning）市場</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>研究機構</th><th>基準年市場規模</th><th>預測終年市場規模</th><th>CAGR</th><th>預測期間</th></tr></thead>
+          <tbody>
+            <tr><td>Grand View Research</td><td>2024：約 3,034 億美元</td><td>2032：約 8,355 億美元</td><td class="num">13.5%</td><td>2024–2032</td></tr>
+            <tr><td>IMARC Group</td><td>2025：約 3,697 億美元</td><td>2034：約 7,318 億美元</td><td class="num">7.65%</td><td>2026–2034</td></tr>
+            <tr><td>Zion Market Research</td><td>2024：約 2,319 億美元</td><td>2034：約 1兆 861 億美元</td><td class="num">15.2%</td><td>2025–2034</td></tr>
+            <tr><td>Custom Market Insights</td><td>2025：約 3,240 億美元</td><td>2035：約 2兆 390 億美元</td><td class="num">20.2%</td><td>2026–2035</td></tr>
+            <tr><td>Technavio</td><td>2024：基期</td><td>2030：市場淨增 5,490 億美元</td><td class="num">24.2%</td><td>2025–2030</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>多方數據雖存在統計口徑差異，但均一致指向：全球數位學習市場現階段規模落於 3,000～3,700 億美元區間，且未來 5～10 年將以兩位數 CAGR 持續擴張，是 szpL2E 十一條學習賽道的基礎需求盤。</p>
+
+      <h3>4.2　核心市場二：遊戲化學習（Gamified Learning）市場</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>研究機構</th><th>基準年市場規模</th><th>預測終年市場規模</th><th>CAGR</th><th>預測期間</th></tr></thead>
+          <tbody>
+            <tr><td>Market.us（遊戲化學習）</td><td>2024：約 127 億美元</td><td>2034：約 2,167 億美元</td><td class="num">32.8%</td><td>2025–2034</td></tr>
+            <tr><td>Market Research Future</td><td>2024：約 135 億美元</td><td>2034：約 424 億美元</td><td class="num">12.1%</td><td>2025–2034</td></tr>
+            <tr><td>Global Industry Analysts</td><td>2024：約 35 億美元</td><td>2030：約 143 億美元</td><td class="num">26.6%</td><td>2024–2030</td></tr>
+            <tr><td>Market Data Forecast</td><td>2024：約 11.4 億美元</td><td>2033：約 186 億美元</td><td class="num">36.4%</td><td>2025–2033</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>成長率一致呈現 12%～36% 的高速區間，顯著高於傳統數位學習市場，佐證市場對遊戲化教育設計的需求正快速提升。</p>
+
+      <h3>4.3　核心市場三：企業培訓與專業證照市場</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>研究機構</th><th>市場類別</th><th>基準年市場規模</th><th>預測終年市場規模</th><th>CAGR</th></tr></thead>
+          <tbody>
+            <tr><td>SkyQuest</td><td>全球企業培訓</td><td>2024：約 4,009 億美元</td><td>2033：約 7,465 億美元</td><td class="num">7.3%</td></tr>
+            <tr><td>ResearchAndMarkets</td><td>全球企業培訓</td><td>2024：約 3,527 億美元</td><td>—</td><td class="num">11.7%</td></tr>
+            <tr><td>DataIntelo</td><td>全球專業證照培訓</td><td>2024：約 284 億美元</td><td>2033：約 563 億美元</td><td class="num">7.9%</td></tr>
+            <tr><td>MarketIntelo</td><td>全球專業證照培訓</td><td>2024：約 184 億美元</td><td>2033：約 412 億美元</td><td class="num">9.3%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>是 szpL2E「可驗證證書／技能認證變現」與「企業贊助任務」兩項收入來源的量化基礎——規模最大、成長最穩健的基礎需求盤。</p>
+
+      <h3>4.4　差異化市場：區塊鏈教育與 Learn-to-Earn 市場</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>研究機構</th><th>市場類別</th><th>基準年市場規模</th><th>預測終年市場規模</th><th>CAGR</th></tr></thead>
+          <tbody>
+            <tr><td>Market.us</td><td>區塊鏈 EdTech</td><td>2024：約 21 億美元</td><td>2034：約 303 億美元</td><td class="num">30.4%</td></tr>
+            <tr><td>GrowthMarketReports</td><td>區塊鏈教育</td><td>2024：約 7.1 億美元</td><td>2033：約 91 億美元</td><td class="num">36.2%</td></tr>
+            <tr><td>Persistence Market Research</td><td>區塊鏈 EdTech</td><td>2025：約 24 億美元</td><td>2032：約 114 億美元</td><td class="num">24.9%</td></tr>
+            <tr><td>VirtueMarketResearch</td><td>區塊鏈教育生態</td><td>2023：約 2.4 億美元</td><td>2030：約 30.7 億美元</td><td class="num">43.94%</td></tr>
+            <tr><td>DataIntelo</td><td>區塊鏈教育（含高教）</td><td>2025：約 18 億美元</td><td>2034：約 124 億美元</td><td class="num">23.8%</td></tr>
+            <tr><td>MarketIntelo</td><td>加密貨幣教育</td><td>2025：約 32 億美元</td><td>2034：約 118 億美元</td><td class="num">15.6%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>此為 szpL2E 相對於傳統中心化 EdTech 平台的差異化定位所在。值得特別留意的是「加密貨幣教育」子市場已明確記載 JPMorgan、Goldman Sachs、Fidelity 等大型金融機構於 2025 年投入企業員工加密貨幣升級訓練預算，以及 MIT、Stanford、Cornell 等頂尖大學已將區塊鏈課程納入正式課綱，顯示相關需求已具備真實且可驗證的早期採用訊號，而非純粹概念性市場。</p>
+
+      <h3>4.5　市場量化總表：szpL2E 可觸及市場（TAM／SAM）估算</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>情境</th><th>TAM 定義基礎</th><th>2026 年估算</th><th>2031 年估算</th><th>隱含 CAGR</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">保守情境</td><td>僅計入區塊鏈教育＋遊戲化學習兩個差異化子市場加總下緣</td><td class="num">約 35 億美元</td><td class="num">約 150 億美元</td><td class="num">34%</td></tr>
+            <tr><td class="strong">中位情境</td><td>區塊鏈教育（中位）＋遊戲化學習（中位）＋專業證照培訓 5% 滲透率</td><td class="num">約 90 億美元</td><td class="num">約 480 億美元</td><td class="num">40%</td></tr>
+            <tr><td class="strong">樂觀情境</td><td>數位學習市場 3% 滲透率＋企業培訓 2% 滲透率＋區塊鏈教育（樂觀）全額計入</td><td class="num">約 220 億美元</td><td class="num">約 1,350 億美元</td><td class="num">44%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">各機構統計口徑、地理範疇與產業分類定義並不完全一致，數字之間不宜直接加總或互相校驗，僅供量級與成長趨勢參考。TAM／SAM 估算為本文件基於第三方數據所作之交叉推算，非任一第三方機構之官方數字。</p>
+
+      <h2 id="strategy">5　目標市場切入策略與橫向擴張路徑</h2>
+
+      <h3>5.1　與世界研究所、大學、企業、證照機構的連結策略</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>合作對象</th><th>切入模式</th><th>對應收入來源</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">大學／研究所</td><td>以 szpERX 模組承載選修課程、跨校學分先修課程，鏈上可驗證證書可作為學分抵免或補充憑證</td><td>課程銷售分潤、學校補助</td></tr>
+            <tr><td class="strong">企業（招募／培訓）</td><td>企業於平台發布客製化命題任務，付費取得完成者履歷與能力評分排序、優先媒合權限</td><td>企業贊助任務</td></tr>
+            <tr><td class="strong">證照機構</td><td>將既有證照大綱轉譯為 szpERX 課程與線上考試模組，證照以 NFT／SBT 形式鑄造</td><td>企業認證版證書付費核發</td></tr>
+            <tr><td class="strong">政府／NGO</td><td>針對金融知識、健康素養等公共政策目標素養教育，以補助形式支持特定賽道內容開發</td><td>學校／政府補助</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>5.2　優先切入賽道排序</h3>
+      <div class="tl">
+        <div class="tl-item"><span class="tl-tag">第一波・生產上線同步</span><h4>程式設計、加密貨幣／Web3</h4><p>技術含金量高，驗證機制與現有平台架構最契合，對應區塊鏈教育市場最高成長率子市場。</p></div>
+        <div class="tl-item"><span class="tl-tag">第二波・上線後 6～12 個月</span><h4>金融知識、數位內容授權</h4><p>直接對應 szpDRX 模組電子書授權場景，可快速將創作者經濟導入平台形成內容飛輪。</p></div>
+        <div class="tl-item"><span class="tl-tag">第三波・上線後 12～24 個月</span><h4>語言學習、健康素養、產業特定技能</h4><p>市場規模最大，但需要更成熟的社群規模支撐排行榜與社交留存機制之價值。</p></div>
+        <div class="tl-item"><span class="tl-tag">中長期・依技術路線圖</span><h4>ERP、預測市場／博奕、遊戲設計</h4><p>直接沿用已規劃之 ERP、預測市場與遊戲模組技術路線。</p></div>
+      </div>
+
+      <h3>5.4　競爭定位摘要</h3>
+      <p>相較於 Duolingo、Coursera 等中心化數位學習平台以廣告與訂閱為主要收入來源、學習成果不具鏈上可攜性；也相較於既有 GameFi／Play-to-Earn 專案多聚焦娛樂型代幣經濟、缺乏教育信譽的防作弊驗證機制，szpL2E 的差異化定位在於同時具備「教育信譽的驗證嚴謹度」與「Web3 資產的可攜性與去中心化韌性」，鎖定的是兩個市場交集處目前競爭者相對稀缺的區隔。</p>
+
+      <h2 id="business">6　商業模式與財務推估</h2>
+
+      <h3>6.1　四方收入結構</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>收入來源</th><th>計費基礎</th><th>設計意圖</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">廣告商</td><td>學習間隙品牌內容曝光、精準投放，依實際曝光與完課轉換結算</td><td>提供「真金白銀」基礎收入</td></tr>
+            <tr><td class="strong">企業贊助</td><td>命題任務獎勵資金由企業預先儲值於智能合約，企業付費取得履歷與能力數據</td><td>與用戶訂閱形成反哺循環</td></tr>
+            <tr><td class="strong">學校／政府補助</td><td>推動特定素養教育政策目標，提供教育成效數據與學習覆蓋率報告</td><td>提供非營利屬性穩定性</td></tr>
+            <tr><td class="strong">用戶付費訂閱</td><td>解鎖進階內容、提高獎勵倍率、去廣告</td><td>訂閱費反哺獎金池，提升代幣兌換率</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.2　關鍵假設與推估方法</h3>
+      <p>本節財務推估採「由下而上（Bottom-Up）使用者成長模型」而非「由上而下市場滲透率外推」，以降低對第四章總體市場數據之過度依賴。</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>假設項目</th><th>數值</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">生產上線時點</td><td>自本文件發佈起約 4～6 個月後</td></tr>
+            <tr><td class="strong">首年活躍使用者（MAU）目標</td><td>上線第 12 個月末達 5 萬～15 萬人（保守／樂觀情境）</td></tr>
+            <tr><td class="strong">次年使用者成長率</td><td>150%～300%（YoY），第三年起收斂至 60%～120%</td></tr>
+            <tr><td class="strong">每活躍用戶年化收入（ARPU）</td><td>8～25 美元（依廣告、訂閱、企業贊助、交易手續費綜合計算）</td></tr>
+            <tr><td class="strong">企業贊助任務單價</td><td>每項命題任務 3,000～20,000 美元（依任務規模與企業規模分級）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.3　五年營收推估（保守／中位／樂觀三情境）</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>年度</th><th>保守情境（百萬美元）</th><th>中位情境（百萬美元）</th><th>樂觀情境（百萬美元）</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Y1（上線首年）</td><td class="num">0.4</td><td class="num">1.2</td><td class="num">3.5</td></tr>
+            <tr><td class="strong">Y2</td><td class="num">1.6</td><td class="num">5.8</td><td class="num">18.0</td></tr>
+            <tr><td class="strong">Y3</td><td class="num">4.2</td><td class="num">16.5</td><td class="num">52.0</td></tr>
+            <tr><td class="strong">Y4</td><td class="num">8.5</td><td class="num">34.0</td><td class="num">108.0</td></tr>
+            <tr><td class="strong">Y5</td><td class="num">15.0</td><td class="num">62.0</td><td class="num">195.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ 財務推估性質說明</div>
+        <p>上表為情境推估，非財務預測或財務預估，未經會計師或第三方財務顧問審閱，不應作為投資決策之唯一依據。推估情境刻意呈現三倍以上之保守至樂觀區間差距，反映 szpL2E 現階段（生產上線前）財務結果之高度不確定性。</p>
+      </div>
+
+      <h3>6.4　成本結構重點</h3>
+      <p>依「無中心化業務邏輯伺服器」之設計原則，szpL2E 相較傳統中心化 EdTech 平台之成本結構具備兩項結構性差異：其一，無需自建大規模雲端伺服器叢集，去中心化儲存與 RPC 節點成本可隨用量彈性外部化計價；其二，客服與異常監控成本因無中心化後台而轉移至更完善的 App 內建說明與鏈上狀態追蹤 UX 設計投入。主要現金支出項目為工程團隊人事成本、第三方安全審計費用（預估 8 萬～25 萬美元）、去中心化外包美術與配樂社群費用，以及企業與監理法遵顧問費用。</p>
+
+      <h2 id="valuation">7　szpL2E 量化估值分析</h2>
+      <p>本章採三種互補之估值方法交叉驗證，三法交叉後取合理區間，而非單一精確數字，以誠實反映早期階段估值之本質不確定性。</p>
+
+      <h3>7.1　方法一：階段基準法（Stage-Based Benchmarking）</h3>
+      <p>依 Carta 2025～2026 年度數據，美國新創公司種子輪平均前期估值中位數約為 1,600 萬美元，種子輪後估值中位數約為 2,400 萬美元；前種子輪 SAFE 估值上限則落於 1,000～1,500 萬美元區間。</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>階段</th><th>前期估值中位數（美元）</th><th>適用性評估</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">前種子輪</td><td>1,000 萬～1,500 萬</td><td>適用於僅有構想與團隊、尚無 MVP 之階段</td></tr>
+            <tr><td class="strong">種子輪</td><td>約 1,600 萬</td><td>適用於已有 MVP 並展現早期使用者訊號之階段</td></tr>
+            <tr><td class="strong">種子輪後段</td><td>約 2,000 萬～2,400 萬（Post-Money）</td><td>適用於已有小規模營收或強烈成長訊號之階段</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>szpL2E 現階段已完成技術架構、量化規格、九大領域工作拆解，以及完整本機一鍵啟動數位分身，工程完備度顯著高於「僅有構想」之前種子輪基準，但尚未完成生產環境部署與真實使用者驗證，因此本文件將 szpL2E 定位於「種子輪」與「前種子輪後段」之間，階段基準法估值區間為 <strong>1,200 萬～1,800 萬美元</strong>（前期估值）。</p>
+
+      <h3>7.2　方法二：風險調整未來收入折現法</h3>
+      <p>以第六章中位情境營收推估為基礎，採 EdTech 種子階段常用之高折現率區間（45%～55%），並以 Y5 營收乘以產業慣例 EV/Revenue 退出倍數（4～8 倍），反推現值：</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>情境</th><th>Y5 中位營收（百萬美元）</th><th>假設退出倍數</th><th>折現率</th><th>現值估算（百萬美元）</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">保守</td><td class="num">15.0</td><td class="num">4x</td><td class="num">55%</td><td class="num">約 6.8</td></tr>
+            <tr><td class="strong">中位</td><td class="num">62.0</td><td class="num">6x</td><td class="num">50%</td><td class="num">約 48.9</td></tr>
+            <tr><td class="strong">樂觀</td><td class="num">195.0</td><td class="num">8x</td><td class="num">45%</td><td class="num">約 235.6</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>三情境現值估算橫跨約 700 萬至 2.36 億美元，區間跨度極大，反映生產上線前階段財務推估之固有高波動性。本文件建議以「保守至中位」區間（約 700 萬～4,900 萬美元）作為現階段估值參考之主要錨點，樂觀情境數字僅供長期潛力參考，不宜作為募資談判基礎。</p>
+
+      <h3>7.3　方法三：可比市場乘數法</h3>
+      <p>依 Finro 2025 年第四季 EdTech 估值資料庫，種子階段 EdTech 新創之 EV/Revenue 平均倍數約 11.9 倍，惟離散度極大（0.2 倍至 80 倍）。考量 szpL2E 尚無正式營收，此方法於現階段僅具參考性質，待生產上線並累積至少 2～3 季實際營收數據後，方能提供更具說服力之乘數估值基礎。</p>
+
+      <h3>7.4　估值方法交叉驗證與建議區間</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>估值方法</th><th>估值區間（百萬美元，Pre-Money）</th><th>方法特性</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">階段基準法</td><td class="num">12.0 – 18.0</td><td>對標同階段新創之市場慣例，不依賴自身財務推估</td></tr>
+            <tr><td class="strong">風險調整折現法（保守至中位）</td><td class="num">6.8 – 48.9</td><td>依賴第六章營收推估，波動性最高</td></tr>
+            <tr><td class="strong">可比市場乘數法</td><td>現階段不適用（無實際營收）</td><td>待生產上線後方具參考力</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <div class="c-title">⚠ 綜合估值結論</div>
+        <p>綜合三種方法之交叉驗證，本文件建議 szpL2E 現階段（生產上線前、已完成本機一鍵啟動數位分身驗證之階段）合理前期估值區間為 <strong>1,000 萬～2,000 萬美元</strong>，中位錨點約落於 <strong>1,500 萬美元</strong>附近。</p>
+        <p>此區間為方法論交叉驗證之結果，非精確估值，實際募資估值仍應依領投機構之盡職調查結論、市場當期資金環境與團隊談判動態而定。隨著階段 7（生產環境驗證）逐步完成，估值基礎將可由現階段之「階段基準法為主」逐步過渡至「可比市場乘數法為主」，屆時應重新進行估值分析。</p>
+      </div>
+
+      <h2 id="funding">8　募資規劃與資金運用</h2>
+
+      <h3>8.1　建議募資規模與釋股區間</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>情境</th><th>前期估值（Pre-Money）</th><th>建議募資金額</th><th>稀釋比例</th><th>後期估值（Post-Money）</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">保守（偏防禦）</td><td>1,000 萬美元</td><td>150 萬～200 萬美元</td><td class="num">約 13%～17%</td><td>約 1,150 萬～1,200 萬美元</td></tr>
+            <tr><td class="strong">中位（建議基準）</td><td>1,500 萬美元</td><td>250 萬～350 萬美元</td><td class="num">約 14%～19%</td><td>約 1,750 萬～1,850 萬美元</td></tr>
+            <tr><td class="strong">樂觀（強勢議價）</td><td>2,000 萬美元</td><td>400 萬～500 萬美元</td><td class="num">約 17%～20%</td><td>約 2,400 萬～2,500 萬美元</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>中位情境募資金額（250 萬～350 萬美元）對應約 4～6 個月生產化開發時程，加計第三方安全審計（8 萬～25 萬美元）與 12～18 個月營運緩衝之資金需求，是本文件建議之主要參考基準。</p>
+
+      <h3>8.2　資金運用規劃</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>用途</th><th>佔比建議</th><th>對應工作範疇</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">工程團隊人事（Sprint 1～5）</td><td class="num">45%–50%</td><td>九大領域生產化開發，含 Tauri 客戶端、智能合約、去中心化基建、szpEX 錢包整合</td></tr>
+            <tr><td class="strong">第三方安全審計與法遵顧問</td><td class="num">10%–15%</td><td>智能合約與跨鏈整合審計、監理合規顧問</td></tr>
+            <tr><td class="strong">去中心化外包美術／音效與社群建置</td><td class="num">10%–12%</td><td>松鼠角色成長系統核心視覺資產、配樂製作、開源素材授權署名管理</td></tr>
+            <tr><td class="strong">市場驗證與早期使用者獲取</td><td class="num">15%–18%</td><td>第一波優先切入賽道之早期社群與企業合作夥伴開發</td></tr>
+            <tr><td class="strong">營運與行政緩衝</td><td class="num">8%–10%</td><td>團隊營運、雲端輔助基礎設施、不可預期支出準備金</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>8.3　里程碑式撥款建議</h3>
+      <div class="tl">
+        <div class="tl-item"><span class="tl-tag">首期撥款・40%</span><h4>募資完成時撥付</h4><p>啟動 Sprint 1～Sprint 2 工程開發（客戶端骨架整合、核心智能合約部署至測試網）。</p></div>
+        <div class="tl-item"><span class="tl-tag">次期撥款・35%</span><h4>完成 Sprint 3 里程碑後撥付</h4><p>真實裝置基準測試、防作弊整合測試、鏈上部署。</p></div>
+        <div class="tl-item"><span class="tl-tag">末期撥款・25%</span><h4>完成第三方安全審計並取得審計報告後撥付</h4><p>對應主網上線前最後準備階段。</p></div>
+      </div>
+
+      <h2 id="risk">9　風險因素揭露</h2>
+      <p>依《技術架構規劃書》v1.1 與《任務拆解與魚骨圖規劃書》v2.0 原文揭露之風險，彙整如下，供投資人審慎評估。</p>
+
+      <h3>9.1　技術與執行風險</h3>
+      <ul>
+        <li><strong>跨鏈橋接安全風險：</strong>Wormhole 本身曾於 2022 年發生約 3.2 億美元的重大安全事件，szpEX 之雙路由並存架構，路由決策層邏輯若有誤，可能造成使用者資產重複扣款或路由衝突。</li>
+        <li><strong>私鑰不落地安全邊界：</strong>Wasm 網頁版與原生版須共用同一套 Rust 安全邏輯，若沙箱邊界設計不慎，可能導致私鑰明文序列化外洩；Web 版天生攻擊面大於原生版。</li>
+        <li><strong>Layer 2 鏈選型風險：</strong>屬於整個去中心化基礎設施之地基決策，一旦選定後續全部智能合約均基於此鏈開發，重工成本極高。</li>
+        <li><strong>防作弊模組誤判風險：</strong>教育產品之核心信譽風險，若誤判率過高會傷害真實學習者體驗，若偵測率過低則整個代幣經濟將被刷題套利掏空。</li>
+        <li><strong>代幣經濟極端情境失衡風險：</strong>動態調節演算法若在極端情境下失衡，修正成本高於固定金額模式。</li>
+      </ul>
+
+      <h3>9.2　監理與法遵風險</h3>
+      <p>跨鏈橋接、IP 版權交易、教育服務，加上未來規劃的 ERP 與預測市場模組，橫跨證券法、著作權法與金融監理等多重法律領域，建議及早諮詢熟悉加密貨幣與證券法規的專業律師進行合規性審視，本文件所有內容均不構成法律意見。SZP 代幣本身之法律定性尚待正式法律意見書確認，是本輪募資前必須釐清之關鍵前提。</p>
+
+      <h3>9.3　「無中心化業務伺服器」架構之體驗代價</h3>
+      <p>採用無後台架構意味著沒有傳統客服系統，也沒有集中式的異常監控機制，szpL2E 需要在 App 內建更完善的鏈上交易狀態追蹤與錯誤恢復流程。助記詞遺失為非托管錢包不可逆之本質限制，官方無法代為找回，是使用者信任建立過程中必須誠實溝通之限制。</p>
+
+      <h3>9.4　市場與財務推估不確定性</h3>
+      <p>第四章市場數據引用自多家第三方研究機構，各機構統計口徑與涵蓋範疇存在差異；第六章財務推估與第七章估值分析均建立於現階段（生產上線前）之情境假設，尚未經實際市場數據驗證，實際結果可能與推估存在重大差異，投資人應將此類前瞻性數字視為決策參考架構，而非保證性陳述。</p>
+
+      <h2 id="closing">10　結語與聯繫資訊</h2>
+      <p>松鼠坡學以致富（szpL2E）以「無中心化業務伺服器」為架構主軸，將遊戲化學習、可攜式技能證明與去中心化資產交易整合為單一產品，切入數位學習、遊戲化學習、企業培訓與區塊鏈教育四個高成長市場的交集。截至本文件撰寫之時，專案已完成技術架構、量化規格、九大工作領域任務拆解，並已完成涵蓋客戶端骨架至效能規格模擬對照之完整本機一鍵啟動數位分身驗證，具備清晰、可執行、可驗證的工程證據基礎；生產環境部署、第三方安全審計與真實使用者規模驗證，是下一階段募資將支持完成之核心里程碑。</p>
+
+      <h3>10.2　文件引用來源彙整</h3>
+      <p class="small muted">本文件市場數據引用來源包括但不限於：Grand View Research、IMARC Group、Zion Market Research、Custom Market Insights、Technavio、Market.us、Market Research Future、Global Industry Analysts、Market Data Forecast、SkyQuest、ResearchAndMarkets、DataIntelo、MarketIntelo、GrowthMarketReports、Persistence Market Research、VirtueMarketResearch、Cognitive Market Research、Finro、Carta 等市場研究與新創數據機構於 2024 年至 2026 年間發布之公開報告與新聞稿。</p>
+
+      <h3>10.3　配套內部文件</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>文件名稱</th><th>版本</th></tr></thead>
+          <tbody>
+            <tr><td><a href="technical.html">szpL2E 技術架構規劃書</a></td><td>v1.1</td></tr>
+            <tr><td>szpL2E 性能規格與操作說明書</td><td>v1.0</td></tr>
+            <tr><td><a href="wbs.html">szpL2E 專案實踐任務拆解與魚骨圖規劃書</a></td><td>v2.0</td></tr>
+            <tr><td><a href="roadmap.html">szpL2E 一鍵啟動階段化實踐計畫</a></td><td>v2.0</td></tr>
+            <tr><td>szpL2E 投資人簡報書（本文件）</td><td>v1.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="small muted" style="margin-top:24px">本文件版本 v1.0　｜　2026 年 8 月　｜　僅供受邀投資人參考，請勿任意轉發</p>
+
+      <div class="btn-row" style="margin-top:40px">
+        <a href="index.html" class="btn btn-primary">回總覽</a>
+        <a href="roadmap.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">← 上一份：一鍵啟動階段化實踐計畫</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ 松鼠坡學以致富</div>
+        <p class="f-tag">Sonzpo Learn-to-Earn（szpL2E）—— 去中心化・遊戲化・可攜式技能證明學習經濟基礎設施。本頁為投資人參考資料，非正式招股說明書。</p>
+      </div>
+      <div>
+        <h5>工程文件</h5>
+        <a href="technical.html">技術架構規劃書 v1.1</a>
+        <a href="wbs.html">任務拆解與魚骨圖規劃書 v2.0</a>
+        <a href="roadmap.html">一鍵啟動階段化實踐計畫 v2.0</a>
+        <a href="investor.html">投資人簡報書 v1.0</a>
+        <a href="results.html">實作成果版本總覽（v2.0 起）</a>
+      </div>
+      <div>
+        <h5>本頁章節</h5>
+        <a href="#market">市場量化分析</a>
+        <a href="#valuation">估值分析</a>
+        <a href="#funding">募資規劃</a>
+        <a href="#risk">風險揭露</a>
+      </div>
+      <div>
+        <h5>快速導覽</h5>
+        <a href="#overview">公司概述</a>
+        <a href="#milestones">開發里程碑</a>
+        <a href="#closing">結語</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+	  <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>計價單位：<strong>SZP</strong>（松鼠坡代幣）　｜　投資人簡報書 v1.0</span>
+      <span>「在松鼠坡上，每一次學習都是儲備過冬的堅果。」</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

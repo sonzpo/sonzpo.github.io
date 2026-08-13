@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Memorandum v1.0 ｜ szpL2E Sonzpo Learn-to-Earn</title>
+<meta name="description" content="szpL2E Investor Memorandum: quantified market-potential analysis and a company valuation report. Global market sizing, business model and financial projections, a three-method cross-validated valuation, fundraising plan and use of funds, and risk disclosures.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="../css/main.css">
+	<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../../assets/audio/312727.mp3"
+     sound[1]= "../../assets/audio/312767.mp3"
+     sound[2]= "../../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>Sonzpo Learn-to-Earn<small>SZPL2E　·　松鼠坡學以致富</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html">Overview</a>
+      <a href="technical.html">Architecture</a>
+      <a href="wbs.html">Task Breakdown</a>
+      <a href="roadmap.html">Launch Plan</a>
+      <div class="nav-item-drop">
+        <a href="results.html">Results</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python stdlib zero-dependency rewrite</a>
+          <div class="dd-foot">
+            <a href="results.html">→ All versions</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html" class="current">Investor Memo</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="../investor.html">中</a>
+        <a href="investor.html" class="is-active">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-hero">
+  <div class="wrap">
+    <span class="kicker">Investor Memorandum　·　投資人簡報書</span>
+    <h1>Quantified Market-Potential Analysis and the szpL2E Valuation Report</h1>
+    <p>Compiled from four internal engineering documents: the Technical Architecture Plan v1.1, the Performance Spec &amp; Operations Manual v1.0, the Task Breakdown &amp; Fishbone Plan v2.0, and the One-Click Staged Launch Plan v2.0. This document is investor reference material — it is not a formal offering prospectus, nor a public or private offering document in any jurisdiction.</p>
+    <div class="meta-row">
+      <span>Version　<strong>v1.0</strong></span>
+      <span>Published　<strong>August 2026</strong></span>
+      <span>Unit of account　<strong>SZP</strong></span>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer-band">
+  <div class="wrap">⚠ Forward-looking statement: the market sizes, growth rates, financial projections, and valuation ranges in this document are forward-looking statements subject to significant uncertainty. This document does not constitute investment advice, legal advice, or financial advice; prospective investors should consult independent advisors and conduct their own due diligence.</div>
+</div>
+
+<section>
+  <div class="wrap doc-layout">
+
+    <aside class="doc-sidebar">
+      <div class="sb-group">
+        <div class="sb-h">Contents</div>
+        <a href="#overview">1　Company &amp; Product Overview</a>
+        <a href="#moat">2　Product Highlights &amp; Technical Moat</a>
+        <a href="#milestones">3　Progress &amp; Milestone Evidence</a>
+        <a href="#market">4　Global Market Sizing</a>
+        <a href="#strategy">5　Go-to-Market Strategy</a>
+        <a href="#business">6　Business Model &amp; Financial Projections</a>
+        <a href="#valuation">7　szpL2E Quantified Valuation</a>
+        <a href="#funding">8　Fundraising Plan &amp; Use of Funds</a>
+        <a href="#risk">9　Risk Factor Disclosures</a>
+        <a href="#closing">10　Closing &amp; Contact</a>
+      </div>
+    </aside>
+
+    <div class="doc-main">
+
+      <h2 id="overview">1　Company &amp; Product Overview</h2>
+      <p><strong>One-line positioning:</strong> Sonzpo Learn-to-Earn (szpL2E) is a decentralized learning-economy operating system built on "no trusted central server": users earn tradable tokens (SZP), a portable learning résumé, and on-chain verifiable skill credentials through gamified learning and verification, and can trade digital IP licenses and digital courses on the same wallet and asset infrastructure — with long-term plans to expand horizontally into corporate ERP, prediction markets, and gaming modules.</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Item</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">App codename</td><td>szpL2E</td></tr>
+            <tr><td class="strong">Full name</td><td>Sonzpo Learn-to-Earn (松鼠坡學以致富)</td></tr>
+            <tr><td class="strong">Unit of account</td><td>SZP (the Sonzpo token; the unit of account and settlement for all in-app services)</td></tr>
+            <tr><td class="strong">Core positioning</td><td>No-backend, decentralized, cross-platform learning and asset-trading app</td></tr>
+            <tr><td class="strong">Platforms</td><td>iPhone, Android, Windows, macOS, Wasm Web — five platforms, one source</td></tr>
+            <tr><td class="strong">Core stack</td><td>Tauri v2 (Rust core) ＋ IPFS/Storacha ＋ CoW Protocol ＋ Wormhole Bridge ＋ ERC-1155/721 + EIP-2981</td></tr>
+            <tr><td class="strong">Current stage</td><td>Architecture and specs finalized; nine-domain task breakdown complete; a local one-click digital twin (Stage −1 through Stage 6) fully planned and executable. Production mainnet deployment and real-fund integration are the next phase.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>1.4　Core Positioning: What to Learn, What to Earn, Who Pays</h3>
+      <div class="grid grid-3">
+        <div class="card"><h3>What to learn</h3><p>Eleven learning tracks, weighted 1x–10x by verification strength (multiple choice／scenario application／hands-on／corporate-set) to deter grinding-for-tokens abuse.</p></div>
+        <div class="card"><h3>What to earn</h3><p>Four asset types: the platform token SZP, lottery entries, a portable learning résumé, and on-chain verifiable credentials (NFT／SBT).</p></div>
+        <div class="card"><h3>Who pays</h3><p>Four mutually reinforcing revenue sources: advertisers, corporate sponsorship, school／government grants, and paid user subscriptions.</p></div>
+      </div>
+
+      <h2 id="moat">2　Product Highlights &amp; Technical Moat</h2>
+
+      <h3>2.1　The "No Centralized Business-Logic Server" Architectural Moat</h3>
+      <p>szpL2E's core architectural claim is "no single trusted server": matching, authentication, fund custody, and other core business logic never run on a server that szpL2E operates and can unilaterally control — smart contracts and off-chain protocols replace the traditional backend API. Relative to traditional centralized EdTech platforms, this yields three structural advantages that are hard to replicate quickly:</p>
+      <ul>
+        <li><strong>Externalized regulatory and trust cost:</strong> custody and trade-matching responsibility is distributed to mature decentralized protocols like CoW Protocol and Wormhole, reducing the tail risk of a single platform suffering a centralized data breach or a regulatory shutdown order.</li>
+        <li><strong>Lower operational complexity from single-source, multi-platform deployment:</strong> Tauri v2 compiles one Rust core to iOS, Android, Windows, macOS, and Wasm Web simultaneously — currently one of the few mature cross-platform frameworks covering both desktop and mobile from a single core.</li>
+        <li><strong>Portable learning outcomes and assets:</strong> verifiable credentials (NFT／SBT) and résumé assets directly use the ERC-1155／ERC-721＋EIP-2981 royalty standard, so a user's learning outcomes are never locked to a single platform.</li>
+      </ul>
+
+      <h3>2.2　Anti-Cheat &amp; Verification: The Educational-Credibility Moat</h3>
+      <p>The biggest credibility risk in the Learn-to-Earn space is "gaming the system, not real learning." szpL2E's verification design includes spaced-repetition testing, typing／action-speed anomaly detection, and device／behavioral fingerprint matching, replacing simple attendance counts with three axes — progress, retention, and quality coefficients — and writing anti-cheat determinations to an on-chain, hash-timestamped record: auditable and tamper-evident.</p>
+
+      <h3>2.3　The Token Economy's Deflationary Design</h3>
+      <p>To avoid the classic failure mode of "token inflation, too many issued for anyone to want to learn," szpL2E uses a dynamic decaying reward curve pegged to current circulating supply, combined with fixed-ratio token burns across multiple spending scenarios — unlocking advanced content, minting credentials, entering lotteries — creating self-adjusting deflationary pressure. Corporate-sponsored task funds are pre-funded by the sponsor into a smart contract; the platform never advances funds or handles the flow of money.</p>
+
+      <h3>2.4　Modular Design for Horizontal Expansion</h3>
+      <p>szpDRX and szpERX are, technically, two applications of the same "encrypted content + on-chain proof of ownership + conditional decryption + automatic royalty split" asset-tization framework — expanding into other digital-content types and other learning formats doesn't require rebuilding the underlying asset infrastructure, sharply lowering the marginal cost of expansion.</p>
+
+      <h2 id="milestones">3　Progress &amp; Milestone Evidence</h2>
+      <p>As of this writing, szpL2E has completed the following four tiers of deliverables, forming the factual basis for this round of investor evaluation:</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Deliverable tier</th><th>What's complete</th><th>Source document</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Technical architecture finalized</td><td>Overall architecture principles, seven system layers, product positioning and gamified economic design, Tauri v2 client architecture, decentralized storage layer, szpEX wallet, szpDRX／szpERX asset modules, mid/long-term roadmap — all technology choices finalized</td><td>Technical Architecture Plan v1.1</td></tr>
+            <tr><td class="strong">Quantified specs finalized</td><td>Quantified SLA targets across four areas — client, decentralized storage, szpEX trading, szpDRX／szpERX; a draft operations manual, monitoring metrics, and a troubleshooting reference</td><td>Performance Spec &amp; Operations Manual v1.0</td></tr>
+            <tr><td class="strong">Work breakdown finalized</td><td>A two-tier WBS across nine work domains, ~30 sub-domains, and 80 executable tasks, with critical path, high-risk nodes, and team-staffing recommendations</td><td>Task Breakdown &amp; Fishbone Plan v2.0</td></tr>
+            <tr><td class="strong">One-click digital twin</td><td>Stage −1 (Tauri client scaffold) through Stage 6 (performance spec and monitoring dashboard) — 8 one-click-launchable local end-to-end demo stages, fully planned and executable</td><td>One-Click Staged Launch Plan v2.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.2　The One-Click Digital Twin: What's Already Executable, End to End</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Stage</th><th>Demo scope already complete</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Stage −1</td><td>Tauri v2 client shell handshaking with a minimal local service process, verifying the full chain: frontend UI → IPC Bridge → Rust core → service process</td></tr>
+            <tr><td class="strong">Stage 0</td><td>A single-process end-to-end demo of multi-track course units, spaced-repetition test scheduling, question weighting, and scoring, including automated tests</td></tr>
+            <tr><td class="strong">Stage 1</td><td>Real contract transactions (mint, burn) against an ERC-1155／ERC-721＋EIP-2981 core-contract subset via a local embedded testnet</td></tr>
+            <tr><td class="strong">Stage 2</td><td>Real two-process HTTP／RPC communication between the learning-verification service and the on-chain settlement service; learning content moved to an IPFS＋Storacha hybrid persistence prototype</td></tr>
+            <tr><td class="strong">Stage 3</td><td>A minimal anti-cheat behavior-analysis layer and signature-based identity verification, with every score sent to settlement carrying a verifiable signature</td></tr>
+            <tr><td class="strong">Stage 4</td><td>Process count expanded to 3–6, adding a storage-proxy process alongside the client shell, with a simple monitoring dashboard</td></tr>
+            <tr><td class="strong">Stage 5</td><td>A minimal szpEX self-custody wallet, a corporate-task posting-interface prototype, and auto-reconnect resilience for the settlement process</td></tr>
+            <tr><td class="strong">Stage 6</td><td>A monitoring dashboard displaying performance-spec quantified SLA targets alongside local simulated measurements, explicitly labeled as simulation</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ Honest Boundary: What This Round Does Not Yet Cover (Stage 7・Production Verification)</div>
+        <p>Real mainnet deployment, real-fund integration via CoW Protocol／Wormhole Bridge, third-party security audits, external educational-integrity assessment, and real five-platform device benchmarking cannot, by their nature, be compressed into the "local one-click launch" scope — they belong to the Stage 7 (production-environment sign-off) outlook and have not yet been broken down into a detailed WBS. Chapter 6's financial projections and Chapter 7's valuation analysis are both premised on "architecture, specs, task breakdown, and the executable local digital twin are complete; production verification and formal launch are still pending."</p>
+      </div>
+
+      <h3>3.3　Critical Path &amp; Production Timeline</h3>
+      <p>The full project runs roughly <strong>8 sprints</strong> from Sprint −1 (spec freeze) to Sprint 5 (final sign-off) — about 16 weeks／4 months at 2 weeks per sprint — to complete everything from spec to production deployment and performance sign-off. The critical path: client four-layer architecture spec → Tauri scaffold build → no-persist private-key security boundary → self-custody wallet → social-recovery smart contract → CoW／Wormhole dual routing → asset-monetization flow integration → automatic royalty split → storage-and-trading performance-spec sign-off → production-readiness checklist final sign-off.</p>
+
+      <h2 id="market">4　Global Market Sizing (Past 5 Years and Next 5 Years)</h2>
+      <p>szpL2E sits at the intersection of four high-growth markets: education technology, gamified learning, decentralized finance infrastructure, and digital IP trading. This chapter compiles publicly available third-party market-research data as of August 2026.</p>
+
+      <h3>4.1　Core Market 1: Global E-Learning</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Research firm</th><th>Base-year size</th><th>Forecast-year size</th><th>CAGR</th><th>Forecast period</th></tr></thead>
+          <tbody>
+            <tr><td>Grand View Research</td><td>2024: ~$303.4B</td><td>2032: ~$835.5B</td><td class="num">13.5%</td><td>2024–2032</td></tr>
+            <tr><td>IMARC Group</td><td>2025: ~$369.7B</td><td>2034: ~$731.8B</td><td class="num">7.65%</td><td>2026–2034</td></tr>
+            <tr><td>Zion Market Research</td><td>2024: ~$231.9B</td><td>2034: ~$1.086T</td><td class="num">15.2%</td><td>2025–2034</td></tr>
+            <tr><td>Custom Market Insights</td><td>2025: ~$324.0B</td><td>2035: ~$2.039T</td><td class="num">20.2%</td><td>2026–2035</td></tr>
+            <tr><td>Technavio</td><td>2024: base year</td><td>2030: net market growth of $549.0B</td><td class="num">24.2%</td><td>2025–2030</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Despite differing methodologies across sources, they consistently point to the same picture: the global e-learning market currently sits in the $300B–$370B range, and is expected to keep expanding at double-digit CAGR over the next 5–10 years — the base demand pool for szpL2E's eleven learning tracks.</p>
+
+      <h3>4.2　Core Market 2: Gamified Learning</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Research firm</th><th>Base-year size</th><th>Forecast-year size</th><th>CAGR</th><th>Forecast period</th></tr></thead>
+          <tbody>
+            <tr><td>Market.us (Gamified Learning)</td><td>2024: ~$12.7B</td><td>2034: ~$216.7B</td><td class="num">32.8%</td><td>2025–2034</td></tr>
+            <tr><td>Market Research Future</td><td>2024: ~$13.5B</td><td>2034: ~$42.4B</td><td class="num">12.1%</td><td>2025–2034</td></tr>
+            <tr><td>Global Industry Analysts</td><td>2024: ~$3.5B</td><td>2030: ~$14.3B</td><td class="num">26.6%</td><td>2024–2030</td></tr>
+            <tr><td>Market Data Forecast</td><td>2024: ~$1.14B</td><td>2033: ~$18.6B</td><td class="num">36.4%</td><td>2025–2033</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Growth rates consistently sit in the high 12%–36% range, well above the traditional e-learning market — evidence that demand for gamified educational design is accelerating.</p>
+
+      <h3>4.3　Core Market 3: Corporate Training &amp; Professional Certification</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Research firm</th><th>Market category</th><th>Base-year size</th><th>Forecast-year size</th><th>CAGR</th></tr></thead>
+          <tbody>
+            <tr><td>SkyQuest</td><td>Global corporate training</td><td>2024: ~$400.9B</td><td>2033: ~$746.5B</td><td class="num">7.3%</td></tr>
+            <tr><td>ResearchAndMarkets</td><td>Global corporate training</td><td>2024: ~$352.7B</td><td>—</td><td class="num">11.7%</td></tr>
+            <tr><td>DataIntelo</td><td>Global professional-certification training</td><td>2024: ~$28.4B</td><td>2033: ~$56.3B</td><td class="num">7.9%</td></tr>
+            <tr><td>MarketIntelo</td><td>Global professional-certification training</td><td>2024: ~$18.4B</td><td>2033: ~$41.2B</td><td class="num">9.3%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The quantified basis for two of szpL2E's revenue lines — "monetizable verified credentials／skill certification" and "corporate-sponsored tasks" — the largest and most steadily growing base demand pool.</p>
+
+      <h3>4.4　Differentiated Market: Blockchain Education and Learn-to-Earn</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Research firm</th><th>Market category</th><th>Base-year size</th><th>Forecast-year size</th><th>CAGR</th></tr></thead>
+          <tbody>
+            <tr><td>Market.us</td><td>Blockchain EdTech</td><td>2024: ~$2.1B</td><td>2034: ~$30.3B</td><td class="num">30.4%</td></tr>
+            <tr><td>GrowthMarketReports</td><td>Blockchain education</td><td>2024: ~$0.71B</td><td>2033: ~$9.1B</td><td class="num">36.2%</td></tr>
+            <tr><td>Persistence Market Research</td><td>Blockchain EdTech</td><td>2025: ~$2.4B</td><td>2032: ~$11.4B</td><td class="num">24.9%</td></tr>
+            <tr><td>VirtueMarketResearch</td><td>Blockchain education ecosystem</td><td>2023: ~$0.24B</td><td>2030: ~$3.07B</td><td class="num">43.94%</td></tr>
+            <tr><td>DataIntelo</td><td>Blockchain education (incl. higher ed)</td><td>2025: ~$1.8B</td><td>2034: ~$12.4B</td><td class="num">23.8%</td></tr>
+            <tr><td>MarketIntelo</td><td>Crypto education</td><td>2025: ~$3.2B</td><td>2034: ~$11.8B</td><td class="num">15.6%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>This is where szpL2E's differentiation from traditional centralized EdTech platforms lives. Notably, the "crypto education" sub-market records that major financial institutions — JPMorgan, Goldman Sachs, Fidelity — allocated corporate budgets in 2025 to upskill staff on crypto, and that top universities including MIT, Stanford, and Cornell have added blockchain coursework to their formal curricula, signaling real, verifiable early adoption rather than a purely conceptual market.</p>
+
+      <h3>4.5　Market Sizing Summary: szpL2E's Addressable Market (TAM／SAM) Estimate</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Scenario</th><th>TAM basis</th><th>2026 estimate</th><th>2031 estimate</th><th>Implied CAGR</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Conservative</td><td>Only the low end of blockchain education + gamified learning, the two differentiated sub-markets, summed</td><td class="num">~$3.5B</td><td class="num">~$15.0B</td><td class="num">34%</td></tr>
+            <tr><td class="strong">Median</td><td>Blockchain education (median) + gamified learning (median) + 5% penetration of professional-certification training</td><td class="num">~$9.0B</td><td class="num">~$48.0B</td><td class="num">40%</td></tr>
+            <tr><td class="strong">Optimistic</td><td>3% penetration of e-learning + 2% penetration of corporate training + blockchain education (optimistic) counted in full</td><td class="num">~$22.0B</td><td class="num">~$135.0B</td><td class="num">44%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">Methodologies, geographic scope, and industry-classification definitions differ across sources; figures should not be directly summed or cross-validated, and indicate scale and growth trend only. The TAM／SAM estimate is this document's own cross-derivation from third-party data, not an official figure from any single third-party firm.</p>
+
+      <h2 id="strategy">5　Go-to-Market Strategy &amp; Horizontal Expansion Path</h2>
+
+      <h3>5.1　Connecting with Research Institutes, Universities, Enterprises, and Certification Bodies</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Partner type</th><th>Entry model</th><th>Corresponding revenue source</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Universities／graduate schools</td><td>Carry elective courses and cross-institution credit-bearing courses on szpERX; on-chain verifiable credentials can serve as credit substitution or supplementary proof</td><td>Course-sales revenue share, school grants</td></tr>
+            <tr><td class="strong">Enterprises (recruiting／training)</td><td>Companies post custom-set tasks on the platform, paying for completers' résumé and ability-ranking data and priority-matching access</td><td>Corporate-sponsored tasks</td></tr>
+            <tr><td class="strong">Certification bodies</td><td>Translate existing certification syllabi into szpERX courses and online-exam modules; credentials minted as NFT／SBT</td><td>Paid issuance of an enterprise-certified credential</td></tr>
+            <tr><td class="strong">Government／NGOs</td><td>Support development of content for specific literacy tracks (financial literacy, health literacy, etc.) tied to public-policy goals, via grants</td><td>School／government grants</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>5.2　Priority Track Sequencing</h3>
+      <div class="tl">
+        <div class="tl-item"><span class="tl-tag">Wave 1・At launch</span><h4>Programming, Crypto／Web3</h4><p>High technical content, the best fit between verification mechanics and the existing platform architecture, mapping to the fastest-growing sub-market in blockchain education.</p></div>
+        <div class="tl-item"><span class="tl-tag">Wave 2・6–12 months post-launch</span><h4>Financial literacy, digital content licensing</h4><p>Directly maps to the szpDRX e-book-licensing scenario, quickly bringing the creator economy onto the platform to form a content flywheel.</p></div>
+        <div class="tl-item"><span class="tl-tag">Wave 3・12–24 months post-launch</span><h4>Language learning, health literacy, industry-specific skills</h4><p>The largest addressable markets, but need a more mature community scale before leaderboard and social-retention mechanics deliver their full value.</p></div>
+        <div class="tl-item"><span class="tl-tag">Mid/long-term・per the technical roadmap</span><h4>ERP, prediction markets／gaming, game design</h4><p>Directly reuses the already-planned ERP, prediction-market, and gaming-module technical roadmap.</p></div>
+      </div>
+
+      <h3>5.4　Competitive Positioning Summary</h3>
+      <p>Relative to centralized digital-learning platforms like Duolingo and Coursera — whose main revenue comes from ads and subscriptions and whose learning outcomes aren't portable on-chain — and relative to existing GameFi／Play-to-Earn projects, which mostly focus on entertainment-oriented token economies and lack an educationally credible anti-cheat verification system, szpL2E's differentiation lies in combining "rigorous, credible educational verification" with "Web3 asset portability and decentralized resilience" — targeting a segment at the intersection of two markets where competitors are currently relatively scarce.</p>
+
+      <h2 id="business">6　Business Model &amp; Financial Projections</h2>
+
+      <h3>6.1　Four-Way Revenue Structure</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Revenue source</th><th>Billing basis</th><th>Design intent</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Advertisers</td><td>Brand-content impressions during learning breaks, precisely targeted, settled on actual impressions and completion-conversion</td><td>A "real money" base revenue line</td></tr>
+            <tr><td class="strong">Corporate sponsorship</td><td>Task-reward funds pre-funded by companies into a smart contract; companies pay for résumé and ability data</td><td>A feedback loop with user subscriptions</td></tr>
+            <tr><td class="strong">School／government grants</td><td>Advancing specific literacy-education policy goals; provides educational-outcome data and learning-coverage reports</td><td>Nonprofit-style revenue stability</td></tr>
+            <tr><td class="strong">Paid user subscriptions</td><td>Unlocks advanced content, boosts reward multipliers, removes ads</td><td>Subscription revenue feeds the reward pool, improving token redemption rates</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.2　Key Assumptions &amp; Methodology</h3>
+      <p>This section's financial projections use a bottom-up user-growth model rather than a top-down market-penetration extrapolation, to reduce over-reliance on Chapter 4's aggregate market data.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Assumption</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Production launch timing</td><td>Roughly 4–6 months after this document's publication</td></tr>
+            <tr><td class="strong">Year-1 active-user (MAU) target</td><td>50K–150K by end of month 12 post-launch (conservative／optimistic)</td></tr>
+            <tr><td class="strong">Year-2 user growth rate</td><td>150%–300% YoY, converging to 60%–120% from Year 3 onward</td></tr>
+            <tr><td class="strong">ARPU (annualized)</td><td>$8–$25 (blending ads, subscriptions, corporate sponsorship, and transaction fees)</td></tr>
+            <tr><td class="strong">Corporate-sponsored-task unit price</td><td>$3,000–$20,000 per task (tiered by task scale and company size)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.3　Five-Year Revenue Projection (Conservative／Median／Optimistic)</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Year</th><th>Conservative ($M)</th><th>Median ($M)</th><th>Optimistic ($M)</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Y1 (launch year)</td><td class="num">0.4</td><td class="num">1.2</td><td class="num">3.5</td></tr>
+            <tr><td class="strong">Y2</td><td class="num">1.6</td><td class="num">5.8</td><td class="num">18.0</td></tr>
+            <tr><td class="strong">Y3</td><td class="num">4.2</td><td class="num">16.5</td><td class="num">52.0</td></tr>
+            <tr><td class="strong">Y4</td><td class="num">8.5</td><td class="num">34.0</td><td class="num">108.0</td></tr>
+            <tr><td class="strong">Y5</td><td class="num">15.0</td><td class="num">62.0</td><td class="num">195.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ On the Nature of These Financial Projections</div>
+        <p>The table above presents scenario estimates, not a financial forecast or a financial projection in the formal sense; it has not been reviewed by an accountant or third-party financial advisor and should not be the sole basis for an investment decision. The deliberately wide spread — more than 3× from conservative to optimistic — reflects the inherently high uncertainty of financial outcomes at szpL2E's current, pre-launch stage.</p>
+      </div>
+
+      <h3>6.4　Cost-Structure Highlights</h3>
+      <p>Under the "no centralized business-logic server" design principle, szpL2E's cost structure differs from a traditional centralized EdTech platform's in two structural ways: first, there's no need to build a large self-hosted cloud server cluster — decentralized storage and RPC-node costs can scale elastically with usage and be externalized; second, customer-support and anomaly-monitoring costs shift, in the absence of a centralized backend, into a much more thorough in-app help system and on-chain status-tracking UX investment. The main cash outlays are engineering-team compensation, third-party security audit fees (estimated $80K–$250K), decentralized-outsourcing art and music community costs, and legal／compliance advisory fees.</p>
+
+      <h2 id="valuation">7　szpL2E Quantified Valuation Analysis</h2>
+      <p>This chapter cross-validates three complementary valuation methods, taking a reasonable range from the intersection rather than a single precise number — honestly reflecting the inherent uncertainty of early-stage valuation.</p>
+
+      <h3>7.1　Method 1: Stage-Based Benchmarking</h3>
+      <p>Per Carta's 2025–2026 data, U.S. startups' median seed-round pre-money valuation is roughly $16M, with median post-seed valuation around $24M; pre-seed SAFE valuation caps fall in the $10M–$15M range.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Stage</th><th>Median pre-money valuation</th><th>Applicability</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Pre-seed</td><td>$10M–$15M</td><td>For a stage with only a concept and a team, no MVP yet</td></tr>
+            <tr><td class="strong">Seed</td><td>~$16M</td><td>For a stage with an MVP and early user-traction signals</td></tr>
+            <tr><td class="strong">Late seed</td><td>~$20M–$24M (post-money)</td><td>For a stage with modest revenue or strong growth signals</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>szpL2E has currently completed its technical architecture, quantified specs, a nine-domain work breakdown, and a complete local one-click digital twin — an engineering-completeness level markedly higher than the pre-seed "concept only" benchmark — but has not yet completed production deployment or real-user validation. This document therefore positions szpL2E between "seed" and "late pre-seed," giving a stage-based-benchmarking valuation range of <strong>$12M–$18M</strong> (pre-money).</p>
+
+      <h3>7.2　Method 2: Risk-Adjusted Future-Revenue Discounting</h3>
+      <p>Based on Chapter 6's median-scenario revenue projections, using the high discount-rate range common at the EdTech seed stage (45%–55%), and applying an industry-standard EV/Revenue exit multiple (4x–8x) to Y5 revenue to back into present value:</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Scenario</th><th>Y5 median revenue ($M)</th><th>Assumed exit multiple</th><th>Discount rate</th><th>Present-value estimate ($M)</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Conservative</td><td class="num">15.0</td><td class="num">4x</td><td class="num">55%</td><td class="num">~6.8</td></tr>
+            <tr><td class="strong">Median</td><td class="num">62.0</td><td class="num">6x</td><td class="num">50%</td><td class="num">~48.9</td></tr>
+            <tr><td class="strong">Optimistic</td><td class="num">195.0</td><td class="num">8x</td><td class="num">45%</td><td class="num">~235.6</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Present-value estimates across the three scenarios span roughly $7M to $236M — an extremely wide range, reflecting the inherent high volatility of pre-launch financial projections. This document suggests using the "conservative to median" range (roughly $7M–$49M) as the primary anchor for current-stage valuation reference; the optimistic figure is for long-term potential reference only and should not be used as a fundraising-negotiation basis.</p>
+
+      <h3>7.3　Method 3: Comparable Market Multiples</h3>
+      <p>Per Finro's Q4 2025 EdTech valuation database, seed-stage EdTech startups' average EV/Revenue multiple is roughly 11.9x, though with extremely wide dispersion (0.2x to 80x). Given szpL2E has no formal revenue yet, this method is reference-only at this stage; it will offer a more persuasive multiple-based valuation basis once the company has launched and accumulated at least 2–3 quarters of actual revenue data.</p>
+
+      <h3>7.4　Cross-Validation and Recommended Range</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Valuation method</th><th>Valuation range ($M, pre-money)</th><th>Method characteristics</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Stage-based benchmarking</td><td class="num">12.0 – 18.0</td><td>Benchmarks against market norms for same-stage startups; independent of this company's own financial projections</td></tr>
+            <tr><td class="strong">Risk-adjusted discounting (conservative to median)</td><td class="num">6.8 – 48.9</td><td>Relies on Chapter 6's revenue projections; the highest volatility of the three</td></tr>
+            <tr><td class="strong">Comparable market multiples</td><td>Not applicable at this stage (no actual revenue)</td><td>Will become useful for reference after launch</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <div class="c-title">⚠ Combined Valuation Conclusion</div>
+        <p>Cross-validating the three methods, this document suggests a reasonable pre-money valuation range for szpL2E at its current stage (pre-launch, with the local one-click digital twin verification complete) of <strong>$10M–$20M</strong>, with a median anchor around <strong>$15M</strong>.</p>
+        <p>This range is the result of methodological cross-validation, not a precise valuation — the actual fundraising valuation should still depend on the lead investor's due-diligence conclusions, the fundraising environment at the time, and negotiation dynamics between the parties. As Stage 7 (production verification) is progressively completed, the valuation basis can shift from "primarily stage-based benchmarking" today toward "primarily comparable-market-multiples," at which point the valuation analysis should be redone.</p>
+      </div>
+
+      <h2 id="funding">8　Fundraising Plan &amp; Use of Funds</h2>
+
+      <h3>8.1　Recommended Raise Size and Dilution Range</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Scenario</th><th>Pre-money valuation</th><th>Recommended raise</th><th>Dilution</th><th>Post-money valuation</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Conservative (defensive)</td><td>$10M</td><td>$1.5M–$2.0M</td><td class="num">~13%–17%</td><td>~$11.5M–$12.0M</td></tr>
+            <tr><td class="strong">Median (recommended baseline)</td><td>$15M</td><td>$2.5M–$3.5M</td><td class="num">~14%–19%</td><td>~$17.5M–$18.5M</td></tr>
+            <tr><td class="strong">Optimistic (strong negotiating position)</td><td>$20M</td><td>$4.0M–$5.0M</td><td class="num">~17%–20%</td><td>~$24.0M–$25.0M</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The median-scenario raise ($2.5M–$3.5M) corresponds to roughly 4–6 months of production-development timeline, plus a third-party security audit ($80K–$250K) and 12–18 months of operating runway — this is the document's primary recommended benchmark.</p>
+
+      <h3>8.2　Use of Funds</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Use</th><th>Recommended share</th><th>Corresponding scope of work</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Engineering headcount (Sprints 1–5)</td><td class="num">45%–50%</td><td>Production-grade development across the nine domains, including the Tauri client, smart contracts, decentralized infrastructure, and szpEX wallet integration</td></tr>
+            <tr><td class="strong">Third-party security audits &amp; compliance advisory</td><td class="num">10%–15%</td><td>Smart-contract and cross-chain-integration audits, regulatory-compliance advisory</td></tr>
+            <tr><td class="strong">Decentralized-outsourcing art／audio &amp; community-building</td><td class="num">10%–12%</td><td>Core visual assets for the squirrel character growth system, music production, open-asset-library license/attribution management</td></tr>
+            <tr><td class="strong">Market validation &amp; early user acquisition</td><td class="num">15%–18%</td><td>Early community and corporate-partner development for the wave-1 priority tracks</td></tr>
+            <tr><td class="strong">Operating &amp; administrative buffer</td><td class="num">8%–10%</td><td>Team operations, supplementary cloud infrastructure, unforeseen-expense reserve</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>8.3　Milestone-Based Disbursement Recommendation</h3>
+      <div class="tl">
+        <div class="tl-item"><span class="tl-tag">First tranche・40%</span><h4>Disbursed at close</h4><p>Kicks off Sprint 1–Sprint 2 engineering (client-scaffold integration, core smart contracts deployed to testnet).</p></div>
+        <div class="tl-item"><span class="tl-tag">Second tranche・35%</span><h4>Disbursed after the Sprint 3 milestone</h4><p>Real-device benchmarking, anti-cheat integration testing, on-chain deployment.</p></div>
+        <div class="tl-item"><span class="tl-tag">Final tranche・25%</span><h4>Disbursed after the third-party security audit report is received</h4><p>Covers final preparation before mainnet launch.</p></div>
+      </div>
+
+      <h2 id="risk">9　Risk Factor Disclosures</h2>
+      <p>Risks disclosed in the source text of the Technical Architecture Plan v1.1 and the Task Breakdown &amp; Fishbone Plan v2.0 are compiled below for investors' careful review.</p>
+
+      <h3>9.1　Technical &amp; Execution Risk</h3>
+      <ul>
+        <li><strong>Cross-chain bridge security risk:</strong> Wormhole itself suffered a roughly $320M security incident in 2022; a flaw in szpEX's dual-routing-decision logic could cause duplicate charges or routing conflicts for user assets.</li>
+        <li><strong>No-persist private-key security boundary:</strong> the Wasm web version and native version must share the same Rust security logic — a poorly designed sandbox boundary could leak a plaintext private key via serialization; the web version inherently has a larger attack surface than native.</li>
+        <li><strong>Layer-2 chain-selection risk:</strong> a foundational decision for the entire decentralized infrastructure — once chosen, every smart contract downstream is built on that chain, making rework extremely costly.</li>
+        <li><strong>Anti-cheat module false-positive risk:</strong> the core reputational risk for an education product — too high a false-positive rate hurts real learners, too low a detection rate lets the entire token economy be drained by grinding abuse.</li>
+        <li><strong>Token-economy extreme-scenario instability risk:</strong> if the dynamic-adjustment algorithm destabilizes under extreme conditions, the cost to correct it is higher than under a fixed-amount model.</li>
+      </ul>
+
+      <h3>9.2　Regulatory &amp; Compliance Risk</h3>
+      <p>Cross-chain bridging, IP/copyright trading, and education services — plus the future ERP and prediction-market modules — span securities law, copyright law, and financial regulation across multiple legal domains. We recommend consulting a lawyer experienced in crypto and securities regulation early for a compliance review; nothing in this document constitutes legal advice. The SZP token's legal characterization has not yet been confirmed by a formal legal opinion, a key prerequisite that must be clarified before this fundraising round.</p>
+
+      <h3>9.3　The UX Cost of the "No Centralized Business-Logic Server" Architecture</h3>
+      <p>A no-backend architecture means no traditional customer-support system and no centralized anomaly-monitoring facility; szpL2E needs a much more complete in-app on-chain transaction tracking and error-recovery flow. A lost seed phrase is an inherent, irreversible limitation of a non-custodial wallet that the company cannot recover on the user's behalf — a limitation that must be communicated honestly as user trust is built.</p>
+
+      <h3>9.4　Market and Financial-Projection Uncertainty</h3>
+      <p>Chapter 4's market data is drawn from multiple third-party research firms whose methodologies and coverage differ; Chapter 6's financial projections and Chapter 7's valuation analysis are both built on current-stage (pre-launch) scenario assumptions that have not yet been validated against actual market data. Actual results may differ materially from these projections; investors should treat these forward-looking figures as a decision-support framework, not a guarantee.</p>
+
+      <h2 id="closing">10　Closing &amp; Contact</h2>
+      <p>Sonzpo Learn-to-Earn (szpL2E) is built on "no centralized business-logic server" as its architectural spine, integrating gamified learning, portable skill proof, and decentralized asset trading into a single product, entering the intersection of four high-growth markets — digital learning, gamified learning, corporate training, and blockchain education. As of this writing, the project has completed its technical architecture, quantified specs, and nine-domain task breakdown, and has completed a full local one-click digital-twin verification spanning the client scaffold through simulated performance-spec comparison — a clear, executable, verifiable engineering evidence base. Production deployment, third-party security audits, and real-user-scale validation are the core milestones the next funding round will support completing.</p>
+
+      <h3>10.2　Source Attribution</h3>
+      <p class="small muted">Market data in this document is drawn from, but not limited to, public reports and press releases issued between 2024 and 2026 by: Grand View Research, IMARC Group, Zion Market Research, Custom Market Insights, Technavio, Market.us, Market Research Future, Global Industry Analysts, Market Data Forecast, SkyQuest, ResearchAndMarkets, DataIntelo, MarketIntelo, GrowthMarketReports, Persistence Market Research, VirtueMarketResearch, Cognitive Market Research, Finro, and Carta.</p>
+
+      <h3>10.3　Companion Internal Documents</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Document</th><th>Version</th></tr></thead>
+          <tbody>
+            <tr><td><a href="technical.html">szpL2E Technical Architecture Plan</a></td><td>v1.1</td></tr>
+            <tr><td>szpL2E Performance Spec &amp; Operations Manual</td><td>v1.0</td></tr>
+            <tr><td><a href="wbs.html">szpL2E Task Breakdown &amp; Fishbone Plan</a></td><td>v2.0</td></tr>
+            <tr><td><a href="roadmap.html">szpL2E One-Click Staged Launch Plan</a></td><td>v2.0</td></tr>
+            <tr><td>szpL2E Investor Memorandum (this document)</td><td>v1.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="small muted" style="margin-top:24px">Document version v1.0　｜　August 2026　｜　For the reference of invited investors only — please do not redistribute</p>
+
+      <div class="btn-row" style="margin-top:40px">
+        <a href="index.html" class="btn btn-primary">Back to overview</a>
+        <a href="roadmap.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">← Previous: One-Click Staged Launch Plan</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ Sonzpo Learn-to-Earn</div>
+        <p class="f-tag">szpL2E — decentralized, gamified, portable skill-proof learning-economy infrastructure. This page is investor reference material, not a formal public disclosure.</p>
+      </div>
+      <div>
+        <h5>Documents</h5>
+        <a href="technical.html">Technical Architecture Plan v1.1</a>
+        <a href="wbs.html">Task Breakdown &amp; Fishbone Plan v2.0</a>
+        <a href="roadmap.html">One-Click Staged Launch Plan v2.0</a>
+        <a href="investor.html">Investor Memorandum v1.0</a>
+        <a href="results.html">Implementation Results Archive (v2.0 onward)</a>
+      </div>
+      <div>
+        <h5>On This Page</h5>
+        <a href="#market">Market sizing</a>
+        <a href="#valuation">Valuation analysis</a>
+        <a href="#funding">Fundraising plan</a>
+        <a href="#risk">Risk disclosures</a>
+      </div>
+      <div>
+        <h5>Quick Links</h5>
+        <a href="#overview">Company overview</a>
+        <a href="#milestones">Progress &amp; milestones</a>
+        <a href="#closing">Closing</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+	  <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>Unit of account: <strong>SZP</strong> (Sonzpo token)　｜　Investor Memorandum v1.0</span>
+      <span>"On Sonzpo Hill, every lesson learned is a nut stored for winter."</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

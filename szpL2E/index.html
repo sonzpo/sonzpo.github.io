@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>szpL2E 松鼠坡學以致富 ｜ 去中心化・遊戲化・可攜式技能證明 學習經濟基礎設施</title>
+<meta name="description" content="szpL2E（Sonzpo Learn-to-Earn）松鼠坡學以致富：無中心化業務伺服器的去中心化學習經濟作業系統。技術架構、任務拆解、一鍵啟動實踐計畫與投資人簡報四份工程文件之整合入口。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="css/main.css">
+	<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../assets/audio/312727.mp3"
+     sound[1]= "../assets/audio/312767.mp3"
+     sound[2]= "../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>	
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>松鼠坡學以致富<small>SZPL2E　·　SONZPO LEARN-TO-EARN</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html" class="current">總覽</a>
+      <a href="technical.html">技術架構</a>
+      <a href="wbs.html">任務拆解</a>
+      <a href="roadmap.html">一鍵啟動計畫</a>
+      <div class="nav-item-drop">
+        <a href="results.html">實作成果</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python 標準庫零依賴改版</a>
+          <div class="dd-foot">
+            <a href="results.html">→ 全部版本總覽</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html">投資人簡報</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="index.html" class="is-active">中</a>
+        <a href="en/index.html">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="開啟選單">☰</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">工程文件入口　·　v2026.08</span>
+    <h1 class="display">學習是<em>儲備過冬</em><br>的堅果</h1>
+    <p class="hero-sub">
+      松鼠坡學以致富（Sonzpo Learn-to-Earn，szpL2E）是一套「無中心化業務伺服器」的去中心化學習經濟作業系統。
+      使用者透過遊戲化的學習與驗證流程賺取可流通代幣、可攜式學習履歷與鏈上可驗證技能證書，
+      並在同一套錢包與資產基礎設施上進行數位智慧財產授權與數位學習課程交易。
+    </p>
+    <div class="hero-meta">
+      <span>計價單位　<strong>SZP</strong></span>
+      <span>支援平台　<strong>iPhone・Android・Windows・macOS・Wasm 網頁</strong></span>
+      <span>核心技術棧　<strong>Tauri v2 ＋ IPFS/Storacha ＋ CoW Protocol ＋ Wormhole</strong></span>
+    </div>
+    <div class="btn-row">
+      <a href="investor.html" class="btn btn-primary">閱讀投資人簡報書</a>
+      <a href="roadmap.html" class="btn btn-ghost">看一鍵啟動階段化實踐計畫</a>
+    </div>
+  </div>
+</section>
+
+<div class="disclaimer-band">
+  <div class="wrap">⚠ 本站彙整四份內部工程規劃文件，供技術與投資參考，非正式招股說明書、亦非任何法域下之公開發行或私募要約文件。所有前瞻性數字詳見各文件之揭露聲明。</div>
+</div>
+
+<!-- ============ 現況基線 stat strip ============ -->
+<section class="tight">
+  <div class="wrap">
+    <span class="kicker">現況基線　Baseline as of 2026-08</span>
+    <h2 class="section-title">四層交付物，皆已規劃定案並可執行</h2>
+    <p class="section-lede">技術架構、量化規格、九大工作領域任務拆解，以及涵蓋客戶端骨架至效能規格模擬對照的完整本機一鍵啟動數位分身，構成本站四份文件的事實基礎。生產環境主網部署與真實資金串接，屬於下一階段工作。</p>
+
+    <div class="stat-strip">
+      <div class="stat-cell">
+        <div class="v">5<small>端</small></div>
+        <div class="l">iPhone / Android / Windows / macOS / Wasm 網頁，單一 Rust 核心多端部署</div>
+      </div>
+      <div class="stat-cell">
+        <div class="v">9<small>大領域</small></div>
+        <div class="l">約 30 個次領域、80 項可執行任務之雙層 WBS</div>
+      </div>
+      <div class="stat-cell">
+        <div class="v">8<small>階段</small></div>
+        <div class="l">階段 −1 至階段 6，本機一鍵啟動端到端數位分身已規劃完成並可執行</div>
+      </div>
+      <div class="stat-cell">
+        <div class="v">11<small>條賽道</small></div>
+        <div class="l">語言、程式設計、金融、健康、Web3、ERP、IP 授權、預測市場、遊戲、AI 共作、產業技能</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 五大特色 ============ -->
+<section class="section-alt">
+  <div class="wrap">
+    <span class="kicker">產品五大特色</span>
+    <h2 class="section-title">「無中心化業務伺服器」的架構主張</h2>
+    <p class="section-lede">核心架構主張並非字面上「完全無任何伺服器」，而是「無單一信任伺服器」：撮合、鑑權、資金保管等核心業務邏輯全數不經由 szpL2E 自營且可單方控制的伺服器處理，改以智能合約與鏈下協定取代傳統後台 API。</p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <span class="num">01</span>
+        <h3>五端同源客戶端</h3>
+        <p>跨 iPhone、Android、Windows、macOS、Wasm 網頁五端執行，單一 Rust 核心邏輯多端部署，避免安全邏輯分裂。</p>
+      </div>
+      <div class="card">
+        <span class="num">02</span>
+        <h3>去中心化儲存底層</h3>
+        <p>整合 IPFS 與 Storacha（Filecoin 持久化）作為內容儲存，內容加密上鏈定址，購買後條件式解密，IP 全程不經 szpL2E 伺服器把關。</p>
+      </div>
+      <div class="card">
+        <span class="num">03</span>
+        <h3>szpEX 松鼠坡交易錢包</h3>
+        <p>可連接硬體錢包，整合 CoW Protocol（同鏈最優價與 MEV 保護）與 Wormhole Bridge（跨鏈資產轉移），並規劃社交復原機制。</p>
+      </div>
+      <div class="card">
+        <span class="num">04</span>
+        <h3>szpDRX 數位授權交易</h3>
+        <p>支援用戶發佈電子書等數位智慧財產，ERC-1155/721＋EIP-2981 版稅標準確保二級市場轉售仍可自動分潤原創作者。</p>
+      </div>
+      <div class="card">
+        <span class="num">05</span>
+        <h3>szpERX 數位學習交易</h3>
+        <p>課程發佈與交易、線上考試防作弊（行為指紋、間隔重複測驗、zk-SNARK 選配隱私證明）、學習里程碑成就 NFT。</p>
+      </div>
+      <div class="card">
+        <span class="num">06</span>
+        <h3>橫向擴張路線圖</h3>
+        <p>szpDRX／szpERX 為同一套資產化框架的兩種應用，可低邊際成本擴張至 ERP、預測市場與遊戲模組。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 四份文件 doc cards ============ -->
+<section id="docs">
+  <div class="wrap">
+    <span class="kicker">工程文件庫　Document Library</span>
+    <h2 class="section-title">四份內部工程文件，一站導覽</h2>
+    <p class="section-lede">投資人簡報書即依據以下三份工程文件彙整撰寫。點選任一文件卡片，進入完整章節導覽。</p>
+
+    <div class="grid grid-2">
+      <a href="technical.html" class="doc-card">
+        <span class="tag">技術架構規劃書　v1.1</span>
+        <h3>系統七層分層與技術選型全定案</h3>
+        <p>整體架構原則、產品定位與遊戲化經濟設計、Tauri v2 客戶端架構、去中心化儲存層、szpEX 錢包、szpDRX／szpERX 資產化模組、中長期路線圖與風險提醒。</p>
+        <span class="go">閱讀技術架構規劃書</span>
+      </a>
+      <a href="wbs.html" class="doc-card">
+        <span class="tag">任務拆解與魚骨圖規劃書　v2.0</span>
+        <h3>九大工作領域・80 項可執行任務</h3>
+        <p>雙層驗證架構（Claude AI 先行驗證 → 工程實作），約 30 個次領域、80 項任務之雙層 WBS，含關鍵路徑、高風險節點與團隊編組建議。</p>
+        <span class="go">閱讀任務拆解與魚骨圖規劃書</span>
+      </a>
+      <a href="roadmap.html" class="doc-card">
+        <span class="tag">一鍵啟動階段化實踐計畫　v2.0</span>
+        <h3>階段 −1 至階段 6・可一鍵啟動的數位分身</h3>
+        <p>以「行程數 × 功能層」雙軸交叉、由簡入繁設計，每一階段皆可一鍵啟動並自動完成健康檢查與端到端展示劇本。</p>
+        <span class="go">閱讀一鍵啟動階段化實踐計畫</span>
+      </a>
+      <a href="investor.html" class="doc-card">
+        <span class="tag">投資人簡報書　v1.0</span>
+        <h3>市場量化分析與 szpL2E 估值報告</h3>
+        <p>全球市場量化分析、商業模式與財務推估、三方法交叉驗證估值分析、募資規劃與資金運用、風險因素揭露。</p>
+        <span class="go">閱讀投資人簡報書</span>
+      </a>
+      <a href="results.html" class="doc-card">
+        <span class="tag">實作成果規格性能說明書　v2.0 起・逐版並列</span>
+        <h3>一鍵啟動計畫的實測成果存證庫</h3>
+        <p>與「一鍵啟動階段化實踐計畫」對照閱讀：每次改版工程的量化實測數據、誠實邊界聲明、測試覆蓋率與可重現套件，逐版獨立成頁、永久並列，v2.1、v2.2……將持續新增。</p>
+        <span class="go">瀏覽實作成果版本總覽</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 十一條學習賽道 ============ -->
+<section class="section-alt">
+  <div class="wrap">
+    <span class="kicker">核心定位</span>
+    <h2 class="section-title">學什麼・賺什麼・誰付錢</h2>
+    <p class="section-lede">產品採「多軌並行」內容策略，涵蓋十一條學習賽道，每一賽道皆對應獨立驗證機制與代幣獎勵曲線。</p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <h3>學什麼</h3>
+        <p>十一條學習賽道 —— 語言學習、程式設計、金融知識、健康素養、加密貨幣／Web3、ERP、數位內容授權、預測市場／博奕、遊戲設計、AI 共作、產業特定技能，依驗證強度分級給予 1x～10x 代幣權重，防止刷題套利。</p>
+      </div>
+      <div class="card">
+        <h3>賺什麼</h3>
+        <p>平台代幣 SZP、抽獎機會、可攜式學習履歷、鏈上可驗證證書（NFT／SBT）四類資產。</p>
+      </div>
+      <div class="card">
+        <h3>誰付錢</h3>
+        <p>廣告商（學習間隙精準投放）、企業贊助（招募與培訓命題任務）、學校／政府補助（教育政策目標）、用戶付費訂閱（解鎖進階內容）四方收入來源互相支撐。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 快速市場快照 ============ -->
+<section>
+  <div class="wrap">
+    <div class="section-head-row">
+      <div>
+        <span class="kicker">市場快照</span>
+        <h2 class="section-title">四個高成長市場的交集</h2>
+      </div>
+      <a href="investor.html#market" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">看完整市場量化分析 →</a>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data">
+        <thead>
+          <tr><th>構成市場</th><th>基準規模區間</th><th>CAGR 區間</th><th>szpL2E 對應</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="strong">全球數位學習（E-Learning）</td><td>3,000～3,700 億美元</td><td class="num">7.6%～24.2%</td><td>十一條學習賽道之基礎需求盤</td></tr>
+          <tr><td class="strong">遊戲化學習（Gamified Learning）</td><td>11～135 億美元</td><td class="num">12%～36%</td><td>核心循環設計直接對應</td></tr>
+          <tr><td class="strong">企業培訓與專業證照</td><td>184～4,009 億美元</td><td class="num">7.3%～11.7%</td><td>企業贊助任務、可驗證證書變現</td></tr>
+          <tr><td class="strong">區塊鏈教育／Learn-to-Earn</td><td>2.4～32 億美元</td><td class="num">15.6%～43.9%</td><td>差異化定位所在，成長率最高</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted" style="margin-top:14px">資料來源：Grand View Research、IMARC Group、Zion Market Research、Market.us、SkyQuest、DataIntelo 等第三方市場研究機構 2024～2026 年間公開報告，統計口徑不完全一致，僅供量級與成長趨勢參考，詳見投資人簡報書第四章。</p>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="section-dark">
+  <div class="wrap center">
+    <span class="kicker">下一步</span>
+    <h2 class="section-title">從技術架構開始，或直接看估值分析</h2>
+    <p class="section-lede" style="margin-left:auto;margin-right:auto">四份文件彼此獨立成篇，亦可依「技術架構 → 任務拆解 → 一鍵啟動計畫 → 投資人簡報」順序閱讀，理解 szpL2E 從規格定案到可執行展示的完整證據鏈。</p>
+    <div class="btn-row" style="justify-content:center">
+      <a href="technical.html" class="btn btn-primary">從技術架構規劃書開始</a>
+      <a href="investor.html" class="btn btn-ghost">跳至投資人簡報書</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ 松鼠坡學以致富</div>
+        <p class="f-tag">Sonzpo Learn-to-Earn（szpL2E）—— 去中心化・遊戲化・可攜式技能證明學習經濟基礎設施。本站為工程文件彙整入口，非正式對外發行文件。</p>
+      </div>
+      <div>
+        <h5>工程文件</h5>
+        <a href="technical.html">技術架構規劃書 v1.1</a>
+        <a href="wbs.html">任務拆解與魚骨圖規劃書 v2.0</a>
+        <a href="roadmap.html">一鍵啟動階段化實踐計畫 v2.0</a>
+        <a href="investor.html">投資人簡報書 v1.0</a>
+        <a href="results.html">實作成果版本總覽（v2.0 起）</a>
+      </div>
+      <div>
+        <h5>技術棧</h5>
+        <a href="technical.html#client">Tauri v2 客戶端</a>
+        <a href="technical.html#storage">IPFS ＋ Storacha</a>
+        <a href="technical.html#wallet">szpEX 錢包</a>
+        <a href="technical.html#drx-erx">szpDRX ／ szpERX</a>
+      </div>
+      <div>
+        <h5>投資人</h5>
+        <a href="investor.html#market">市場量化分析</a>
+        <a href="investor.html#valuation">估值分析</a>
+        <a href="investor.html#funding">募資規劃</a>
+        <a href="investor.html#risk">風險揭露</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+	  <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>計價單位：<strong>SZP</strong>（松鼠坡代幣）　｜　版本彙整　2026 年 8 月</span>
+      <span>「在松鼠坡上，每一次學習都是儲備過冬的堅果。」</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

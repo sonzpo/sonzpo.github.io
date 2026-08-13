@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One-Click Staged Launch Plan v2.0 ｜ szpL2E Sonzpo Learn-to-Earn</title>
+<meta name="description" content="szpL2E One-Click Staged Launch Plan v2.0: built on a 'process count × feature depth' two-axis grid, Stage −1 through Stage 6 — eight one-click-launchable local end-to-end digital-twin stages.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="../css/main.css">
+	<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../../assets/audio/312727.mp3"
+     sound[1]= "../../assets/audio/312767.mp3"
+     sound[2]= "../../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>Sonzpo Learn-to-Earn<small>SZPL2E　·　松鼠坡學以致富</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html">Overview</a>
+      <a href="technical.html">Architecture</a>
+      <a href="wbs.html">Task Breakdown</a>
+      <a href="roadmap.html" class="current">Launch Plan</a>
+      <div class="nav-item-drop">
+        <a href="results.html">Results</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python stdlib zero-dependency rewrite</a>
+          <div class="dd-foot">
+            <a href="results.html">→ All versions</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html">Investor Memo</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="../roadmap.html">中</a>
+        <a href="roadmap.html" class="is-active">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-hero">
+  <div class="wrap">
+    <span class="kicker">One-Click Staged Launch Plan　·　一鍵啟動階段化實踐計畫</span>
+    <h1>The Sonzpo Hill trail map: eight one-click, end-to-end demo stages</h1>
+    <p>Built on a "process count × feature depth" two-axis grid, moving from simple to complex — every stage launches with one click and runs an automated health check plus an end-to-end demo script, converging the technology choices and product logic across the four planning documents into locally verifiable, repeatable engineering evidence rather than paper specs.</p>
+    <div class="meta-row">
+      <span>Version　<strong>v2.0</strong></span>
+      <span>Stages　<strong>8 (Stage −1 through Stage 6) + Stage 7 outlook</strong></span>
+      <span>Core axes　<strong>Process count × Feature depth × Evidence tier</strong></span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap doc-layout">
+
+    <aside class="doc-sidebar">
+      <div class="sb-group">
+        <div class="sb-h">Contents</div>
+        <a href="#trail">2　Stage Overview: Trail Map</a>
+        <a href="#axes">1　Reorganization Principles: Three Axes</a>
+        <a href="#stages">4　Detailed Stage-by-Stage Breakdown</a>
+        <a href="#risk">5　Technical Risk &amp; Dependencies</a>
+        <a href="#mapping">6　Mapping to the Nine Domains</a>
+        <a href="#assets">8　Demo Asset Library</a>
+      </div>
+    </aside>
+
+    <div class="doc-main">
+
+      <h2 id="trail">2　Stage Overview: The Sonzpo Hill Trail Map</h2>
+      <p>The horizontal axis is process-count scale, the vertical axis is feature-stacking depth; each cell is one stage, labeled with what actually happens on screen once that stage is launched with one click, and its corresponding evidence tier. Stage −1 is where the new architecture first introduces the Tauri client shell — before it's folded into anything else, it must be independently verified: "does it compile, and can it shake hands with one service process?"</p>
+
+      <div class="trail-wrap">
+        <div class="trail-scroll">
+          <div class="trail">
+            <div class="trail-line"></div>
+
+            <div class="stage stage-neg">
+              <span class="peak-label">Stage −1</span>
+              <div class="peak-title">Tauri client scaffold</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">1 Tauri shell + 1 minimal service process handshake. Evidence tier zero→one</div>
+            </div>
+
+            <div class="stage">
+              <span class="peak-label">Stage 0</span>
+              <div class="peak-title">Single-process learning-verification core</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">Multi-track courses, spaced-repetition testing end-to-end demo. Evidence tier one</div>
+            </div>
+
+            <div class="stage">
+              <span class="peak-label">Stage 1</span>
+              <div class="peak-title">Single process + simulated on-chain settlement</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">Calls a local testnet to complete real ERC-1155/721 core-contract-subset transactions. Evidence tier one</div>
+            </div>
+
+            <div class="stage">
+              <span class="peak-label">Stage 2</span>
+              <div class="peak-title">Two processes + real chain broadcast</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">Learning verification × on-chain settlement, real two-process HTTP/RPC comms; IPFS+Storacha prototype. Evidence tier one</div>
+            </div>
+
+            <div class="stage">
+              <span class="peak-label">Stage 3</span>
+              <div class="peak-title">Two processes + anti-cheat &amp; identity spoofing defense</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">Adds a minimal anti-cheat behavior-analysis layer and signature-based identity verification. Evidence tier one</div>
+            </div>
+
+            <div class="stage">
+              <span class="peak-label">Stage 4</span>
+              <div class="peak-title">Multi-process + decentralized topology</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">Process count grows to 3–6; adds a storage-proxy process alongside the client shell, with a simple monitoring dashboard. Evidence tier one</div>
+            </div>
+
+            <div class="stage">
+              <span class="peak-label">Stage 5</span>
+              <div class="peak-title">Multi-process + szpEX wallet integration</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">Minimal self-custody wallet, a corporate-task posting-interface prototype, auto-reconnect resilience. Evidence tier one–two</div>
+            </div>
+
+            <div class="stage">
+              <span class="peak-label">Stage 6</span>
+              <div class="peak-title">Performance spec &amp; monitoring dashboard</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">Quantified SLA targets displayed alongside local simulated measurements, clearly labeled as simulation. Evidence tier one</div>
+            </div>
+
+            <div class="stage stage-future">
+              <span class="peak-label">Stage 7・Outlook</span>
+              <div class="peak-title">Production-environment sign-off</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">Mainnet deployment, real-fund integration, third-party audit, real-device benchmarking. Evidence tier three, outside the one-click scope</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <p class="small muted">Moving left to right along a row represents "the same substance, proven again on a bigger stage"; moving bottom to top within a column represents "the stage stays the same, but the script gets fuller." Stage 6 sits apart from the grid because performance-spec sign-off is, in essence, "measuring and comparing an already-existing multi-process system," not a new product feature — it bookends with Stage −1: one verifies the starting point ("can the scaffold even run?"), the other verifies the finish line ("does what's running meet spec?").</p>
+
+      <h3>2.1　Role Mapping: Old v1.1 Process Roles → New Spec</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Old v1.1 process role</th><th>New corresponding spec</th><th>Shared foundation node</th></tr></thead>
+          <tbody>
+            <tr><td>Learning-verification service (in-memory only)</td><td>Learning-verification service, now also covering szpERX on-device question-bank encrypt/decrypt spec</td><td class="num">F1, F8</td></tr>
+            <tr><td>Local testnet + minimal viable token contract</td><td>Layer-2 testnet + ERC-1155／ERC-721＋EIP-2981 core contract subset</td><td class="num">F4</td></tr>
+            <tr><td>Local IPFS node</td><td>IPFS＋Storacha (UCAN authorization) hybrid persistence prototype</td><td class="num">F4</td></tr>
+            <tr><td>Monitoring dashboard (process health list)</td><td>Monitoring dashboard (process health + performance-spec comparison)</td><td class="num">F7</td></tr>
+            <tr><td>Minimal built-in wallet</td><td>szpEX self-custody wallet (local keys + social-recovery prototype, no real routing)</td><td class="num">F6</td></tr>
+            <tr><td>Corporate-task posting-interface prototype</td><td>Corporate-task posting-interface prototype, tied into the szpDRX/ERX asset-tization framework</td><td class="num">F5</td></tr>
+            <tr><td>(no prior equivalent)</td><td>Tauri client shell process (new)</td><td class="num">F8</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="axes">1　Reorganization Principles: Why "Process Count × Feature Depth"</h2>
+      <p>Picture the whole production-readiness effort as a grid: the horizontal axis is "how many independent processes this system currently runs," the vertical axis is "how many feature layers this system currently has." Hold the horizontal axis fixed, stack the vertical axis up to a height that's "sufficient but honest," then move one column right to add another process.</p>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="num">Primary axis</span>
+          <h3>Process count</h3>
+          <p>A decentralized posture needs process count as the most honest observable metric; one-click-script complexity is driven mainly by process count and heterogeneity; each stage's launch script naturally doubles as the next stage's smoke-test baseline.</p>
+        </div>
+        <div class="card">
+          <span class="num">Secondary axis</span>
+          <h3>Feature depth</h3>
+          <p>Features depend on each other far more tightly than they appear to: anti-cheat and signature-based identity verification only make sense with two-process mutual trust; szpEX's CoW/Wormhole dual-routing decision logic likewise only makes sense at two-or-more-process scale.</p>
+        </div>
+        <div class="card">
+          <span class="num">Third axis</span>
+          <h3>Evidence tier</h3>
+          <p>Aligned with Chapter 19 of the Task Breakdown &amp; Fishbone Plan v2.0's four-tier framework: spec frozen, rule-simulation verified, real-integration verified, production verified — plus a new "performance-benchmark comparison" as an extension of tier-one numeric simulation.</p>
+        </div>
+      </div>
+
+      <h2 id="stages">4　Detailed Stage-by-Stage Breakdown</h2>
+
+      <h3>4.1　Stage −1・Tauri Client Scaffold One-Click Demo</h3>
+      <p>Launches 1 Tauri v2 client-shell process and 1 minimal local service process, verifying the full chain: frontend UI layer → IPC Bridge → Rust core → the Rust core calling the local service process via HTTP to fetch a static response. This stage involves no keys, no learning logic, and no on-chain logic — purely verifying "the client shell compiles, runs, and can handshake with a service process."</p>
+
+      <h3>4.2　Stage 0・Single-Process Learning-Verification Core One-Click Demo</h3>
+      <p>Launches 1 Python service process, running the F1-defined multi-track course units, spaced-repetition test scheduling, question-weighting, and scoring system through a ready-made end-to-end demo, with that process's automated tests folded into the launch script's self-check step. Token points are a purely in-memory simulation.</p>
+
+      <h3>4.3　Stage 1・Single Process + Simulated On-Chain Settlement (Groundwork)</h3>
+      <p>Still just 1 externally visible service process, but internally the in-memory token-point simulation from Stage 0 is upgraded to call a local embedded testnet for real contract transactions, against an ERC-1155／ERC-721＋EIP-2981 core-contract subset aligned to the F4 spec (implementing only the mint and burn functions).</p>
+
+      <h3>4.4　Stage 2・Two Processes + Real Local-Chain Broadcast and IPFS/Storacha Prototype</h3>
+      <p>Splits into 2 externally visible independent processes — the learning-verification service and the on-chain settlement service (including the local testnet) — communicating over real HTTP／RPC; learning-outcome summaries and course content also move to an IPFS＋Storacha hybrid persistence prototype, replacing the local file access used in Stages 0 and 1.</p>
+
+      <h3>4.5　Stage 3・Two Processes + Anti-Cheat and Identity Spoofing Defense (Layered)</h3>
+      <p>Process count stays at 2; on top of Stage 2's on-chain settlement, adds the F2-defined minimal anti-cheat behavior-analysis layer and signature-based identity verification, so every score sent from the learning side to the settlement side carries a verifiable signature and risk-control flag.</p>
+
+      <h3>4.6　Stage 4・Multi-Process + Decentralized Topology and Monitoring Prototype</h3>
+      <p>Process count expands to 3–6; adds an IPFS＋Storacha storage-proxy process and the Tauri client-shell process (running alongside the service-side processes for the first time), with a simple monitoring dashboard showing each process's health and data flow at a glance.</p>
+
+      <h3>4.7　Stage 5・Multi-Process + szpEX Wallet／Asset-Monetization Integration and Resilience</h3>
+      <p>Process count stays at 3–6; on top of Stage 4's topology, adds a minimal szpEX self-custody wallet (local key management + social-recovery prototype, without connecting to real CoW Protocol／Wormhole Bridge) and a corporate-task posting-interface prototype, plus resilience for the settlement process — auto-reconnect and event replay after a disconnect.</p>
+
+      <h3>4.8　Stage 6・Multi-Process + Performance Spec and Monitoring Dashboard One-Click Demo</h3>
+      <p>Process count stays at 3–6; on top of the process topology already live in Stages 4 and 5, the one-click launch script runs an extra pass of "numeric simulation + spec comparison," displaying the Performance Spec &amp; Operations Manual v1.0's quantified SLA targets side-by-side with local simulated measurements on the monitoring dashboard, explicitly labeled as simulated values.</p>
+
+      <div class="callout">
+        <div class="c-title">📎 Cross-reference: measured results for this plan are compiled in a standalone report</div>
+        <p>The quantified test results, honesty-boundary disclosures, and test coverage from this plan's Stage −1 through Stage 6 rewrite are compiled in the <a href="results-v2.0.html" style="color:var(--pine-900);text-decoration:underline">Implementation Results Specification &amp; Performance Report v2.0</a>. Future rewrites will continue to be added side-by-side as v2.1, v2.2, … in the <a href="results.html" style="color:var(--pine-900);text-decoration:underline">Implementation Results Archive</a>; this plan document itself remains unchanged.</p>
+      </div>
+
+      <div class="callout">
+        <div class="c-title">⚠ Stage 7・Production-Environment Sign-Off (Outlook, Outside One-Click Scope)</div>
+        <p>Real mainnet deployment, real-fund integration via CoW Protocol／Wormhole Bridge, third-party security audits, external educational-integrity assessment, real five-platform device benchmarking — these tasks cannot, by their nature, be compressed into the "local one-click launch" definition. They correspond to Chapter 19 "Evidence Tier Three: Production Verification" in the Task Breakdown &amp; Fishbone Plan v2.0, and have not yet been broken down into a detailed WBS.</p>
+      </div>
+
+      <h2 id="risk">5　Technical Risk and Dependencies</h2>
+      <h3>5.1　Cross-Stage Critical Path</h3>
+      <p class="lede-note" style="font-size:15px;color:var(--pine-900);font-weight:700;font-family:var(--mono)">Stage −1 → Stage 0 → Stage 1 → Stage 2 → Stage 3 (layered)／Stage 4 → Stage 5 (layered) → Stage 6 (performance comparison) → Stage 7 (outlook)</p>
+      <p>A clear linear dependency runs across the nine build stages: Stage −1's Tauri client scaffold is the common starting point for client-shell integration from Stage 4 onward; Stage 0's learning-verification core is the shared starting point for Stages 1 through 6; Stage 2's two-process communication interface and storage proxy are the common foundation for both Stage 3's layered signature defense and Stage 4's expanded process count. A problem in any one stage's foundation directly drags down every cell to its right and above it.</p>
+
+      <div class="callout">
+        <div class="c-title">⚠ Risk 6　Tauri／Rust toolchain cross-platform differences</div>
+        <p>First becomes a gating issue in Stage −1, corresponding to the environment-version prerequisite for the T0-05 no-persist private-key security-boundary risk node. Development machines on different platforms (Windows／macOS／Linux) require different system dependencies for a Tauri build; if the target environment is missing a dependency, every stage from Stage −1 onward that depends on the client shell will be blocked. Recommendation: run a minimal build on at least two mainstream development platforms first, to confirm the build process is reproducible.</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ Risk 7　The performance-comparison table's simulated values could be misread as official sign-off data</div>
+        <p>Surfaces in Stage 6, because simulated values and real local measurements are displayed side-by-side on the same dashboard; a careless visual-design choice could lead a user to mistake "the performance numbers shown in the one-click demo" for the official sign-off results in the Performance Spec &amp; Operations Manual v1.0. Recommendation: simulated values should always carry a distinct background color or explicit label — "simulated estimate, not a real-device measurement" — with a fixed note underneath the comparison table explaining where the official sign-off data comes from.</p>
+      </div>
+
+      <h2 id="mapping">6　Mapping to the Nine Domains</h2>
+      <p>Readers familiar with the Task Breakdown &amp; Fishbone Plan v2.0 (the nine-domain version) can use the table below to quickly find where each original task lands in this staged architecture — the two documents describe the same body of engineering work, just sliced along different axes.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Nine domains</th><th>Where it lands in the staged architecture</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">①Tauri client</td><td>Client-shell scaffold lands in Stage −1; integration with the service-side topology lands in Stage 4; local simulated performance comparison lands in Stage 6; real five-platform device benchmarking extends into Stage 7.</td></tr>
+            <tr><td class="strong">②Learning-verification engine</td><td>Core logic lands in Stage 0; anti-cheat behavior analysis lands in Stage 3; on-device question-bank encrypt/decrypt performance comparison lands in Stage 6; real user-scale validation extends into Stage 7.</td></tr>
+            <tr><td class="strong">③Token-economy engine</td><td>Minimal viable mint／burn lands in Stage 1; fixed token pools and pre-funded corporate sponsorship land in Stage 5; large-scale stress testing and mainnet deployment land in Stage 7.</td></tr>
+            <tr><td class="strong">④Decentralized infrastructure</td><td>Local testnet and core contracts land in Stage 1; real two-process communication lands in Stage 2; IPFS/Storacha storage and monitoring prototype land in Stage 4; real performance benchmarking lands in Stage 7.</td></tr>
+            <tr><td class="strong">⑤szpEX wallet &amp; cross-chain integration</td><td>Minimal self-custody wallet and rule-level routing prototype land in Stage 5; real CoW/Wormhole integration and testnet validation land in Stage 7.</td></tr>
+            <tr><td class="strong">⑥szpDRX／szpERX</td><td>Task-posting and review-flow prototype lands in Stage 5; e-book licensing, course trading, and other parts needing real partner participation land in Stage 7.</td></tr>
+            <tr><td class="strong">⑦Social &amp; retention mechanics</td><td>The one-click scope does not cover a full leaderboard/team-system implementation — the value of social mechanics only shows at multi-user scale, which is inherently at odds with a single-machine demo format.</td></tr>
+            <tr><td class="strong">⑧Visual, art／audio</td><td>Exhaustiveness checks against the production-readiness checklist run through every stage's wrap-up; art／audio production and third-party audits both land in Stage 7.</td></tr>
+            <tr><td class="strong">⑨Performance-spec sign-off &amp; ops</td><td>Monitoring-dashboard prototype lands in Stage 4; performance-spec comparison (at the numeric-simulation tier) becomes its own Stage 6; operations-manual translation, real-device benchmarking, and other tier-two/three sign-offs land in Stage 7.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="assets">8　Demo Asset Library</h2>
+      <p>Non-core visual and audio elements needed for the demo scripts are drawn first from Kenney.nl's CC0 UI assets, with new additions for the Tauri client-shell and monitoring-dashboard icons and performance-comparison-table visualization, tying into the draft-first principle of Domain⑧ in the Task Breakdown &amp; Fishbone Plan v2.0. CC0 assets require no attribution and are freely modifiable and commercially usable; mixed-license assets such as those on OpenGameArt.org are checked item by item, with an attribution table maintained.</p>
+
+      <div class="btn-row" style="margin-top:40px">
+        <a href="investor.html" class="btn btn-primary">Next document: Investor Memorandum →</a>
+        <a href="wbs.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">← Previous: Task Breakdown &amp; Fishbone Plan</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ Sonzpo Learn-to-Earn</div>
+        <p class="f-tag">szpL2E — decentralized, gamified, portable skill-proof learning-economy infrastructure.</p>
+      </div>
+      <div>
+        <h5>Documents</h5>
+        <a href="technical.html">Technical Architecture Plan v1.1</a>
+        <a href="wbs.html">Task Breakdown &amp; Fishbone Plan v2.0</a>
+        <a href="roadmap.html">One-Click Staged Launch Plan v2.0</a>
+        <a href="investor.html">Investor Memorandum v1.0</a>
+        <a href="results.html">Implementation Results Archive (v2.0 onward)</a>
+      </div>
+      <div>
+        <h5>On This Page</h5>
+        <a href="#trail">Stage overview trail map</a>
+        <a href="#stages">Stage-by-stage breakdown</a>
+        <a href="#risk">Technical risk &amp; dependencies</a>
+      </div>
+      <div>
+        <h5>Investors</h5>
+        <a href="investor.html#milestones">Progress &amp; milestones</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+	  <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>Unit of account: <strong>SZP</strong> (Sonzpo token)　｜　One-Click Staged Launch Plan v2.0</span>
+      <span>"On Sonzpo Hill, every lesson learned is a nut stored for winter."</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Breakdown &amp; Fishbone Plan v2.0 ｜ szpL2E Sonzpo Learn-to-Earn</title>
+<meta name="description" content="szpL2E Task Breakdown & Fishbone Plan v2.0: nine work domains, ~30 sub-domains, an 80-task two-tier WBS with critical path, high-risk nodes, and team-staffing recommendations.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="../css/main.css">
+	<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../../assets/audio/312727.mp3"
+     sound[1]= "../../assets/audio/312767.mp3"
+     sound[2]= "../../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>Sonzpo Learn-to-Earn<small>SZPL2E　·　松鼠坡學以致富</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html">Overview</a>
+      <a href="technical.html">Architecture</a>
+      <a href="wbs.html" class="current">Task Breakdown</a>
+      <a href="roadmap.html">Launch Plan</a>
+      <div class="nav-item-drop">
+        <a href="results.html">Results</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python stdlib zero-dependency rewrite</a>
+          <div class="dd-foot">
+            <a href="results.html">→ All versions</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html">Investor Memo</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="../wbs.html">中</a>
+        <a href="wbs.html" class="is-active">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-hero">
+  <div class="wrap">
+    <span class="kicker">Task Breakdown &amp; Fishbone Plan　·　任務拆解與魚骨圖規劃書</span>
+    <h1>The nine-domain fishbone diagram: from spec freeze to 80 executable tasks</h1>
+    <p>A two-tier verification architecture: Claude AI verification first → engineering implementation. Fully updated against the Technical Architecture Plan v1.1 and the Performance Spec &amp; Operations Manual v1.0, breaking both documents' technical and product specs into nine work domains, ~30 sub-domains, and 80 executable tasks via fishbone (cause-and-effect) analysis.</p>
+    <div class="meta-row">
+      <span>Version　<strong>v2.0</strong></span>
+      <span>Methodology　<strong>Two-tier verification architecture</strong></span>
+      <span>Granularity　<strong>Sized to fit a single Sprint (2 weeks)</strong></span>
+      <span>Baseline　<strong>Specs frozen; no code or test baseline yet</strong></span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap doc-layout">
+
+    <aside class="doc-sidebar">
+      <div class="sb-group">
+        <div class="sb-h">Contents</div>
+        <a href="#foundation">1　Shared Foundation Task Layer</a>
+        <a href="#fishbone">3　Main Fishbone: Nine Domains</a>
+        <a href="#verification">4　Two-Tier Verification</a>
+        <a href="#staffing">5　Advanced Staffing Models</a>
+        <a href="#timeline">15　Parallel Development Timeline</a>
+        <a href="#critical-path">16　Critical Path &amp; Risk Nodes</a>
+        <a href="#team">17　Team Structure &amp; Roles</a>
+        <a href="#evidence">19　Evidence-Tier Continuity</a>
+      </div>
+    </aside>
+
+    <div class="doc-main">
+
+      <h2 id="foundation">1　Shared Foundation Task Layer (Sprint −1)</h2>
+      <p>From the nine work domains, identify the interface-level tasks that "multiple domains jointly depend on, and where a later change would trigger cascading rework," and freeze their specs first as the common basis for everything downstream. This round adds the Tauri client and performance-spec scope, expanding the shared foundation nodes from seven to <strong>eight (F1–F8)</strong>.</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Node</th><th>Name</th><th>Dependent domains</th><th>Frozen deliverable</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">F1</td><td>Learning-verification &amp; question-weight spec</td><td>①②③⑥⑨</td><td>Question-weight table + spaced-repetition scheduling algorithm spec</td></tr>
+            <tr><td class="strong">F2</td><td>Anti-cheat behavior-analysis spec</td><td>①②④⑨</td><td>Anomaly-detection indicator list + tiered risk-control flowchart</td></tr>
+            <tr><td class="strong">F3</td><td>Dynamic reward-curve &amp; burn-parameter spec</td><td>①②③⑤⑥</td><td>Reward-decay formula + burn-ratio parameter table</td></tr>
+            <tr><td class="strong">F4</td><td>Smart-contract, IPFS/Storacha &amp; asset-standard spec</td><td>All domains</td><td>Draft contract ABI + ERC-1155/721+EIP-2981 standard</td></tr>
+            <tr><td class="strong">F5</td><td>Corporate-sponsored-task interface spec</td><td>①⑦</td><td>Task-posting/review API spec + résumé-authorization field definitions</td></tr>
+            <tr><td class="strong">F6</td><td>szpEX key custody, hardware wallet &amp; social-recovery spec</td><td>①③⑥</td><td>Key-custody model + hardware-wallet signing interface + social-recovery draft</td></tr>
+            <tr><td class="strong">F7</td><td>Production-readiness, educational-integrity &amp; performance-spec checklist</td><td>All domains</td><td>Production-readiness checklist (dual sign-off: educational effectiveness + performance spec)</td></tr>
+            <tr><td class="strong">F8</td><td>Tauri v2 four-layer client architecture &amp; five-platform performance baseline</td><td>All domains</td><td>Four-layer architecture diagram + five-platform performance baseline table</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ Why F8 is foundational</div>
+        <p>The Technical Architecture Plan explicitly defines the client's four-layer architecture and stresses that "the web version and native version share the same Rust security logic." The interface contract for high-sensitivity operations — key management, signing logic — must be frozen before detailed work on Domain 5 (szpEX wallet) and Domain 2 (learning verification) begins, or the risk of fragmented behavior across five platforms will directly undermine the core "no centralized business-logic server" principle. F8, alongside F4 and F6, is one of the three highest-risk foundational nodes this round.</p>
+      </div>
+
+      <h2 id="fishbone">3　Main Fishbone: Nine Work Domains Overview</h2>
+      <p class="lede-note">The fish head: szpL2E architecture and performance specs frozen → a deployable decentralized Learn-to-Earn production service (five-platform client + quantified SLA sign-off)</p>
+
+      <div class="fishbone">
+        <div class="spine"></div>
+        <div class="bones">
+          <div class="bone"><span class="b-num">Domain①</span><h4>Tauri v2 cross-platform client architecture</h4><p>Rust／cross-platform engineering. One of two critical-path starting points: frontend UI／IPC Bridge／Rust core／five-platform compiled output.</p></div>
+          <div class="bone"><span class="b-num">Domain②</span><h4>Learning-verification engine</h4><p>Education design + data-science／backend engineering. Spaced repetition, anti-cheat, question weighting, zk-SNARK privacy proofs.</p></div>
+          <div class="bone"><span class="b-num">Domain③</span><h4>Token-economy engine</h4><p>Smart-contract logic + tokenomics engineering. Dynamic curves, burn mechanics, progress/retention/quality coefficients.</p></div>
+          <div class="bone"><span class="b-num">Domain④</span><h4>Decentralized infrastructure</h4><p>Blockchain + distributed-systems engineering. The other critical-path starting point: smart contracts, IPFS/Storacha, Subgraph, SIWE.</p></div>
+          <div class="bone"><span class="b-num">Domain⑤</span><h4>szpEX wallet &amp; cross-chain integration</h4><p>Web3 wallet engineering + protocol integration. Self-custody wallet, CoW/Wormhole dual routing, hardware wallets, social recovery.</p></div>
+          <div class="bone"><span class="b-num">Domain⑥</span><h4>szpDRX／szpERX asset-tization &amp; corporate monetization</h4><p>Business development + asset-tization smart-contract engineering. ERC-1155/721+EIP-2981, corporate-task integration.</p></div>
+          <div class="bone"><span class="b-num">Domain⑦</span><h4>Social &amp; retention mechanics</h4><p>Product engineering + frontend engineering. Leaderboards, teams, streak repair, peer review.</p></div>
+          <div class="bone"><span class="b-num">Domain⑧</span><h4>Visual, art &amp; audio asset library</h4><p>Art／audio + licensing-compliance coordination. Open asset-library integration, the squirrel character growth system.</p></div>
+          <div class="bone"><span class="b-num">Domain⑨</span><h4>Performance-spec sign-off, ops monitoring &amp; operations manual</h4><p>SRE／technical writing + security audit／educational-integrity QA. Runs across S3–S5, the most concentrated domain at the end of the timeline.</p></div>
+        </div>
+      </div>
+      <p class="small muted">This round adds Domain① (Tauri client) and Domain⑨ (performance sign-off and ops) to the nine domains; Domain① and Domain④ together form the critical path's dual starting point — the client's Rust core is the foundation for wallet and crypto logic, and the decentralized infrastructure is the foundation for smart contracts and storage. Both must have their specs frozen early and in parallel (F8 and F4) before the rest of the domains can proceed in parallel.</p>
+
+      <h2 id="verification">4　Two-Tier Verification: Claude AI Verification → Engineering Implementation</h2>
+      <p>Tasks first complete a first-tier verification in a Claude AI environment — confirming the rule logic is internally consistent, the numeric balance is reasonable, or an interactive prototype works — before moving into second-tier engineering implementation.</p>
+      <div class="grid grid-3">
+        <div class="card"><span class="num">Mode①</span><h3>Rule-logic simulation</h3><p>Verification engine, anti-cheat, state-transition logic; produces a verification memo + a revised rule set.</p></div>
+        <div class="card"><span class="num">Mode②</span><h3>Numeric simulation</h3><p>Token-economy curves, burn ratios, rate-limit thresholds; produces simulation scripts + data charts + balancing recommendations.</p></div>
+        <div class="card"><span class="num">Mode③</span><h3>Interactive prototype demo</h3><p>User flows, leaderboard UI, corporate-task posting interface; produces an interactive prototype + a recorded interaction trace.</p></div>
+        <div class="card"><span class="num">Mode④</span><h3>Not applicable (flagged, skipped)</h3><p>Third-party security audits, real multi-machine network load tests, real-fund cross-chain-bridge tests; produces a spec-review memo.</p></div>
+        <div class="card"><span class="num">Mode⑤</span><h3>Educational-effectiveness simulation</h3><p>Simulates different learner answering patterns (including deliberate gaming); produces an educational-effectiveness report + a counterexample list.</p></div>
+        <div class="card"><span class="num">New scenario</span><h3>Performance-benchmark comparison</h3><p>Estimates, based on the chosen technology, whether a theoretical ceiling might exceed the spec target; flags high-risk items and pre-warns when close to the threshold.</p></div>
+      </div>
+
+      <h2 id="staffing">5　Advanced Staffing Models &amp; When to Use Them</h2>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Task type</th><th>Preferred staffing model</th><th>Rationale</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Rust core &amp; private-key security boundary</td><td>Agile in-house team</td><td>Touches key management and cross-platform security consistency; AI is explicitly excluded from generating security-boundary code</td></tr>
+            <tr><td class="strong">Learning-verification engine &amp; anti-cheat rules</td><td>Agile in-house team</td><td>Touches educational integrity and correct token issuance; AI may only generate test scenarios</td></tr>
+            <tr><td class="strong">Smart contracts &amp; token-economy parameters</td><td>Agile team + AI-assisted simulation</td><td>Economic-model and royalty correctness needs human sign-off; numeric simulation can be AI-accelerated</td></tr>
+            <tr><td class="strong">Decentralized infrastructure deployment</td><td>Agile in-house team</td><td>A foundational task affecting the whole project's architectural integrity; not suited to outsourcing</td></tr>
+            <tr><td class="strong">CoW／Wormhole／hardware-wallet integration</td><td>Agile team (dedicated Web3 engineers)</td><td>Touches real user-asset safety; signing and bridging logic is explicitly excluded from AI generation</td></tr>
+            <tr><td class="strong">Corporate-task integration &amp; résumé authorization</td><td>Agile team + decentralized outsourcing (legal)</td><td>Touches PII and cross-organization data authorization, requiring legal expertise</td></tr>
+            <tr><td class="strong">Leaderboard／social-mechanics frontend</td><td>AI-drafted first pass + agile-team polish</td><td>UI components can be heavily templated</td></tr>
+            <tr><td class="strong">Visual art &amp; music production</td><td>Decentralized outsourcing + community co-creation</td><td>CC0 asset libraries as the first-layer draft source, accelerating early prototype demos</td></tr>
+            <tr><td class="strong">Operations manual &amp; monitoring dashboard</td><td>Agile team + decentralized outsourcing (technical writers)</td><td>Accuracy is critical to asset safety given no centralized customer support; core logic stays in-house</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="timeline">15　Parallel Development Timeline (Including the Claude Verification Window)</h2>
+      <p>Each sprint is 2 weeks. Sprint −1 (the eight shared-foundation nodes' spec-freeze window, 2 weeks) precedes Sprint 0 (the nine domains' parallel Claude AI verification window, including educational-effectiveness simulation and performance-benchmark comparison, 3 weeks). The full project plans for roughly <strong>8 sprints</strong> (including Sprint −1 and 0) to go from spec to production deployment and performance sign-off.</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Sprint</th><th>Window</th><th>①Client</th><th>④Decentralized infra</th><th>⑤szpEX wallet</th><th>⑨Performance/ops</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">S−1</td><td>Weeks 1–2</td><td>F8 spec</td><td>F4 spec</td><td>F6 spec</td><td>---</td></tr>
+            <tr><td class="strong">S0</td><td>Weeks 3–5</td><td>Rule + numeric sim</td><td>Rule sim (ABI)</td><td>Rule sim</td><td>---</td></tr>
+            <tr><td class="strong">S1</td><td>Weeks 6–7</td><td>Shell + IPC</td><td>L2 setup + core contracts</td><td>Self-custody wallet</td><td>---</td></tr>
+            <tr><td class="strong">S2</td><td>Weeks 8–9</td><td>Wasm + security boundary</td><td>Subgraph+SIWE+Oracle</td><td>AA social recovery + CoW integration</td><td>---</td></tr>
+            <tr><td class="strong">S3</td><td>Weeks 10–11</td><td>Real-device benchmarking</td><td>Backup nodes + perf baseline</td><td>Wormhole + asset integration</td><td>Client + storage/trading spec sign-off</td></tr>
+            <tr><td class="strong">S4</td><td>Weeks 12–13</td><td>End-to-end integration</td><td>End-to-end integration testing</td><td>Testnet end-to-end validation</td><td>Docs + monitoring + FAQ</td></tr>
+            <tr><td class="strong">S5</td><td>Week 14</td><td>---</td><td>---</td><td>---</td><td>Final sign-off</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">Domain① (Tauri client) and Domain④ (decentralized infrastructure) are the critical path's dual starting points: Domain⑤ (the szpEX self-custody wallet) depends on Domain①'s Rust core and Domain④'s core smart contracts; Domain② (on-device question-bank decryption) depends on Domain①'s security boundary. Domain⑨ runs across S3–S5, the most concentrated domain at the end of the timeline. Domain⑧'s art and music drafts can proceed in parallel from S1 using open asset libraries, unconstrained by the outsourced community's final-production timeline.</p>
+
+      <h2 id="critical-path">16　Critical Path &amp; Risk Nodes</h2>
+      <h3>16.1　Project Critical Path</h3>
+      <div class="tl">
+        <div class="tl-item"><span class="tl-tag">S−1</span><h4>F8 client four-layer architecture spec</h4><p>Freezes the frontend UI／IPC Bridge／Rust core／compiled-output contract.</p></div>
+        <div class="tl-item"><span class="tl-tag">T0-01</span><h4>Tauri scaffold build</h4><p>A compilable, runnable client shell with a minimal IPC communication path.</p></div>
+        <div class="tl-item"><span class="tl-tag">T0-05</span><h4>No-persist private-key security boundary</h4><p>Sandbox-boundary design for the Rust security logic shared by the web and native versions.</p></div>
+        <div class="tl-item"><span class="tl-tag">T4-02</span><h4>Self-custody wallet</h4><p>Depends on F4／T3-03 core smart contracts, completed in parallel.</p></div>
+        <div class="tl-item"><span class="tl-tag">T4-03</span><h4>Social-recovery smart contract</h4><p>Threshold-signature account-recovery mechanism, executed on-chain.</p></div>
+        <div class="tl-item"><span class="tl-tag">T4-06</span><h4>CoW／Wormhole dual routing</h4><p>The routing-decision layer where best-price same-chain execution and cross-chain bridging coexist.</p></div>
+        <div class="tl-item"><span class="tl-tag">T4-10</span><h4>Asset-monetization flow integration</h4><p>szpDRX／szpERX trading integrated with the szpEX wallet.</p></div>
+        <div class="tl-item"><span class="tl-tag">T5-06</span><h4>Automatic royalty split</h4><p>EIP-2981 standard, executed alongside the token-burn logic.</p></div>
+        <div class="tl-item"><span class="tl-tag">T8-02</span><h4>Storage &amp; trading performance-spec sign-off</h4><p>Quantified SLA targets compared against measured values.</p></div>
+        <div class="tl-item"><span class="tl-tag">T8-08</span><h4>Production-readiness checklist final sign-off</h4><p>Dual sign-off standard: educational effectiveness and performance spec.</p></div>
+      </div>
+      <p class="small muted">The biggest difference from the prior version's critical path: the prior version used Domain③ as a single starting point; this version's client security boundary (F8/T0-05) directly blocks wallet development (T4-02), forming a dual-starting-point structure with Domain① and Domain④ in parallel — a delay in either one drags down the entire chain.</p>
+
+      <h3>16.2　High-Risk Node List</h3>
+      <div class="callout">
+        <div class="c-title">⚠ T0-05　No-Persist private-key security boundary</div>
+        <p>The Wasm web version and the native version must share the exact same Rust security logic; a poorly designed sandbox boundary could let a plaintext private key leak via serialization, and the web version inherently has a larger attack surface than native. Mitigation: run rule-logic simulation with Claude in Sprint 0 to check the WebCrypto API／wasm-pack boundary line by line, with a security representative required to review.</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ T3-02　Layer-2 chain selection</div>
+        <p>A foundational decision for the entire decentralized infrastructure — once chosen, every smart contract downstream is built on that chain, and rework cost is extremely high if performance or ecosystem fit later proves inadequate. Mitigation: complete technical due diligence on at least two candidate L2 chains during Sprint −1.</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ T4-06　CoW BridgingSdk and Wormhole dual routing coexisting</div>
+        <p>A flaw in the routing-decision layer could cause duplicate charges or routing conflicts for user assets; Wormhole itself suffered a roughly $320M security incident in 2022, making this one of the highest-risk technical items in the plan. Mitigation: exploratory testing with small testnet amounts in S2, and a third-party security audit covering the dual-routing decision logic before launch.</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ T1-08　Anti-cheat module integration testing</div>
+        <p>The core reputational risk for an education product: too high a false-positive rate hurts real learners, too low a detection rate lets the token economy be drained by grinding abuse. Mitigation: simulation scenarios should cover diverse, realistic user behavior patterns, with a human appeal/review channel preserved.</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ T2-10　Token-economy engine agent-based stress testing</div>
+        <p>If the dynamic-adjustment algorithm destabilizes under extreme scenarios, the cost to correct it is higher than under a fixed-amount model. Mitigation: run extreme-scenario simulations first in S0, then scale up real stress tests incrementally, keeping an emergency pause mechanism.</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ T8-04／T8-06　Operations manual &amp; troubleshooting reference</div>
+        <p>With no centralized customer-support backend, the in-app help and FAQ are the only user-support channel; any error (especially in irreversible situations like a lost seed phrase) directly threatens asset safety and platform trust. Mitigation: joint review by legal counsel and the technical writer, with a line-by-line comparison against the source text at final sign-off.</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ T7-06　Third-party security audit</div>
+        <p>Covers smart-contract and wallet/cross-chain integration; audit firms typically need 2–3 months' lead time to book. Mitigation: book an audit firm's slot as soon as the project kicks off, and evaluate insurance mechanisms.</p>
+      </div>
+
+      <h2 id="team">17　Team Structure &amp; Role Recommendations</h2>
+      <p>Across the nine domains and three staffing models, we recommend nine specialty squads plus one integration team, totaling roughly <strong>34–38 core staff</strong> (excluding external auditors and community contributors) — up from 24–28 in the prior version, mainly due to the two new independent squads for Domain① (Tauri client) and Domain⑨ (performance sign-off and ops).</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Squad</th><th>Staffing</th><th>Primary responsibility</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Tauri client squad</td><td>4 (mostly full-stack Rust engineers)</td><td>All of Domain①</td></tr>
+            <tr><td class="strong">Learning-verification squad</td><td>5 (2 education designers + 3 data-science engineers)</td><td>All of Domain②</td></tr>
+            <tr><td class="strong">Token-economy squad</td><td>4 (smart-contract engineering + economics advisor)</td><td>All of Domain③</td></tr>
+            <tr><td class="strong">Decentralized-infrastructure squad</td><td>5 (mostly blockchain/distributed-systems engineers)</td><td>All of Domain④</td></tr>
+            <tr><td class="strong">szpEX wallet/cross-chain squad</td><td>4 (dedicated Web3 engineers, incl. cross-chain security background)</td><td>All of Domain⑤</td></tr>
+            <tr><td class="strong">szpDRX/ERX asset-monetization squad</td><td>4 (biz-dev + asset-tization smart-contract engineering)</td><td>All of Domain⑥</td></tr>
+            <tr><td class="strong">Social-product squad</td><td>3 (product + frontend engineering)</td><td>All of Domain⑦</td></tr>
+            <tr><td class="strong">Visual／audio squad</td><td>3 (art/audio coordination + licensing compliance)</td><td>All of Domain⑧</td></tr>
+            <tr><td class="strong">Performance &amp; operations squad</td><td>4 (SRE-minded engineers + technical writers)</td><td>All of Domain⑨</td></tr>
+            <tr><td class="strong">Integration &amp; project management</td><td>2</td><td>Cross-squad interface specs, sprint coordination, critical-path tracking</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>17.1　External Collaborators (Non-Core Staffing)</h3>
+      <div class="pill-row">
+        <span class="pill">Smart-contract &amp; cross-chain security audit firm</span>
+        <span class="pill">Cross-chain-bridge insurance advisor</span>
+        <span class="pill">Tokenomics advisor</span>
+        <span class="pill">Educational-assessment specialist firm</span>
+        <span class="pill">Legal counsel／compliance officer</span>
+        <span class="pill">Freelance art／audio community</span>
+        <span class="pill">Technical writer</span>
+      </div>
+
+      <h2 id="evidence">19　Evidence-Tier Continuity: From "Spec Frozen" to "Production Verified"</h2>
+      <div class="callout">
+        <div class="c-title">The risk-mitigation value of rule-logic simulation</div>
+        <p>Because szpL2E has no existing test suite to use as a regression baseline, this plan's risk mitigation leans primarily on the depth of rule-logic simulation, numeric simulation, and performance-benchmark comparison during Sprint −1/0. szpL2E relies on rule simulation and spec comparison as an "advance safety net," echoing the core principle that "any architectural claim should be tested against reality before it is presented externally."</p>
+      </div>
+
+      <div class="btn-row" style="margin-top:40px">
+        <a href="roadmap.html" class="btn btn-primary">Next document: One-Click Staged Launch Plan →</a>
+        <a href="technical.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">← Previous: Technical Architecture Plan</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ Sonzpo Learn-to-Earn</div>
+        <p class="f-tag">szpL2E — decentralized, gamified, portable skill-proof learning-economy infrastructure.</p>
+      </div>
+      <div>
+        <h5>Documents</h5>
+        <a href="technical.html">Technical Architecture Plan v1.1</a>
+        <a href="wbs.html">Task Breakdown &amp; Fishbone Plan v2.0</a>
+        <a href="roadmap.html">One-Click Staged Launch Plan v2.0</a>
+        <a href="investor.html">Investor Memorandum v1.0</a>
+        <a href="results.html">Implementation Results Archive (v2.0 onward)</a>
+      </div>
+      <div>
+        <h5>On This Page</h5>
+        <a href="#fishbone">Nine-domain fishbone</a>
+        <a href="#critical-path">Critical path &amp; risks</a>
+        <a href="#team">Team structure</a>
+      </div>
+      <div>
+        <h5>Investors</h5>
+        <a href="investor.html#milestones">Progress &amp; milestones</a>
+        <a href="investor.html#risk">Risk disclosures</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+	  <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>Unit of account: <strong>SZP</strong> (Sonzpo token)　｜　Task Breakdown &amp; Fishbone Plan v2.0</span>
+      <span>"On Sonzpo Hill, every lesson learned is a nut stored for winter."</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

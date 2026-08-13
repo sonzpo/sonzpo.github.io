@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>實作成果規格性能說明書 ｜ szpL2E 松鼠坡學以致富</title>
+<meta name="description" content="szpL2E 一鍵啟動階段化實踐計畫之各版本實作成果規格性能說明書總覽：v2.0 起逐版並列彙整，收錄改版決策、量化實測數據、誠實邊界聲明與測試覆蓋率。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="css/main.css">
+	<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../assets/audio/312727.mp3"
+     sound[1]= "../assets/audio/312767.mp3"
+     sound[2]= "../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>松鼠坡學以致富<small>SZPL2E　·　SONZPO LEARN-TO-EARN</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html">總覽</a>
+      <a href="technical.html">技術架構</a>
+      <a href="wbs.html">任務拆解</a>
+      <a href="roadmap.html">一鍵啟動計畫</a>
+      <div class="nav-item-drop">
+        <a href="results.html" class="current">實作成果</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python 標準庫零依賴改版</a>
+          <div class="dd-foot">
+            <a href="results.html">→ 全部版本總覽</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html">投資人簡報</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="results.html" class="is-active">中</a>
+        <a href="en/results.html">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="開啟選單">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-hero">
+  <div class="wrap">
+    <span class="kicker">實作成果規格性能說明書　·　Implementation Results Archive</span>
+    <h1>一鍵啟動計畫的實作成果：逐版並列存證</h1>
+    <p>《一鍵啟動階段化實踐計畫》定義「該做什麼、怎麼分階段做」；本頁彙整的則是每一次改版工程實際跑出來的成果——量化實測數據、誠實邊界聲明、測試覆蓋率與可重現套件。每個版本獨立成頁、彼此並列，不互相取代：v2.0 之後新增的 v2.1、v2.2……將持續以同一機制掛載於此，方便橫向比較各版本間的改版決策與實測結果演進。</p>
+    <div class="meta-row">
+      <span>目前收錄　<strong>1 個版本（v2.0）</strong></span>
+      <span>收錄機制　<strong>同一目錄下逐版新增子頁，永不覆蓋舊版</strong></span>
+      <span>對應文件　<strong>一鍵啟動階段化實踐計畫 v2.0</strong></span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <span class="kicker">版本瀏覽</span>
+    <h2 class="section-title">選擇一個版本，檢視該次改版的完整實測成果</h2>
+    <p class="section-lede">每個版本卡片對應一次獨立的改版實作成果規格性能說明書，內容涵蓋架構決策、九階段（或該版本對應階段）量化實測結果、效能規格對照、誠實邊界聲明彙總，以及測試覆蓋率與可重現套件說明。</p>
+
+    <div class="version-card-list">
+      <a href="results-v2.0.html" class="version-card">
+        <div class="vc-head">
+          <span class="vc-ver">v2.0</span>
+          <span class="vc-date">2026 年 8 月</span>
+          <span class="vc-badge latest">最新版</span>
+        </div>
+        <h3>v1.1→v2.0 全面改版：Python 3.12 標準庫零外部依賴實作</h3>
+        <p>因沙箱環境無網路連線、無法安裝 FastAPI／uvicorn／httpx／pydantic 等套件，全面改寫為 http.server／urllib.request 標準庫架構。九階段（階段 −1 至階段 6）全數一鍵展示成功，47 項自動化測試全數通過，含 4 項本機真實量測效能指標與 3 項模擬推演指標之誠實區分。</p>
+        <span class="vc-go">閱讀 v2.0 完整實作成果 →</span>
+      </a>
+
+      <div class="version-card" style="opacity:.55;pointer-events:none;border-style:dashed">
+        <div class="vc-head">
+          <span class="vc-ver" style="background:var(--bark-500)">v2.1</span>
+          <span class="vc-date">籌備中</span>
+          <span class="vc-badge" style="background:var(--line-dark);color:var(--ink-soft)">尚未發布</span>
+        </div>
+        <h3>下一版實作成果將掛載於此</h3>
+        <p>後續改版工程（如階段 7 展望範疇之真實裝置實測、真實測試網部署等）完成並產出實作成果規格性能說明書後，將以 <code>results-v2.1.html</code> 之形式新增於本頁，與 v2.0 並列，不取代既有內容。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt">
+  <div class="wrap">
+    <span class="kicker">收錄機制</span>
+    <h2 class="section-title">如何持續新增版本，而不動到舊版內容</h2>
+    <p class="section-lede">本頁與各版本子頁採固定機制擴充，確保新版本永遠是「新增」而非「覆蓋」：</p>
+    <div class="grid grid-3">
+      <div class="card">
+        <span class="num">01</span>
+        <h3>獨立子頁</h3>
+        <p>每個版本各自獨立成頁，命名為 <code>results-v{版本號}.html</code>（如 <code>results-v2.1.html</code>），內容與網址永久保留，不因新版本發布而移除或改寫。</p>
+      </div>
+      <div class="card">
+        <span class="num">02</span>
+        <h3>頂層導覽同步登錄</h3>
+        <p>導覽列「實作成果」下拉選單與本頁版本卡片清單，於新版本發布時同步新增一筆條目，舊版條目原樣保留，僅移除「最新版」徽章並轉交給新版本。</p>
+      </div>
+      <div class="card">
+        <span class="num">03</span>
+        <h3>版本間可互相對照</h3>
+        <p>各版本頁面頂端皆提供「版本瀏覽列」，可直接切換至同系列其他版本，方便橫向比較架構決策與量化實測數據的演進軌跡。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="btn-row" style="justify-content:center;padding:0 28px 64px">
+  <a href="results-v2.0.html" class="btn btn-primary">閱讀 v2.0 實作成果 →</a>
+  <a href="roadmap.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">← 回到一鍵啟動階段化實踐計畫</a>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ 松鼠坡學以致富</div>
+        <p class="f-tag">Sonzpo Learn-to-Earn（szpL2E）—— 去中心化・遊戲化・可攜式技能證明學習經濟基礎設施。</p>
+      </div>
+      <div>
+        <h5>工程文件</h5>
+        <a href="technical.html">技術架構規劃書 v1.1</a>
+        <a href="wbs.html">任務拆解與魚骨圖規劃書 v2.0</a>
+        <a href="roadmap.html">一鍵啟動階段化實踐計畫 v2.0</a>
+        <a href="investor.html">投資人簡報書 v1.0</a>
+      </div>
+      <div>
+        <h5>實作成果版本</h5>
+        <a href="results-v2.0.html">v2.0（2026 年 8 月）</a>
+        <a href="results.html">全部版本總覽</a>
+      </div>
+      <div>
+        <h5>投資人</h5>
+        <a href="investor.html#milestones">開發進度與里程碑</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+	  <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>計價單位：<strong>SZP</strong>（松鼠坡代幣）　｜　實作成果版本總覽</span>
+      <span>「在松鼠坡上，每一次改版都是誠實面對限制、重新扎根的過程。」</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

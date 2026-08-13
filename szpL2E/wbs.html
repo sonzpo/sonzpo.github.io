@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>任務拆解與魚骨圖規劃書 v2.0 ｜ szpL2E 松鼠坡學以致富</title>
+<meta name="description" content="szpL2E 任務拆解與魚骨圖規劃書 v2.0：九大工作領域、約 30 個次領域、80 項可執行任務之雙層 WBS，含關鍵路徑、高風險節點與團隊編組建議。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="css/main.css">
+	<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../assets/audio/312727.mp3"
+     sound[1]= "../assets/audio/312767.mp3"
+     sound[2]= "../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>松鼠坡學以致富<small>SZPL2E　·　SONZPO LEARN-TO-EARN</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html">總覽</a>
+      <a href="technical.html">技術架構</a>
+      <a href="wbs.html" class="current">任務拆解</a>
+      <a href="roadmap.html">一鍵啟動計畫</a>
+      <div class="nav-item-drop">
+        <a href="results.html">實作成果</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python 標準庫零依賴改版</a>
+          <div class="dd-foot">
+            <a href="results.html">→ 全部版本總覽</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html">投資人簡報</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="wbs.html" class="is-active">中</a>
+        <a href="en/wbs.html">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="開啟選單">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-hero">
+  <div class="wrap">
+    <span class="kicker">任務拆解與魚骨圖規劃書　·　WBS &amp; Fishbone Plan</span>
+    <h1>九大工作領域魚骨圖：從規格定案到 80 項可執行任務</h1>
+    <p>雙層驗證架構：Claude AI 先行驗證 → 工程實作。依據《技術架構規劃書》v1.1 與《性能規格與操作說明書》v1.0 全面更新，將兩份文件之技術與產品規格透過魚骨圖因果分析法，拆解為九大工作領域、約 30 個次領域、80 項可執行任務。</p>
+    <div class="meta-row">
+      <span>版本　<strong>v2.0</strong></span>
+      <span>方法論　<strong>雙層驗證架構</strong></span>
+      <span>顆粒度　<strong>可排入單一 Sprint（2 週）</strong></span>
+      <span>現況基線　<strong>規格定案，尚無程式碼與測試基線</strong></span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap doc-layout">
+
+    <aside class="doc-sidebar">
+      <div class="sb-group">
+        <div class="sb-h">目錄</div>
+        <a href="#foundation">1　基礎共用優先任務層</a>
+        <a href="#fishbone">3　主魚骨圖：九大領域</a>
+        <a href="#verification">4　雙層驗證機制</a>
+        <a href="#staffing">5　先進分工方式</a>
+        <a href="#timeline">15　平行開發時間軸</a>
+        <a href="#critical-path">16　關鍵路徑與風險節點</a>
+        <a href="#team">17　團隊編組與角色建議</a>
+        <a href="#evidence">19　證據等級延續原則</a>
+      </div>
+    </aside>
+
+    <div class="doc-main">
+
+      <h2 id="foundation">1　基礎共用優先任務層（Sprint −1）</h2>
+      <p>從九大領域任務中，找出「被多個領域共同依賴、一旦事後變更將引發連鎖返工」的接口性任務，優先凍結其規格，作為所有後續任務的共同依據。本輪因新增 Tauri 客戶端與效能規格範疇，基礎共用節點由舊版七項擴充為<strong>八項（F1–F8）</strong>。</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>節點</th><th>名稱</th><th>被依賴領域</th><th>凍結產出物</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">F1</td><td>學習驗證與題型權重規格</td><td>①②③⑥⑨</td><td>題型權重表＋間隔重複排程演算法規格</td></tr>
+            <tr><td class="strong">F2</td><td>防作弊行為分析規格</td><td>①②④⑨</td><td>異常偵測指標清單＋分級風控流程圖</td></tr>
+            <tr><td class="strong">F3</td><td>動態獎勵曲線與銷毀參數規格</td><td>①②③⑤⑥</td><td>獎勵遞減公式＋銷毀比例參數表</td></tr>
+            <tr><td class="strong">F4</td><td>智能合約、IPFS/Storacha 與資產標準規格</td><td>全部領域</td><td>合約 ABI 草案＋ERC-1155/721+EIP-2981 標準</td></tr>
+            <tr><td class="strong">F5</td><td>企業贊助任務介面規格</td><td>①⑦</td><td>任務發布/覆核 API 規格＋履歷授權欄位定義</td></tr>
+            <tr><td class="strong">F6</td><td>szpEX 私鑰託管、硬體錢包與社交復原規格</td><td>①③⑥</td><td>私鑰託管模式＋硬體錢包簽章介面＋社交復原草案</td></tr>
+            <tr><td class="strong">F7</td><td>生產就緒、教育誠信與效能規格對照檢核清單</td><td>全部領域</td><td>生產就緒檢核表（教育有效性＋效能規格雙重驗收）</td></tr>
+            <tr><td class="strong">F8</td><td>Tauri v2 四層客戶端架構與五端效能基準規格</td><td>全部領域</td><td>四層架構圖＋五端效能基準表</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ F8 的地基性質</div>
+        <p>技術架構規劃書明確定義客戶端四層架構，且強調「Web 版與原生版共用同一套 Rust 安全邏輯」。私鑰管理、簽章邏輯等高敏感度運算的介面契約，必須先於領域五（szpEX 錢包）與領域二（學習驗證）之詳細開發前凍結，否則五端行為分裂的風險將直接侵蝕「無中心化業務邏輯伺服器」的核心架構原則。F8 與 F4、F6 並列為本輪風險等級最高的三個地基性節點。</p>
+      </div>
+
+      <h2 id="fishbone">3　主魚骨圖：九大工作領域總覽</h2>
+      <p class="lede-note">魚頭：szpL2E 架構與性能規格定案 → 可部署之去中心化 Learn-to-Earn 生產服務（含五端客戶端與量化 SLA 驗收）</p>
+
+      <div class="fishbone">
+        <div class="spine"></div>
+        <div class="bones">
+          <div class="bone"><span class="b-num">領域①</span><h4>Tauri v2 跨平台客戶端架構</h4><p>Rust／跨平台工程。關鍵路徑起點之一，前端 UI／IPC Bridge／Rust 核心／五端編譯輸出。</p></div>
+          <div class="bone"><span class="b-num">領域②</span><h4>學習驗證引擎</h4><p>教育設計＋資料科學／後端工程。間隔重複、防作弊、題型權重、zk-SNARK 隱私證明。</p></div>
+          <div class="bone"><span class="b-num">領域③</span><h4>代幣經濟引擎</h4><p>智能合約邏輯＋代幣經濟工程。動態曲線、銷毀機制、進步/留存/品質係數。</p></div>
+          <div class="bone"><span class="b-num">領域④</span><h4>去中心化基礎設施</h4><p>區塊鏈工程＋分散式系統工程。關鍵路徑起點之一，智能合約、IPFS/Storacha、Subgraph、SIWE。</p></div>
+          <div class="bone"><span class="b-num">領域⑤</span><h4>szpEX 錢包與跨鏈整合</h4><p>Web3 錢包工程＋協定整合工程。自託管錢包、CoW/Wormhole 雙路由、硬體錢包、社交復原。</p></div>
+          <div class="bone"><span class="b-num">領域⑥</span><h4>szpDRX／szpERX 資產化與企業變現</h4><p>商業開發＋資產化智能合約工程。ERC-1155/721+EIP-2981、企業任務對接。</p></div>
+          <div class="bone"><span class="b-num">領域⑦</span><h4>社交與留存機制</h4><p>產品工程＋前端工程。排行榜、戰隊、補簽、互評機制。</p></div>
+          <div class="bone"><span class="b-num">領域⑧</span><h4>視覺與美術／音效資源庫</h4><p>美術／音效＋授權合規協調。開源素材庫整合、松鼠角色成長系統。</p></div>
+          <div class="bone"><span class="b-num">領域⑨</span><h4>效能規格驗收、維運監控與操作手冊</h4><p>SRE／技術文件＋安全審計／教育誠信 QA。貫穿 S3～S5，時程末端最集中的領域。</p></div>
+        </div>
+      </div>
+      <p class="small muted">本版九大領域新增①（Tauri 客戶端）與⑨（效能驗收與維運）；領域①與領域④共同構成關鍵路徑的雙起點——客戶端 Rust 核心是錢包與加密邏輯的地基，去中心化基礎設施是智能合約與儲存的地基，兩者需及早並行凍結規格（F8 與 F4），其餘領域才能在其上平行展開。</p>
+
+      <h2 id="verification">4　雙層驗證機制：Claude AI 驗證 → 工程實作</h2>
+      <p>任務先於 Claude AI 環境完成第一層驗證，確認規則邏輯自洽、數值平衡合理、或互動雛形可用後，才進入第二層工程實作。</p>
+      <div class="grid grid-3">
+        <div class="card"><span class="num">方式①</span><h3>規則邏輯推演</h3><p>驗證引擎、防作弊、狀態轉移邏輯，產出驗證備忘錄＋規則修訂版本。</p></div>
+        <div class="card"><span class="num">方式②</span><h3>數值模擬試算</h3><p>代幣經濟曲線、銷毀比例、速率限制閾值，產出試算腳本＋數據圖表＋平衡建議。</p></div>
+        <div class="card"><span class="num">方式③</span><h3>互動式雛形 Demo</h3><p>使用者流程、排行榜 UI、企業任務發布介面，產出可互動雛形＋操作動線紀錄。</p></div>
+        <div class="card"><span class="num">方式④</span><h3>不適用（標註跳過）</h3><p>第三方安全審計、真實多機網路壓測、跨鏈橋接真實資金測試，產出規格檢視備忘錄。</p></div>
+        <div class="card"><span class="num">方式⑤</span><h3>教育有效性推演</h3><p>模擬不同學習者作答模式（含刻意刷題模式），產出教育有效性推演報告＋反例清單。</p></div>
+        <div class="card"><span class="num">新增場景</span><h3>效能基準比對</h3><p>依技術選型試算理論上限是否可能超出規格目標值，逼近門檻即標註高風險項目並提前預警。</p></div>
+      </div>
+
+      <h2 id="staffing">5　先進分工方式定義與適用原則</h2>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>任務類型</th><th>優先分工方式</th><th>選用理由</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Rust 核心與私鑰安全邊界</td><td>敏捷並行團隊</td><td>涉及私鑰管理與跨端安全一致性，明確排除 AI 直接生成安全邊界程式碼</td></tr>
+            <tr><td class="strong">學習驗證引擎與防作弊規則</td><td>敏捷並行團隊</td><td>涉及教育誠信與代幣發放正確性，AI 僅可用於生成測試情境</td></tr>
+            <tr><td class="strong">智能合約與代幣經濟參數</td><td>敏捷並行團隊＋AI 輔助模擬</td><td>經濟模型與版稅正確性需人工把關，數值模擬可由 AI 加速</td></tr>
+            <tr><td class="strong">去中心化基礎設施部署</td><td>敏捷並行團隊</td><td>地基性任務，關乎全專案架構完整性，不適合外包</td></tr>
+            <tr><td class="strong">CoW／Wormhole／硬體錢包整合</td><td>敏捷並行團隊（Web3 專職）</td><td>涉及使用者真實資產安全，排除將簽章與橋接邏輯交由 AI 生成</td></tr>
+            <tr><td class="strong">企業任務對接與履歷授權</td><td>敏捷並行＋去中心化外包（法務）</td><td>涉及個資與跨組織資料授權，需法務專業介入</td></tr>
+            <tr><td class="strong">排行榜／社交機制前端</td><td>AI 輔助生成初稿＋敏捷團隊精修</td><td>UI 元件可大量模板化</td></tr>
+            <tr><td class="strong">視覺美術與配樂製作</td><td>去中心化外包＋社群共創</td><td>CC0 素材庫為第一層草稿來源，加速早期原型展示</td></tr>
+            <tr><td class="strong">操作說明書與監控儀表板</td><td>敏捷並行＋去中心化外包（文件寫手）</td><td>正確性攸關無中心化客服情境下的資產安全，核心邏輯不外包</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="timeline">15　平行開發時間軸總表（含 Claude 驗證期）</h2>
+      <p>以 2 週為一個 Sprint。Sprint −1（八大基礎共用節點規格凍結期，2 週）早於 Sprint 0（九大領域平行的 Claude AI 驗證期，含教育有效性推演與效能基準比對，3 週）。全專案規劃約 <strong>8 個 Sprint</strong>（含 Sprint −1 與 0）完成從規格到生產部署與效能驗收。</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Sprint</th><th>時間</th><th>①客戶端</th><th>④去中心化基建</th><th>⑤szpEX 錢包</th><th>⑨效能維運</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">S−1</td><td>第 1–2 週</td><td>F8 規格</td><td>F4 規格</td><td>F6 規格</td><td>---</td></tr>
+            <tr><td class="strong">S0</td><td>第 3–5 週</td><td>規則+數值推演</td><td>規則推演（ABI）</td><td>規則推演</td><td>---</td></tr>
+            <tr><td class="strong">S1</td><td>第 6–7 週</td><td>骨架+IPC</td><td>L2 建置+核心合約</td><td>自託管錢包</td><td>---</td></tr>
+            <tr><td class="strong">S2</td><td>第 8–9 週</td><td>Wasm+安全邊界</td><td>Subgraph+SIWE+Oracle</td><td>AA 社交復原+CoW 整合</td><td>---</td></tr>
+            <tr><td class="strong">S3</td><td>第 10–11 週</td><td>真實裝置基準測試</td><td>備援節點+性能基準</td><td>Wormhole+資產串接</td><td>客戶端+儲存交易規格驗收</td></tr>
+            <tr><td class="strong">S4</td><td>第 12–13 週</td><td>端到端整合</td><td>端到端整合測試</td><td>測試網端到端驗證</td><td>說明頁+監控+FAQ</td></tr>
+            <tr><td class="strong">S5</td><td>第 14 週</td><td>---</td><td>---</td><td>---</td><td>最終驗收</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">領域①（Tauri 客戶端）與領域④（去中心化基礎設施）為關鍵路徑雙起點：領域⑤（szpEX 自託管錢包）依賴領域①之 Rust 核心與領域④之核心智能合約；領域②（題庫本機解密）依賴領域①之安全邊界。領域⑨貫穿 S3～S5，是時程末端最集中的領域。領域⑧美術與配樂草稿可自 S1 起同步以開源素材庫進行，不受限於外包社群正式產出時程。</p>
+
+      <h2 id="critical-path">16　關鍵路徑與風險節點</h2>
+      <h3>16.1　專案關鍵路徑</h3>
+      <div class="tl">
+        <div class="tl-item"><span class="tl-tag">S−1</span><h4>F8 客戶端四層架構規格</h4><p>凍結前端 UI／IPC Bridge／Rust 核心／編譯輸出契約。</p></div>
+        <div class="tl-item"><span class="tl-tag">T0-01</span><h4>Tauri 骨架建置</h4><p>可編譯執行的客戶端殼與最小 IPC 通訊鏈路。</p></div>
+        <div class="tl-item"><span class="tl-tag">T0-05</span><h4>私鑰不落地安全邊界</h4><p>Web 版與原生版共用 Rust 安全邏輯的沙箱邊界設計。</p></div>
+        <div class="tl-item"><span class="tl-tag">T4-02</span><h4>自託管錢包</h4><p>依賴 F4／T3-03 核心智能合約平行完成。</p></div>
+        <div class="tl-item"><span class="tl-tag">T4-03</span><h4>社交復原智能合約</h4><p>門檻簽章帳戶復原機制，鏈上執行。</p></div>
+        <div class="tl-item"><span class="tl-tag">T4-06</span><h4>CoW／Wormhole 雙路由</h4><p>同鏈最優價與跨鏈橋接並存路由決策層。</p></div>
+        <div class="tl-item"><span class="tl-tag">T4-10</span><h4>資產變現流程串接</h4><p>szpDRX／szpERX 交易與 szpEX 錢包整合。</p></div>
+        <div class="tl-item"><span class="tl-tag">T5-06</span><h4>版稅自動分潤</h4><p>EIP-2981 標準與代幣銷毀邏輯並行執行。</p></div>
+        <div class="tl-item"><span class="tl-tag">T8-02</span><h4>儲存與交易效能規格驗收</h4><p>量化 SLA 目標值與實測值對照。</p></div>
+        <div class="tl-item"><span class="tl-tag">T8-08</span><h4>生產就緒檢核清單最終驗收</h4><p>教育有效性與效能規格雙重驗收標準。</p></div>
+      </div>
+      <p class="small muted">此關鍵路徑與舊版最大差異：舊版以領域③為單一起點；本版因客戶端安全邊界（F8/T0-05）直接卡住錢包開發（T4-02），形成領域①與領域④並列的雙起點結構，任一延誤都會拖累整條鏈路。</p>
+
+      <h3>16.2　高風險節點清單</h3>
+      <div class="callout">
+        <div class="c-title">⚠ T0-05　私鑰不落地（No-Persist）安全邊界</div>
+        <p>Wasm 網頁版與原生版須共用同一套 Rust 安全邏輯，若沙箱邊界設計不慎，可能導致私鑰明文序列化外洩；Web 版天生攻擊面大於原生版。因應建議：Sprint 0 即以 Claude 進行規則推演，逐條核對 WebCrypto API／wasm-pack 邊界，並要求安全代表列席複核。</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ T3-02　Layer 2 鏈選型</div>
+        <p>整個去中心化基礎設施的地基決策，一旦選定後續全部智能合約均基於此鏈開發，重工成本極高。因應建議：Sprint −1 期間即完成至少兩條候選 Layer 2 鏈的技術盡職調查。</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ T4-06　CoW BridgingSdk 與 Wormhole 雙路由並存</div>
+        <p>路由決策層邏輯若有誤，可能造成使用者資產重複扣款或路由衝突；Wormhole 曾於 2022 年發生約 3.2 億美元安全事件，是本規劃書風險等級最高的技術項目之一。因應建議：S2 以測試網小額資金進行探索性測試，正式上線前完成第三方安全審計，範圍需涵蓋雙路由決策邏輯。</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ T1-08　防作弊模組整合測試</div>
+        <p>教育產品的核心信譽風險：誤判率過高傷害真實學習者體驗，偵測率過低則代幣經濟被刷題套利掏空。因應建議：模擬情境涵蓋多元真實使用者行為模式，並保留人工申訴複核通道。</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ T2-10　代幣經濟引擎 Agent-Based 壓力測試</div>
+        <p>動態調節演算法若在極端情境下失衡，修正成本高於固定金額模式。因應建議：S0 先以極端情境試算，正式壓測採漸進式規模擴大，保留緊急暫停機制。</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ T8-04／T8-06　操作說明書與故障排除總表</div>
+        <p>系統無中心化客服後台，App 內建說明與 FAQ 是唯一的使用者支援管道，若內容有誤（尤其助記詞遺失等不可逆情境）將直接影響資產安全與平台信任度。因應建議：法務顧問與技術文件寫手共同覆核，最終驗收逐條比對原文。</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ T7-06　第三方安全審計</div>
+        <p>涉及智能合約與錢包/跨鏈整合，審計機構排程通常需提前 2–3 個月預約。因應建議：專案啟動即預約審計機構排程，並評估導入保險機制。</p>
+      </div>
+
+      <h2 id="team">17　團隊編組與角色建議</h2>
+      <p>依九大領域與三種分工方式，建議編組九支特性小隊＋一支整合團隊，總核心人力約 <strong>34–38 人</strong>（不含外部審計與社群貢獻者），較舊版 24–28 人擴大，主因是新增領域①（Tauri 客戶端）與領域⑨（效能驗收與維運）兩支獨立小隊。</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>小隊</th><th>人力配置</th><th>主要職責</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Tauri 客戶端隊</td><td>4 人（Rust 全端工程師為主）</td><td>領域①全任務</td></tr>
+            <tr><td class="strong">學習驗證隊</td><td>5 人（教育設計師 2＋資料科學工程師 3）</td><td>領域②全任務</td></tr>
+            <tr><td class="strong">代幣經濟隊</td><td>4 人（智能合約工程＋經濟顧問）</td><td>領域③全任務</td></tr>
+            <tr><td class="strong">去中心化基建隊</td><td>5 人（區塊鏈/分散式系統工程為主）</td><td>領域④全任務</td></tr>
+            <tr><td class="strong">szpEX 錢包跨鏈隊</td><td>4 人（Web3 專職，含跨鏈安全背景）</td><td>領域⑤全任務</td></tr>
+            <tr><td class="strong">szpDRX/ERX 資產變現隊</td><td>4 人（商業開發＋資產化智能合約工程）</td><td>領域⑥全任務</td></tr>
+            <tr><td class="strong">社交產品隊</td><td>3 人（產品＋前端工程）</td><td>領域⑦全任務</td></tr>
+            <tr><td class="strong">視覺／音效隊</td><td>3 人（美術/音效協調＋授權合規）</td><td>領域⑧全任務</td></tr>
+            <tr><td class="strong">效能與維運隊</td><td>4 人（SRE 思維工程師＋技術文件寫手）</td><td>領域⑨全任務</td></tr>
+            <tr><td class="strong">整合與專案管理</td><td>2 人</td><td>跨隊介面規格、Sprint 協調、關鍵路徑追蹤</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>17.1　外部協作角色（非核心編制）</h3>
+      <div class="pill-row">
+        <span class="pill">智能合約與跨鏈安全審計機構</span>
+        <span class="pill">跨鏈橋接保險顧問</span>
+        <span class="pill">代幣經濟學（Tokenomics）顧問</span>
+        <span class="pill">教育測評專業機構</span>
+        <span class="pill">法務顧問／合規長</span>
+        <span class="pill">美術／音效自由接案社群</span>
+        <span class="pill">技術文件寫手</span>
+      </div>
+
+      <h2 id="evidence">19　證據等級延續原則：從「規格定案」到「生產驗證」</h2>
+      <div class="callout">
+        <div class="c-title">規則推演機制的風險緩解效益</div>
+        <p>由於 szpL2E 沒有既有測試作為回歸基線的優勢，本規劃書的風險緩解主要仰賴 Sprint −1／0 階段的規則推演、數值模擬與效能基準比對深度。szpL2E 依賴規則推演與規格對照作為「事前防護網」，呼應「任何架構主張在對外呈現前，都應該先經過真實測試的檢驗」的核心精神。</p>
+      </div>
+
+      <div class="btn-row" style="margin-top:40px">
+        <a href="roadmap.html" class="btn btn-primary">下一份文件：一鍵啟動階段化實踐計畫 →</a>
+        <a href="technical.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">← 上一份：技術架構規劃書</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ 松鼠坡學以致富</div>
+        <p class="f-tag">Sonzpo Learn-to-Earn（szpL2E）—— 去中心化・遊戲化・可攜式技能證明學習經濟基礎設施。</p>
+      </div>
+      <div>
+        <h5>工程文件</h5>
+        <a href="technical.html">技術架構規劃書 v1.1</a>
+        <a href="wbs.html">任務拆解與魚骨圖規劃書 v2.0</a>
+        <a href="roadmap.html">一鍵啟動階段化實踐計畫 v2.0</a>
+        <a href="investor.html">投資人簡報書 v1.0</a>
+        <a href="results.html">實作成果版本總覽（v2.0 起）</a>
+      </div>
+      <div>
+        <h5>本頁章節</h5>
+        <a href="#fishbone">九大領域魚骨圖</a>
+        <a href="#critical-path">關鍵路徑與風險</a>
+        <a href="#team">團隊編組</a>
+      </div>
+      <div>
+        <h5>投資人</h5>
+        <a href="investor.html#milestones">開發進度與里程碑</a>
+        <a href="investor.html#risk">風險揭露</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+	  <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>計價單位：<strong>SZP</strong>（松鼠坡代幣）　｜　任務拆解與魚骨圖規劃書 v2.0</span>
+      <span>「在松鼠坡上，每一次學習都是儲備過冬的堅果。」</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一鍵啟動階段化實踐計畫 v2.0 ｜ szpL2E 松鼠坡學以致富</title>
+<meta name="description" content="szpL2E 一鍵啟動階段化實踐計畫 v2.0：以「行程數 × 功能層」雙軸交叉，階段 −1 至階段 6 共 8 個可一鍵啟動的本機端到端數位分身展示階段。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+<link rel="stylesheet" href="css/main.css">
+	<!-- ==== background music ==== -->
+    <script type="text/javascript">
+     var numberOfSongs = 3
+     var sound = new Array(numberOfSongs+1)
+     sound[0]= "../assets/audio/312727.mp3"
+     sound[1]= "../assets/audio/312767.mp3"
+     sound[2]= "../assets/audio/312828.mp3"
+     function randomNumber(){
+      var randomLooper = -1
+      while (randomLooper < 0 || randomLooper > numberOfSongs || isNaN(randomLooper)){ 
+	   randomLooper = parseInt(Math.random()*(numberOfSongs+1))
+      }
+      return randomLooper
+     }
+     var randomsub = randomNumber()
+     var soundFile = sound[randomsub]
+     document.write ('<audio autoplay loop><source src="' + soundFile + '" type="audio/mpeg"></audio>')
+    </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">🐿️</span>
+      <span>松鼠坡學以致富<small>SZPL2E　·　SONZPO LEARN-TO-EARN</small></span>
+    </a>
+    <div class="header-right">
+    <nav class="top-nav">
+      <a href="index.html">總覽</a>
+      <a href="technical.html">技術架構</a>
+      <a href="wbs.html">任務拆解</a>
+      <a href="roadmap.html" class="current">一鍵啟動計畫</a>
+      <div class="nav-item-drop">
+        <a href="results.html">實作成果</a>
+        <div class="nav-dropdown">
+          <a href="results-v2.0.html"><span class="v-tag">v2.0</span> Python 標準庫零依賴改版</a>
+          <div class="dd-foot">
+            <a href="results.html">→ 全部版本總覽</a>
+          </div>
+        </div>
+      </div>
+      <a href="investor.html">投資人簡報</a>
+    </nav>
+      <div class="lang-switch">
+        <a href="roadmap.html" class="is-active">中</a>
+        <a href="en/roadmap.html">EN</a>
+      </div>
+      <button class="nav-toggle" aria-label="開啟選單">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-hero">
+  <div class="wrap">
+    <span class="kicker">一鍵啟動階段化實踐計畫　·　One-Click Staged Digital Twin</span>
+    <h1>松鼠坡地形圖：八個可一鍵啟動的端到端展示階段</h1>
+    <p>以「行程數 × 功能層」雙軸交叉、由簡入繁設計，每一階段皆可一鍵啟動並自動完成健康檢查與端到端展示劇本，將四份規劃文件中的技術選型與產品邏輯，逐階段收斂為本機可驗證、可反覆執行的工程證據，而非停留在紙面規格。</p>
+    <div class="meta-row">
+      <span>版本　<strong>v2.0</strong></span>
+      <span>階段數　<strong>8（階段 −1 至階段 6）＋展望階段 7</strong></span>
+      <span>核心軸線　<strong>行程數 × 功能層 × 證據等級</strong></span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap doc-layout">
+
+    <aside class="doc-sidebar">
+      <div class="sb-group">
+        <div class="sb-h">目錄</div>
+        <a href="#trail">2　階段總覽：山徑地圖</a>
+        <a href="#axes">1　重組原則：三軸設計</a>
+        <a href="#stages">4　各階段詳細任務拆解</a>
+        <a href="#risk">5　技術風險與依賴關係</a>
+        <a href="#mapping">6　與九大領域對照</a>
+        <a href="#assets">8　展示素材資源庫</a>
+      </div>
+    </aside>
+
+    <div class="doc-main">
+
+      <h2 id="trail">2　階段總覽：松鼠坡山徑地圖</h2>
+      <p>橫軸是行程數規模，縱軸是功能疊加深度，每一格是一個階段，格子裡標的是這一階段一鍵啟動之後畫面上會真實發生的事，以及對應的證據等級。階段 −1 是新架構第一次引入 Tauri 客戶端殼，這個外殼本身在被納入其餘功能之前，必須先獨立驗證「能否編譯、能否與一個服務行程握手」。</p>
+
+      <div class="trail-wrap">
+        <div class="trail-scroll">
+          <div class="trail">
+            <div class="trail-line"></div>
+
+            <div class="stage stage-neg">
+              <span class="peak-label">階段 −1</span>
+              <div class="peak-title">Tauri 客戶端骨架</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">1 個 Tauri 殼＋1 個最小服務行程握手。證據等級零→一</div>
+            </div>
+
+            <div class="stage">
+              <span class="peak-label">階段 0</span>
+              <div class="peak-title">單行程學習驗證核心</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">多賽道課程、間隔重複測驗端到端 demo。證據等級一</div>
+            </div>
+
+            <div class="stage">
+              <span class="peak-label">階段 1</span>
+              <div class="peak-title">單行程＋模擬鏈上結算</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">呼叫本地測試鏈完成 ERC-1155/721 核心合約子集交易。證據等級一</div>
+            </div>
+
+            <div class="stage">
+              <span class="peak-label">階段 2</span>
+              <div class="peak-title">雙行程＋真實鏈廣播</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">學習驗證×鏈上結算雙行程真實 HTTP/RPC 通訊，IPFS+Storacha 雛形。證據等級一</div>
+            </div>
+
+            <div class="stage">
+              <span class="peak-label">階段 3</span>
+              <div class="peak-title">雙行程＋防作弊身分防偽</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">加入防作弊行為分析最小版與簽章式身分防偽。證據等級一</div>
+            </div>
+
+            <div class="stage">
+              <span class="peak-label">階段 4</span>
+              <div class="peak-title">多行程＋去中心化拓撲</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">行程數擴大至 3～6 個，新增儲存代理與客戶端殼並列，簡易監控儀表板。證據等級一</div>
+            </div>
+
+            <div class="stage">
+              <span class="peak-label">階段 5</span>
+              <div class="peak-title">多行程＋szpEX 錢包整合</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">自託管錢包最小版、企業任務發布介面雛形、斷線自動重連韌性。證據等級一〜二</div>
+            </div>
+
+            <div class="stage">
+              <span class="peak-label">階段 6</span>
+              <div class="peak-title">效能規格與監控儀表板</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">量化 SLA 目標值與本機模擬量測值並列對照，明確標注模擬推演性質。證據等級一</div>
+            </div>
+
+            <div class="stage stage-future">
+              <span class="peak-label">階段 7・展望</span>
+              <div class="peak-title">生產環境驗收</div>
+              <div class="stage-dot"></div>
+              <div class="peak-desc">主網部署、真實資金串接、第三方審計、真實裝置實測。證據等級三，非一鍵範疇</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <p class="small muted">同一列由左往右，代表「同一套本事，換更大的舞台重新證明一次」；同一欄由下往上，代表「舞台不變，把戲份越排越滿」。階段 6 獨立於方格之外，理由是效能規格驗收本質上是「對既有多行程系統做量測與對照」，而非新增產品功能，與階段 −1 首尾呼應——一個驗證起點的「骨架能不能跑」，一個驗證終點的「跑起來的東西是否達標」。</p>
+
+      <h3>2.1　角色對照表：舊版行程角色 → 新版對應規格</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>舊版 v1.1 行程角色</th><th>新版對應規格</th><th>對應基礎共用節點</th></tr></thead>
+          <tbody>
+            <tr><td>學習驗證服務（純記憶體）</td><td>學習驗證服務，另納入 szpERX 題庫本機加解密規格</td><td class="num">F1、F8</td></tr>
+            <tr><td>本地測試鏈＋最小可行代幣合約</td><td>Layer 2 測試鏈＋ERC-1155／ERC-721＋EIP-2981 核心合約子集</td><td class="num">F4</td></tr>
+            <tr><td>IPFS 本地節點</td><td>IPFS＋Storacha（UCAN 授權）混合持久化雛形</td><td class="num">F4</td></tr>
+            <tr><td>監控儀表板（行程健康狀態列表）</td><td>監控儀表板（行程健康狀態＋效能規格對照）</td><td class="num">F7</td></tr>
+            <tr><td>內建錢包最小版</td><td>szpEX 自託管錢包（本地金鑰＋社交復原雛形，不接真實路由）</td><td class="num">F6</td></tr>
+            <tr><td>企業任務發布介面雛形</td><td>企業任務發布介面雛形，銜接 szpDRX/ERX 資產化框架</td><td class="num">F5</td></tr>
+            <tr><td>（無對應）</td><td>Tauri 客戶端殼行程（新增）</td><td class="num">F8</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="axes">1　重組原則：為什麼是「行程數 × 功能層」</h2>
+      <p>把整個生產化工程畫成一張方格紙，橫軸是「這個系統目前跑了幾個獨立行程」，縱軸是「這個系統目前具備幾層功能」，先固定橫軸不動、在這個橫軸位置上把縱軸疊出一個「夠用但誠實」的高度，再往右移一格讓行程數增加。</p>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="num">主軸</span>
+          <h3>行程數</h3>
+          <p>去中心化定位需要以行程數作為最誠實的可觀察指標；一鍵啟動腳本複雜度主要由行程數與異質性決定；每一階段的啟動腳本天生適合作為下一階段的煙霧測試基線。</p>
+        </div>
+        <div class="card">
+          <span class="num">副軸</span>
+          <h3>功能層</h3>
+          <p>功能彼此之間的依賴遠比表面上鬆散：防作弊與簽章防偽需要雙行程互信才有意義；szpEX 之 CoW/Wormhole 雙路由決策邏輯，同樣需要雙行程以上規模才有意義。</p>
+        </div>
+        <div class="card">
+          <span class="num">第三軸</span>
+          <h3>證據等級</h3>
+          <p>對齊《任務拆解與魚骨圖規劃書》v2.0 第十九章之四級架構：規格定案、規則推演驗證、真實整合驗證、生產環境驗證，並新增「效能基準比對」作為等級一數值模擬的延伸應用。</p>
+        </div>
+      </div>
+
+      <h2 id="stages">4　各階段詳細任務拆解</h2>
+
+      <h3>4.1　階段 −1・Tauri 客戶端骨架一鍵展示</h3>
+      <p>啟動 1 個 Tauri v2 客戶端殼行程與 1 個最小本機服務行程，驗證前端 UI 層透過 IPC Bridge 呼叫 Rust 核心、再由 Rust 核心以 HTTP 呼叫本機服務行程取得一段靜態回應的完整鏈路。此階段不涉及任何金鑰、學習邏輯或鏈上邏輯，純粹驗證「客戶端外殼可編譯、可執行、可與服務行程握手」。</p>
+
+      <h3>4.2　階段 0・單行程學習驗證核心一鍵展示</h3>
+      <p>啟動 1 個 Python 服務行程，把 F1 定義的多賽道課程單元、間隔重複測驗排程、題型權重與評分系統，跑一次現成的端到端 demo，並把該行程涵蓋的自動化測試一併納入啟動腳本的自我檢查步驟。代幣點數僅為記憶體內的數值模擬。</p>
+
+      <h3>4.3　階段 1・單行程＋模擬鏈上結算（打底版）</h3>
+      <p>仍然只有 1 個對外可見的服務行程，內部把階段 0 記憶體內的代幣點數模擬，升級為呼叫一個本地內嵌測試鏈完成真實的合約交易，交易對象改為對齊 F4 規格的 ERC-1155／ERC-721＋EIP-2981 核心合約子集（僅實作發放、銷毀兩個函式）。</p>
+
+      <h3>4.4　階段 2・雙行程＋真實本地鏈廣播與 IPFS/Storacha 雛形</h3>
+      <p>拆成 2 個對外可見的獨立行程：學習驗證服務、鏈上結算服務（含本地測試鏈），兩者透過真實 HTTP／RPC 溝通；同時把學習成果摘要與課程內容改為透過 IPFS＋Storacha 混合持久化雛形儲存，取代階段 0、1 的本地檔案存取。</p>
+
+      <h3>4.5　階段 3・雙行程＋防作弊與身分防偽（疊加版）</h3>
+      <p>行程數維持 2 個不變，在階段 2 的鏈上結算之上，加入 F2 定義的防作弊行為分析最小版與簽章式身分防偽，讓學習端送往結算端的每一筆成績，都帶有可驗證的簽章與風控標記。</p>
+
+      <h3>4.6　階段 4・多行程＋去中心化拓撲與監控雛形</h3>
+      <p>行程數擴大到 3～6 個，新增 IPFS＋Storacha 儲存代理行程與 Tauri 客戶端殼行程（首次與服務端行程並列上線），並用一個簡易監控儀表板一眼看到各行程的健康狀態與資料流動。</p>
+
+      <h3>4.7　階段 5・多行程＋szpEX 錢包／資產變現整合與韌性</h3>
+      <p>行程數維持 3～6 個，在階段 4 的拓撲之上，加入 szpEX 自託管錢包最小版（本地金鑰管理＋社交復原雛形，不接真實 CoW Protocol／Wormhole Bridge）與企業任務發布介面雛形，並加入結算行程斷線後自動重連、事件補送的韌性機制。</p>
+
+      <h3>4.8　階段 6・多行程＋效能規格與監控儀表板一鍵展示</h3>
+      <p>行程數維持 3～6 個，在階段 4、5 已上線的行程拓撲之上，一鍵啟動腳本額外跑一輪「數值模擬＋規格對照」流程，把性能規格與操作說明書 v1.0 之量化 SLA 目標值與本機模擬量測值並列呈現在監控儀表板，並明確標注此為模擬推演值。</p>
+
+      <div class="callout">
+        <div class="c-title">📎 對照：本計畫之實測成果已彙整為獨立文件</div>
+        <p>階段 −1 至階段 6 依本計畫改版工程之量化實測數據、誠實邊界聲明與測試覆蓋率，已彙整於《<a href="results-v2.0.html" style="color:var(--pine-900);text-decoration:underline">實作成果規格性能說明書 v2.0</a>》。後續改版將持續以 v2.1、v2.2……並列新增於<a href="results.html" style="color:var(--pine-900);text-decoration:underline">實作成果版本總覽</a>，本計畫文件本身維持不變。</p>
+      </div>
+
+      <div class="callout">
+        <div class="c-title">⚠ 階段 7・生產環境驗收（展望，非一鍵範疇）</div>
+        <p>真實主網部署、CoW Protocol／Wormhole Bridge 真實資金串接、第三方安全審計、教育誠信外部評估、真實裝置五端效能實測——這些工作性質上無法被壓縮進「本機一鍵啟動」的定義裡，對應《任務拆解與魚骨圖規劃書》v2.0 第十九章「證據等級三：生產環境驗證」，尚未展開詳細 WBS。</p>
+      </div>
+
+      <h2 id="risk">5　技術風險與依賴關係</h2>
+      <h3>5.1　跨階段的關鍵路徑</h3>
+      <p class="lede-note" style="font-size:15px;color:var(--pine-900);font-weight:700;font-family:var(--mono)">階段 −1 → 階段 0 → 階段 1 → 階段 2 → 階段 3（疊加）／階段 4 → 階段 5（疊加）→ 階段 6（效能對照）→ 階段 7（展望）</p>
+      <p>九個施工階段之間存在一條清楚的直線依賴：階段 −1 的 Tauri 客戶端骨架，是階段 4 起客戶端殼整合的共同起點；階段 0 的學習驗證核心，是階段 1 到 6 共同的起點；階段 2 的雙行程通訊介面與儲存代理，同時是階段 3 疊加簽章防偽、階段 4 擴大行程數的共同地基。任何一個階段的地基出問題，會直接拖累它右邊、上邊所有格子。</p>
+
+      <div class="callout">
+        <div class="c-title">⚠ 風險六　Tauri／Rust 工具鏈跨平台差異</div>
+        <p>會在階段 −1 第一次成為門檻，對應 T0-05 私鑰不落地安全邊界風險節點之前置環境版本。不同開發機所在平台（Windows／macOS／Linux）對 Tauri 建置所需的系統相依套件不同，若目標環境缺少對應套件，階段 −1 起全部依賴客戶端殼的階段皆會卡住。建議先在至少兩種主流開發平台各執行一次最小建置指令，確認建置流程可重現。</p>
+      </div>
+      <div class="callout">
+        <div class="c-title">⚠ 風險七　效能規格對照表的模擬推演值可能被誤讀為正式驗收數據</div>
+        <p>會在階段 6 出現，因為模擬推演值與本機真實量測值並列呈現於同一份儀表板，若視覺標記設計不慎，容易讓使用者誤以為「一鍵啟動展示出來的效能數字」等同於《性能規格與操作說明書》v1.0 之正式驗收結果。建議模擬推演值一律以不同底色或明確文字標註「模擬推演，非真實裝置實測」，並固定附上提示文字說明正式驗收依據。</p>
+      </div>
+
+      <h2 id="mapping">6　與九大領域的對照</h2>
+      <p>熟悉《任務拆解與魚骨圖規劃書》v2.0（九大領域版）的讀者，可以用下表快速找到原本任務在本階段化架構裡的落點，兩份文件描述的是同一批工程內容，只是切分的軸線不同。</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>九大領域</th><th>在階段化架構中的落點</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">①Tauri 客戶端</td><td>客戶端殼骨架落在階段 −1；與服務端拓撲整合落在階段 4；本機模擬效能對照落在階段 6；五端真實裝置效能實測延伸至階段 7。</td></tr>
+            <tr><td class="strong">②學習驗證引擎</td><td>核心邏輯落在階段 0；防作弊行為分析落在階段 3；題庫本機加解密效能對照落在階段 6；真實使用者規模驗證延伸至階段 7。</td></tr>
+            <tr><td class="strong">③代幣經濟引擎</td><td>最小可行發放／銷毀落在階段 1；固定代幣池與企業贊助資金儲值落在階段 5；大規模壓力測試與主網部署落在階段 7。</td></tr>
+            <tr><td class="strong">④去中心化基礎設施</td><td>本地測試鏈與核心合約落在階段 1；雙行程真實通訊落在階段 2；IPFS/Storacha 儲存與監控雛形落在階段 4；真實效能基準測試落在階段 7。</td></tr>
+            <tr><td class="strong">⑤szpEX 錢包與跨鏈整合</td><td>自託管錢包最小版與路由規則層級雛形落在階段 5；CoW/Wormhole 真實串接與測試網驗證落在階段 7。</td></tr>
+            <tr><td class="strong">⑥szpDRX／szpERX</td><td>任務發布與覆核流程雛形落在階段 5；電子書授權、課程交易等需真實合作方參與的部分落在階段 7。</td></tr>
+            <tr><td class="strong">⑦社交與留存機制</td><td>一鍵啟動範疇未涵蓋排行榜與戰隊系統的完整實作——社交機制的價值需要多使用者規模才能體現，與單機展示形式天生不合。</td></tr>
+            <tr><td class="strong">⑧視覺與美術／音效</td><td>生產就緒檢核清單邏輯窮盡性核對貫穿每一階段收尾；美術／音效製作與第三方審計皆落在階段 7。</td></tr>
+            <tr><td class="strong">⑨效能規格驗收與維運</td><td>監控儀表板雛形落在階段 4；效能規格對照（數值模擬層級）獨立成為階段 6；操作說明書轉譯、真實裝置基準測試等等級二／三驗收，落在階段 7。</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="assets">8　展示素材資源庫</h2>
+      <p>展示劇本所需之非核心視覺與音效元素，優先取自 Kenney.nl CC0 UI 素材，並新增 Tauri 客戶端殼與監控儀表板之圖示、效能規格對照表視覺化，銜接《任務拆解與魚骨圖規劃書》v2.0 領域⑧之草稿優先原則。CC0 素材不需署名、可自由修改與商用；OpenGameArt.org 等混合授權素材則逐項確認授權類型並建立署名對照表。</p>
+
+      <div class="btn-row" style="margin-top:40px">
+        <a href="investor.html" class="btn btn-primary">下一份文件：投資人簡報書 →</a>
+        <a href="wbs.html" class="btn btn-ghost" style="border-color:var(--line);color:var(--pine-900)">← 上一份：任務拆解與魚骨圖規劃書</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">🐿️ 松鼠坡學以致富</div>
+        <p class="f-tag">Sonzpo Learn-to-Earn（szpL2E）—— 去中心化・遊戲化・可攜式技能證明學習經濟基礎設施。</p>
+      </div>
+      <div>
+        <h5>工程文件</h5>
+        <a href="technical.html">技術架構規劃書 v1.1</a>
+        <a href="wbs.html">任務拆解與魚骨圖規劃書 v2.0</a>
+        <a href="roadmap.html">一鍵啟動階段化實踐計畫 v2.0</a>
+        <a href="investor.html">投資人簡報書 v1.0</a>
+        <a href="results.html">實作成果版本總覽（v2.0 起）</a>
+      </div>
+      <div>
+        <h5>本頁章節</h5>
+        <a href="#trail">階段總覽地形圖</a>
+        <a href="#stages">各階段任務拆解</a>
+        <a href="#risk">技術風險與依賴</a>
+      </div>
+      <div>
+        <h5>投資人</h5>
+        <a href="investor.html#milestones">開發進度與里程碑</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+	  <span>Powered by Human-AI Collaboration，人智共作驅動 </span>
+      <span>計價單位：<strong>SZP</strong>（松鼠坡代幣）　｜　一鍵啟動階段化實踐計畫 v2.0</span>
+      <span>「在松鼠坡上，每一次學習都是儲備過冬的堅果。」</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
